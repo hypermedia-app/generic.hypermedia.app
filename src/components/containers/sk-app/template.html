@@ -1,0 +1,21 @@
+<section class="Welcome">
+  <img class="SKLogo" draggable="false" src="assets/AnimatedSkeleton.svg" alt="">
+  <h1 class="Title">Web Components — Now.</h1>
+  <p>
+    Take the future and start building your progressive web apps with Polymer Skeleton, the most advanced Polymer starter kit.
+  </p>
+
+  <sk-button on-click="startTour">Take a tour</sk-button>
+</section>
+
+<dom-if if=[[updateReady]]>
+  <template>
+    <sk-button on-click="reload" class="UpdateReadyAlert">Update ready, reload!</sk-button>
+  </template>
+</dom-if>
+
+<aside class="Meta">
+  v[[appVersion]] - ENV: [[ENV]]
+</aside>
+
+
