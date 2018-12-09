@@ -4,11 +4,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { customElement, computed, property, listen } from '@polymer/decorators';
+import { computed, customElement, listen, property } from '@polymer/decorators';
 import { DeclarativeEventListeners } from '@polymer/decorators/lib/declarative-event-listeners.js';
-import { Debouncer } from '@polymer/polymer/lib/utils/debounce';
 import { microTask } from '@polymer/polymer/lib/utils/async';
-import { PolymerElement, html } from '@polymer/polymer/polymer-element';
+import { Debouncer } from '@polymer/polymer/lib/utils/debounce';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element';
 import css from './style.pcss';
 import template from './template.html';
 import '@polymer/paper-input/paper-input';
@@ -21,6 +21,9 @@ import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/paper-styles/default-theme';
 import '@polymer/paper-styles/typography';
 import '@polymer/paper-styles/paper-styles';
+// import './libs/Templates.js';
+// import './libs/Utils.js';
+import '../../helper-elements/loading-overlay';
 let HfApp = class HfApp extends DeclarativeEventListeners(PolymerElement) {
     constructor() {
         super(...arguments);
@@ -117,8 +120,8 @@ let HfApp = class HfApp extends DeclarativeEventListeners(PolymerElement) {
     _focusUrlInput() {
         this.$.resource.focus();
     }
-    showOperationForm(e) {
-        if (e.detail.operation.requiresInput == false) {
+    howOperationForm(e) {
+        if (e.detail.operation.requiresInput === false) {
             e.detail.operation.invoke();
         }
         else {
@@ -152,7 +155,7 @@ __decorate([
     property({ type: String, notify: true })
 ], HfApp.prototype, "state", void 0);
 __decorate([
-    property({ type: Boolean })
+    property({ type: Boolean, readOnly: true })
 ], HfApp.prototype, "isLoading", void 0);
 __decorate([
     computed('model')

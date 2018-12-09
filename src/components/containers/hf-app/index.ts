@@ -1,13 +1,14 @@
-import {customElement, computed, property, listen} from '@polymer/decorators';
-import {DeclarativeEventListeners} from '@polymer/decorators/lib/declarative-event-listeners.js';
-import {Debouncer} from '@polymer/polymer/lib/utils/debounce';
-import {microTask} from '@polymer/polymer/lib/utils/async';
-import {IHydraResource} from 'alcaeus/types/Resources';
+import { computed, customElement, listen, property } from '@polymer/decorators'
+import { DeclarativeEventListeners } from '@polymer/decorators/lib/declarative-event-listeners.js'
+import { microTask } from '@polymer/polymer/lib/utils/async'
+import { Debouncer } from '@polymer/polymer/lib/utils/debounce'
+import { IHydraResource } from 'alcaeus/types/Resources'
 
-import {PolymerElement, html} from '@polymer/polymer/polymer-element';
+import { html, PolymerElement } from '@polymer/polymer/polymer-element'
 import css from './style.pcss'
 import template from './template.html'
 
+import { PaperInputElement } from '@polymer/paper-input/paper-input'
 import '@polymer/paper-input/paper-input'
 import '@polymer/app-layout'
 import '@polymer/iron-pages/iron-pages'
@@ -15,39 +16,38 @@ import '@polymer/iron-icons/iron-icons'
 import '@polymer/iron-icon/iron-icon'
 import '@polymer/iron-icons/av-icons'
 import '@polymer/paper-icon-button/paper-icon-button'
-import '@polymer/paper-styles/default-theme';
-import '@polymer/paper-styles/typography';
-import '@polymer/paper-styles/paper-styles';
+import '@polymer/paper-styles/default-theme'
+import '@polymer/paper-styles/typography'
+import '@polymer/paper-styles/paper-styles'
 
 // import './libs/Templates.js';
 // import './libs/Utils.js';
-//
-// import './helper-elements/loading-overlay';
+
+import '../../helper-elements/loading-overlay'
 // import 'bower:ld-navigation/ld-navigation.html';
-type ConsoleState = 'ready' | 'loaded' | 'error' | 'operation';
+type ConsoleState = 'ready' | 'loaded' | 'error' | 'operation'
 
 @customElement('hf-app')
 export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
-
   @property({ type: Object })
-  model: IHydraResource = null;
+  public model: IHydraResource = null
 
   @property({ type: String })
-  url: string;
+  public url: string
 
   @property({ type: Object })
-  currentModel: IHydraResource;
+  public currentModel: IHydraResource
 
   @property({ type: Object, readOnly: true })
-  readonly lastError: Error;
+  public readonly lastError: Error
 
   @property({ type: String, notify: true })
-  state: ConsoleState = 'ready';
+  public state: ConsoleState = 'ready'
 
-  @property({ type: Boolean })
-  readonly isLoading: boolean = false;
+  @property({ type: Boolean, readOnly: true })
+  private readonly isLoading: boolean = false
 
-  _prevState: ConsoleState;
+  private _prevState: ConsoleState
 
   @computed('model')
   get hasApiDocumentation() {
@@ -55,136 +55,135 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
   }
 
   @computed('*')
-  get urlInput(): PaperInput {
-    return this.$.resource;
+  get urlInput(): PaperInputElement {
+    return this.$.resource as PaperInputElement
   }
 
-  hasPreviousModel(_modelHistory: any) {
-    return _modelHistory.base.length > 0;
+  public hasPreviousModel(_modelHistory: any) {
+    return _modelHistory.base.length > 0
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  public connectedCallback() {
+    super.connectedCallback()
     // Polymer.importHref('dist/entrypoint-selector.html');
   }
 
-  showDocs() {
-    this.$.documentation.open();
+  public showDocs() {
+    this.$.documentation.open()
   }
 
-  load() {
-    this._setIsLoading(true);
+  public load() {
+    this._setIsLoading(true)
     // LdNavigation.Helpers.fireNavigation(this, this.$.resource.value);
   }
 
   loadResource(value: string) {
     Polymer.importHref('dist/entrypoint-selector.html', async () => {
       try {
-        const hr = await Hypermedia.Hydra.loadResource(value);
-        const res = hr.root;
+        const hr = await Hypermedia.Hydra.loadResource(value)
+        const res = hr.root
 
-        this.model = res;
-        this.currentModel = res;
-        this.state = 'loaded';
-        this._setIsLoading(false);
+        this.model = res
+        this.currentModel = res
+        this.state = 'loaded'
+        this._setIsLoading(false)
 
-        this._loadOutlineElement();
-      } catch(err) {
-        this._setLastError(err);
-        this.state = 'error';
-        this._setIsLoading(false);
-        console.error(err);
+        this._loadOutlineElement()
+      } catch (err) {
+        this._setLastError(err)
+        this.state = 'error'
+        this._setIsLoading(false)
+        console.error(err)
       }
-    });
+    })
   }
 
-  _loadOutlineElement() {
+  private _loadOutlineElement() {
     // Polymer.importHref('dist/menus/side-menu.html');
   }
 
-  urlChanged(e: CustomEvent) {
+  private urlChanged(e: CustomEvent) {
     Debouncer.debounce(
       null,
       microTask,
       () => {
         if (e.detail.value !== '/') {
-          this.$.resource.value = e.detail.value;
+          this.$.resource.value = e.detail.value
           if (!this.$.resource.invalid) {
-            this._setIsLoading(true);
-            this.loadResource(this.$.resource.value);
+            this._setIsLoading(true)
+            this.loadResource(this.$.resource.value)
           }
         }
-      });
+      })
   }
 
-  loadOnEnter(e: KeyboardEvent) {
+  private loadOnEnter(e: KeyboardEvent) {
     if (e.keyCode === 13) {
-      this.load();
+      this.load()
     }
   }
 
   @computed('currentModel')
-  get displayedModel (): IHydraResource {
-    return this.currentModel.collection || this.currentModel;
+  get displayedModel(): IHydraResource {
+    return this.currentModel.collection || this.currentModel
   }
 
-  showModel(ev: CustomEvent) {
-    this.push('_modelHistory', this.currentModel);
-    this.currentModel = ev.detail;
+  public showModel(ev: CustomEvent) {
+    this.push('_modelHistory', this.currentModel)
+    this.currentModel = ev.detail
   }
 
-  _loadDocElements(e: CustomEvent) {
-    if(e.detail.value === true) {
+  private _loadDocElements(e: CustomEvent) {
+    if (e.detail.value === true) {
       // Polymer.importHref('dist/api-documentation/viewer.html');
     }
   }
 
   @listen('show-class-documentation', document)
-  showDocumentation(e: CustomEvent) {
+  public showDocumentation(e: CustomEvent) {
     Polymer.importHref('dist/api-documentation/viewer.html', () => {
-      this.$.apiDocumentation.selectClass(e.detail.classId);
-      this.showDocs();
-    });
+      this.$.apiDocumentation.selectClass(e.detail.classId)
+      this.showDocs()
+    })
 
-    e.stopPropagation();
+    e.stopPropagation()
   }
 
-
   @listen('show-inline-resource', document)
-  showResource(e: CustomEvent) {
-    this.currentModel = e.detail.resource;
+  public showResource(e: CustomEvent) {
+    this.currentModel = e.detail.resource
   }
 
   @listen('show-resource-json', document)
-  showResourceJson(e: CustomEvent) {
+  public showResourceJson(e: CustomEvent) {
     Polymer.importHref('dist/resource-views/resource-json.html', () => {
-      this.$.source.resource = e.detail.resource;
-      this.$.source.show();
-    });
+      this.$.source.resource = e.detail.resource
+      this.$.source.show()
+    })
   }
 
-  _focusUrlInput() {
-    this.$.resource.focus();
+  private _focusUrlInput() {
+    this.$.resource.focus()
   }
 
-  showOperationForm(e: CustomEvent) {
-    if (e.detail.operation.requiresInput == false) {
-      e.detail.operation.invoke();
+  private howOperationForm(e: CustomEvent) {
+    if (e.detail.operation.requiresInput === false) {
+      e.detail.operation.invoke()
     } else {
-      this._prevState = this.state;
-      this.state = 'operation';
+      this._prevState = this.state
+      this.state = 'operation'
     }
   }
 
-  hideOperationForm() {
-    this.state = this._prevState || 'ready';
+  public hideOperationForm() {
+    this.state = this._prevState || 'ready'
   }
 
-  executeOperation() {
-    alert('op');
+  private executeOperation() {
+    alert('op')
   }
 
   static get template() {
-    return html([`<style>${css}</style> ${template}`]);
+    return html([`<style>${css}</style> ${template}`])
   }
 }
