@@ -1,0 +1,88 @@
+<ld-navigator on-resource-url-changed="urlChanged" use-hash-fragment></ld-navigator>
+
+<app-drawer-layout>
+  <app-drawer slot="drawer" swipe-open>
+    <app-toolbar class="medium-tall">
+      <div class="title">Options</div>
+    </app-toolbar>
+
+    <app-toolbar>
+      <entrypoint-selector class="middle" url="{{url}}" on-url-changed="_focusUrlInput">
+        <span data-url="http://wikibus-test.gear.host/">Bus encyclopedia</span>
+        <span data-url="http://www.markus-lanthaler.com/hydra/api-demo/">Hydra demo API</span>
+      </entrypoint-selector>
+    </app-toolbar>
+
+    <side-menu resource="[[currentModel]]"></side-menu>
+  </app-drawer>
+
+  <app-drawer id="documentation" align="end" slot="drawer" swipe-open on-opened-changed="_loadDocElements">
+    <app-toolbar>
+      <div class="title">Documentation</div>
+    </app-toolbar>
+    <div id="api-docs-container">
+      <api-documentation-viewer id="apiDocumentation" api-docs="[[model.apiDocumentation]]"
+                                model-types="[[currentModel.types]]"></api-documentation-viewer>
+    </div>
+  </app-drawer>
+
+  <app-header-layout>
+    <app-header slot="header" fixed>
+      <app-toolbar>
+        <div main-title>
+          Hydra Console
+        </div>
+        <paper-icon-button icon="icons:help-outline"
+                           hidden$="[[!hasApiDocumentation]]"
+                           on-tap="showDocs"></paper-icon-button>
+      </app-toolbar>
+
+      <app-toolbar>
+        <paper-input main-title id="resource" class="middle" label="address"
+                     pattern="^https?://.*" no-label-float auto-validate
+                     invalid="{{addressInvalid}}"
+                     value="{{url}}"
+                     on-keydown="loadOnEnter">
+          <iron-icon slot="prefix" icon="icons:language"></iron-icon>
+        </paper-input>
+        <iron-a11y-keys target="[[urlInput]]" keys="enter" on-keys-pressed="onEnter"></iron-a11y-keys>
+        <paper-icon-button class="middle" icon="av:play-circle-filled" disabled="[[addressInvalid]]"
+                           on-tap="load"></paper-icon-button>
+      </app-toolbar>
+    </app-header>
+
+    <iron-pages attr-for-selected="data-state" selected$="[[state]]">
+      <div data-state="ready">
+        Hello
+      </div>
+
+      <div data-state="loaded">
+        <iron-meta key="apiDocs" value="[[displayedModel.apiDocumentation]]"></iron-meta>
+        <lit-view value="[[displayedModel]]" ignore-missing></lit-view>
+
+        <operation-selector operations="[[displayedModel.operations]]" on-operation-selected="showOperationForm"
+                            operation="{{operation}}"></operation-selector>
+      </div>
+
+      <div data-state="operation">
+        <ags-hydra-adapter id="hydraAdapter" contract="{{contract}}"
+                           operation="[[operation]]"></ags-hydra-adapter>
+        <ags-form contract="{{contract}}"></ags-form>
+
+        <paper-button on-tap="hideOperationForm">Cancel</paper-button>
+        <paper-button on-tap="executeOperation">Submit</paper-button>
+      </div>
+
+      <div data-state="error">
+        An error occurred:
+        <p>[[lastError]]</p>
+      </div>
+    </iron-pages>
+
+    <loading-overlay opened="[[isLoading]]">
+      <mat-spinner showed></mat-spinner>
+    </loading-overlay>
+  </app-header-layout>
+</app-drawer-layout>
+
+<resource-json id="source"></resource-json>
