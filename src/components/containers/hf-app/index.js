@@ -18,12 +18,16 @@ import '@polymer/iron-icons/iron-icons';
 import '@polymer/iron-icon/iron-icon';
 import '@polymer/iron-icons/av-icons';
 import '@polymer/paper-icon-button/paper-icon-button';
+import '@polymer/paper-spinner/paper-spinner';
 import '@polymer/paper-styles/default-theme';
 import '@polymer/paper-styles/typography';
 import '@polymer/paper-styles/paper-styles';
+import { Hydra } from 'alcaeus';
 // import './libs/Templates.js';
 // import './libs/Utils.js';
 import '../../helper-elements/loading-overlay';
+// import 'bower:ld-navigation/ld-navigation.html';
+import { Helpers } from 'LdNavigation/ld-navigation';
 let HfApp = class HfApp extends DeclarativeEventListeners(PolymerElement) {
     constructor() {
         super(...arguments);
@@ -37,38 +41,37 @@ let HfApp = class HfApp extends DeclarativeEventListeners(PolymerElement) {
     get urlInput() {
         return this.$.resource;
     }
-    hasPreviousModel(_modelHistory) {
-        return _modelHistory.base.length > 0;
+    hasPreviousModel(modelHistory) {
+        return modelHistory.base.length > 0;
     }
     connectedCallback() {
         super.connectedCallback();
-        // Polymer.importHref('dist/entrypoint-selector.html');
+        import('../../entrypoint-selector');
     }
     showDocs() {
         this.$.documentation.open();
     }
     load() {
         this._setIsLoading(true);
-        // LdNavigation.Helpers.fireNavigation(this, this.$.resource.value);
+        Helpers.fireNavigation(this, this.$.resource.value);
     }
-    loadResource(value) {
-        Polymer.importHref('dist/entrypoint-selector.html', async () => {
-            try {
-                const hr = await Hypermedia.Hydra.loadResource(value);
-                const res = hr.root;
-                this.model = res;
-                this.currentModel = res;
-                this.state = 'loaded';
-                this._setIsLoading(false);
-                this._loadOutlineElement();
-            }
-            catch (err) {
-                this._setLastError(err);
-                this.state = 'error';
-                this._setIsLoading(false);
-                console.error(err);
-            }
-        });
+    async loadResource(value) {
+        await import('../../entrypoint-selector');
+        try {
+            const hr = await Hydra.loadResource(value);
+            const res = hr.root;
+            this.model = res;
+            this.currentModel = res;
+            this.state = 'loaded';
+            this._setIsLoading(false);
+            this._loadOutlineElement();
+        }
+        catch (err) {
+            this._setLastError(err);
+            this.state = 'error';
+            this._setIsLoading(false);
+            console.error(err);
+        }
     }
     _loadOutlineElement() {
         // Polymer.importHref('dist/menus/side-menu.html');
@@ -125,12 +128,12 @@ let HfApp = class HfApp extends DeclarativeEventListeners(PolymerElement) {
             e.detail.operation.invoke();
         }
         else {
-            this._prevState = this.state;
+            this.prevState = this.state;
             this.state = 'operation';
         }
     }
     hideOperationForm() {
-        this.state = this._prevState || 'ready';
+        this.state = this.prevState || 'ready';
     }
     executeOperation() {
         alert('op');

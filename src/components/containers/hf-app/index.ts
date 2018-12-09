@@ -16,15 +16,19 @@ import '@polymer/iron-icons/iron-icons'
 import '@polymer/iron-icon/iron-icon'
 import '@polymer/iron-icons/av-icons'
 import '@polymer/paper-icon-button/paper-icon-button'
+import '@polymer/paper-spinner/paper-spinner'
 import '@polymer/paper-styles/default-theme'
 import '@polymer/paper-styles/typography'
 import '@polymer/paper-styles/paper-styles'
 
+import {Hydra} from 'alcaeus'
 // import './libs/Templates.js';
 // import './libs/Utils.js';
 
 import '../../helper-elements/loading-overlay'
 // import 'bower:ld-navigation/ld-navigation.html';
+import {Helpers} from 'LdNavigation/ld-navigation'
+
 type ConsoleState = 'ready' | 'loaded' | 'error' | 'operation'
 
 @customElement('hf-app')
@@ -47,7 +51,7 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
   @property({ type: Boolean, readOnly: true })
   private readonly isLoading: boolean = false
 
-  private _prevState: ConsoleState
+  private prevState: ConsoleState
 
   @computed('model')
   get hasApiDocumentation() {
@@ -59,13 +63,13 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
     return this.$.resource as PaperInputElement
   }
 
-  public hasPreviousModel(_modelHistory: any) {
-    return _modelHistory.base.length > 0
+  public hasPreviousModel(modelHistory: any) {
+    return modelHistory.base.length > 0
   }
 
   public connectedCallback() {
     super.connectedCallback()
-    // Polymer.importHref('dist/entrypoint-selector.html');
+    import('../../entrypoint-selector')
   }
 
   public showDocs() {
@@ -74,28 +78,28 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
 
   public load() {
     this._setIsLoading(true)
-    // LdNavigation.Helpers.fireNavigation(this, this.$.resource.value);
+    Helpers.fireNavigation(this, this.$.resource.value)
   }
 
-  loadResource(value: string) {
-    Polymer.importHref('dist/entrypoint-selector.html', async () => {
-      try {
-        const hr = await Hypermedia.Hydra.loadResource(value)
-        const res = hr.root
+  private async loadResource(value: string) {
+    await import('../../entrypoint-selector')
 
-        this.model = res
-        this.currentModel = res
-        this.state = 'loaded'
-        this._setIsLoading(false)
+    try {
+      const hr = await Hydra.loadResource(value)
+      const res = hr.root
 
-        this._loadOutlineElement()
-      } catch (err) {
-        this._setLastError(err)
-        this.state = 'error'
-        this._setIsLoading(false)
-        console.error(err)
-      }
-    })
+      this.model = res
+      this.currentModel = res
+      this.state = 'loaded'
+      this._setIsLoading(false)
+
+      this._loadOutlineElement()
+    } catch (err) {
+      this._setLastError(err)
+      this.state = 'error'
+      this._setIsLoading(false)
+      console.error(err)
+    }
   }
 
   private _loadOutlineElement() {
@@ -170,13 +174,13 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
     if (e.detail.operation.requiresInput === false) {
       e.detail.operation.invoke()
     } else {
-      this._prevState = this.state
+      this.prevState = this.state
       this.state = 'operation'
     }
   }
 
   public hideOperationForm() {
-    this.state = this._prevState || 'ready'
+    this.state = this.prevState || 'ready'
   }
 
   private executeOperation() {

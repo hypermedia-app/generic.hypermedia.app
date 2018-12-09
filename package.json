@@ -76,6 +76,7 @@
     "xo": "0.23.0"
   },
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@polymer/app-layout": "3.0.2",
     "@polymer/decorators": "3.0.0",
     "@polymer/iron-icons": "3.0.1",
@@ -83,9 +84,13 @@
     "@polymer/iron-pages": "3.0.1",
     "@polymer/paper-icon-button": "3.0.1",
     "@polymer/paper-input": "3",
+    "@polymer/paper-spinner": "3.0.1",
     "@polymer/paper-styles": "3.0.1",
     "@polymer/polymer": "3.1.0",
+    "@vaadin/vaadin-combo-box": "4.2.0",
     "@webcomponents/webcomponentsjs": "2.2.0",
-    "alcaeus": "0.4.4-a1"
+    "LdNavigation": "git+https://github.com/tpluscode/ld-navigation.git",
+    "alcaeus": "0.4.4-a1",
+    "core-decorators": "0.20.0"
   }
 }
