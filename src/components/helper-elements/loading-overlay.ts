@@ -1,11 +1,9 @@
-// import 'bower:mat-elements/mat-spinner.html'
-
 import { computed, customElement, listen, property } from '@polymer/decorators'
 import { IronOverlayBehavior } from '@polymer/iron-overlay-behavior/iron-overlay-behavior.js'
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js'
 import { html, PolymerElement } from '@polymer/polymer/polymer-element'
 
-@customElement('loding-overlay')
+@customElement('loading-overlay')
 export default class LoadingOverlay extends mixinBehaviors(IronOverlayBehavior, PolymerElement) {
   @property({ type: Boolean, readOnly: true })
   public readonly withBackdrop = true

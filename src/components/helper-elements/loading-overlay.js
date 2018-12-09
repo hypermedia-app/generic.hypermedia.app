@@ -1,4 +1,3 @@
-// import 'bower:mat-elements/mat-spinner.html'
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,6 +37,6 @@ __decorate([
     property({ type: Boolean, readOnly: true })
 ], LoadingOverlay.prototype, "autoFitOnAttach", void 0);
 LoadingOverlay = __decorate([
-    customElement('loding-overlay')
+    customElement('loading-overlay')
 ], LoadingOverlay);
 export default LoadingOverlay;

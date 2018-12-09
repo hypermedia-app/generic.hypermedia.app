@@ -1,0 +1,8 @@
+<vaadin-combo-box id="classSelect" label="Supported Class" item-value-path="id" item-label-path="title"
+                  items="[[apiDocs.classes]]" selected-item="{{selectedClass}}">
+</vaadin-combo-box>
+
+<supported-class-view supported-class="{{selectedClass}}" hidden$="[[!classFound]]"
+                      on-class-selected="onClassSelected"></supported-class-view>
+
+<paper-toast id="toast" text="Class not found" duration="0" on-tap="closeToast"></paper-toast>

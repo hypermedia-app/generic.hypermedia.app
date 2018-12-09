@@ -1,0 +1,34 @@
+<mat-list>
+  <mat-item label="[[_getPath(resourceId)]]" on-xp-activate="_goUp">
+    <dom-if if="[[!_hasHistory]]">
+      <template>
+        <mat-avatar icon-src="https://www.w3.org/RDF/icons/rdf_flyer.svg" slot="primary" alt="rdf"></mat-avatar>
+      </template>
+    </dom-if>
+    <dom-if if="[[_hasHistory]]">
+      <template>
+        <paper-icon-button icon="arrow-back" slot="primary"></paper-icon-button>
+      </template>
+    </dom-if>
+    <paper-icon-button icon="code" slot="secondary" on-tap="_showSource"></paper-icon-button>
+  </mat-item>
+
+  <mat-divider></mat-divider>
+
+  <dom-repeat items="[[currentProperties]]">
+    <template>
+      <mat-item label="[[_getPath(item.id)]]" data="[[item.property]]" on-xp-activate="_changeResource">
+        <property-label resource="[[resource]]" property-id="[[item.property]]"></property-label>
+      </mat-item>
+    </template>
+  </dom-repeat>
+
+  <dom-if if="[[resource.collection]]">
+    <template>
+      <mat-item label="[[_getPath(resource.collection.id)]]" data="collection" on-xp-activate="_changeResource">
+        <span>Collection</span>
+      </mat-item>
+    </template>
+  </dom-if>
+</mat-list>
+

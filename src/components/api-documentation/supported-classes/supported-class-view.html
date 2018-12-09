@@ -1,0 +1,42 @@
+<paper-tabs id="classTabs" selected="{{classTab}}">
+    <paper-tab>Description</paper-tab>
+    <paper-tab>Properties</paper-tab>
+    <paper-tab>Operations</paper-tab>
+</paper-tabs>
+
+<paper-card>
+    <div class="card-content">
+        <iron-pages selected="{{classTab}}">
+            <p>
+                [[supportedClass.description]]
+            </p>
+
+            <div>
+                <div hidden$="[[!hasProperties]]">
+                    <vaadin-combo-box label="Supported Property" item-value-path="id" item-label-path="title"
+                                      items="[[supportedClass.supportedProperties]]"
+                                      selected-item="{{selectedProperty}}"
+                                      id="supportedProperties">
+                    </vaadin-combo-box>
+
+                    <supported-property-view supported-property="[[selectedProperty]]"
+                                             hidden$="[[!propertyIsSelected]]"></supported-property-view>
+                </div>
+                <div hidden$="[[hasProperties]]">
+                    No supported properties do display
+                </div>
+            </div>
+
+            <div>
+                <div hidden$="[[!hasOperations]]">
+                    <supported-operations-viewer id="operations"
+                                                 supported-operations="[[supportedClass.supportedOperations]]"></supported-operations-viewer>
+                </div>
+
+                <div hidden$="[[hasOperations]]">
+                    No supported operations do display
+                </div>
+            </div>
+        </iron-pages>
+    </div>
+</paper-card>

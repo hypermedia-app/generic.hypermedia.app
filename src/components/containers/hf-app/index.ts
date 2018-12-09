@@ -5,34 +5,50 @@ import { Debouncer } from '@polymer/polymer/lib/utils/debounce'
 import { IHydraResource } from 'alcaeus/types/Resources'
 
 import { html, PolymerElement } from '@polymer/polymer/polymer-element'
+import {Hydra} from 'alcaeus'
 import css from './style.pcss'
 import template from './template.html'
 
-import { PaperInputElement } from '@polymer/paper-input/paper-input'
-import '@polymer/paper-input/paper-input'
 import '@polymer/app-layout'
-import '@polymer/iron-pages/iron-pages'
-import '@polymer/iron-icons/iron-icons'
 import '@polymer/iron-icon/iron-icon'
 import '@polymer/iron-icons/av-icons'
+import '@polymer/iron-icons/iron-icons'
+import '@polymer/iron-pages/iron-pages'
 import '@polymer/paper-icon-button/paper-icon-button'
+import '@polymer/paper-input/paper-input'
+import { PaperInputElement } from '@polymer/paper-input/paper-input'
 import '@polymer/paper-spinner/paper-spinner'
 import '@polymer/paper-styles/default-theme'
-import '@polymer/paper-styles/typography'
 import '@polymer/paper-styles/paper-styles'
+import '@polymer/paper-styles/typography'
 
-import {Hydra} from 'alcaeus'
-// import './libs/Templates.js';
-// import './libs/Utils.js';
-
-import '../../helper-elements/loading-overlay'
-// import 'bower:ld-navigation/ld-navigation.html';
 import {Helpers} from 'LdNavigation/ld-navigation'
+import '../../helper-elements/loading-overlay'
 
 type ConsoleState = 'ready' | 'loaded' | 'error' | 'operation'
 
 @customElement('hf-app')
 export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
+
+  @computed('model')
+  get hasApiDocumentation() {
+    return !!this.model && !!this.model.apiDocumentation
+  }
+
+  @computed('*')
+  get urlInput(): PaperInputElement {
+    return this.$.resource as PaperInputElement
+  }
+
+  @computed('currentModel')
+  get displayedModel(): IHydraResource {
+    return this.currentModel.collection || this.currentModel
+  }
+
+  static get template() {
+    return html([`<style>${css}</style> ${template}`])
+  }
+
   @property({ type: Object })
   public model: IHydraResource = null
 
@@ -48,20 +64,10 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
   @property({ type: String, notify: true })
   public state: ConsoleState = 'ready'
 
-  @property({ type: Boolean, readOnly: true })
+  @property({ type: Boolean, readOnly: true, notify: true })
   private readonly isLoading: boolean = false
 
   private prevState: ConsoleState
-
-  @computed('model')
-  get hasApiDocumentation() {
-    return !!this.model && !!this.model.apiDocumentation
-  }
-
-  @computed('*')
-  get urlInput(): PaperInputElement {
-    return this.$.resource as PaperInputElement
-  }
 
   public hasPreviousModel(modelHistory: any) {
     return modelHistory.base.length > 0
@@ -79,6 +85,38 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
   public load() {
     this._setIsLoading(true)
     Helpers.fireNavigation(this, this.$.resource.value)
+  }
+
+  public showModel(ev: CustomEvent) {
+    this.push('_modelHistory', this.currentModel)
+    this.currentModel = ev.detail
+  }
+
+  @listen('show-class-documentation', document)
+  public async showDocumentation(e: CustomEvent) {
+    await import('../../api-documentation/viewer/viewer')
+
+    this.$.apiDocumentation.selectClass(e.detail.classId)
+    this.showDocs()
+
+    e.stopPropagation()
+  }
+
+  @listen('show-inline-resource', document)
+  public showResource(e: CustomEvent) {
+    this.currentModel = e.detail.resource
+  }
+
+  @listen('show-resource-json', document)
+  public async showResourceJson(e: CustomEvent) {
+    await import('../../resource-views/resource-json')
+
+    this.$.source.resource = e.detail.resource
+    this.$.source.show()
+  }
+
+  public hideOperationForm() {
+    this.state = this.prevState || 'ready'
   }
 
   private async loadResource(value: string) {
@@ -103,7 +141,7 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
   }
 
   private _loadOutlineElement() {
-    // Polymer.importHref('dist/menus/side-menu.html');
+    import('../../side-menu/side-menu')
   }
 
   private urlChanged(e: CustomEvent) {
@@ -127,43 +165,10 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
     }
   }
 
-  @computed('currentModel')
-  get displayedModel(): IHydraResource {
-    return this.currentModel.collection || this.currentModel
-  }
-
-  public showModel(ev: CustomEvent) {
-    this.push('_modelHistory', this.currentModel)
-    this.currentModel = ev.detail
-  }
-
   private _loadDocElements(e: CustomEvent) {
     if (e.detail.value === true) {
-      // Polymer.importHref('dist/api-documentation/viewer.html');
+      import('../../api-documentation/viewer/viewer')
     }
-  }
-
-  @listen('show-class-documentation', document)
-  public showDocumentation(e: CustomEvent) {
-    Polymer.importHref('dist/api-documentation/viewer.html', () => {
-      this.$.apiDocumentation.selectClass(e.detail.classId)
-      this.showDocs()
-    })
-
-    e.stopPropagation()
-  }
-
-  @listen('show-inline-resource', document)
-  public showResource(e: CustomEvent) {
-    this.currentModel = e.detail.resource
-  }
-
-  @listen('show-resource-json', document)
-  public showResourceJson(e: CustomEvent) {
-    Polymer.importHref('dist/resource-views/resource-json.html', () => {
-      this.$.source.resource = e.detail.resource
-      this.$.source.show()
-    })
   }
 
   private _focusUrlInput() {
@@ -179,15 +184,7 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
     }
   }
 
-  public hideOperationForm() {
-    this.state = this.prevState || 'ready'
-  }
-
   private executeOperation() {
     alert('op')
-  }
-
-  static get template() {
-    return html([`<style>${css}</style> ${template}`])
   }
 }
