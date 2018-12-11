@@ -1,4 +1,4 @@
-import { HydraResource, ISupportedProperty } from 'alcaeus/types/Resources'
+import { HydraResource } from 'alcaeus/types/Resources'
 
 // import 'bower:mat-elements/mat-list.html'
 
@@ -12,10 +12,10 @@ class EntrypointMenu extends PolymerElement {
   public entrypoint: HydraResource
 
   @computed('entrypoint')
-  get links(): ISupportedProperty[] {
+  get links() {
     return this.entrypoint.apiDocumentation
       .getProperties(this.entrypoint.types[0])
-      .filter((sp: ISupportedProperty) => {
+      .filter((sp) => {
         return sp.property.types.indexOf('http://www.w3.org/ns/hydra/core#Link') !== -1
       })
   }

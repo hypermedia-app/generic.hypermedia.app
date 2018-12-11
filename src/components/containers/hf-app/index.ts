@@ -46,7 +46,7 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
   }
 
   static get template() {
-    return html([`<style>${css}</style> ${template}`])
+    return html([`<style>${css}</style> ${template}`] as TemplateStringsArray)
   }
 
   @property({ type: Object })
@@ -136,7 +136,6 @@ export default class HfApp extends DeclarativeEventListeners(PolymerElement) {
       this._setLastError(err)
       this.state = 'error'
       this._setIsLoading(false)
-      console.error(err)
     }
   }
 

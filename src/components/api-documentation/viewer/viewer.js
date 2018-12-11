@@ -19,14 +19,14 @@ let ApiDocumentationViewer = class ApiDocumentationViewer extends PolymerElement
     get classFound() {
         return !!this.selectedClass;
     }
-    selectClass(classId) {
+    selectClassById(classId) {
         if (!this.apiDocs || !this.apiDocs.classes) {
             return;
         }
         const clazz = this.apiDocs.classes.find((c) => {
             return c.id === classId;
         });
-        selectClass.call(this, clazz);
+        this.selectClass(clazz);
     }
     selectCurrentClass(apiDocs, types) {
         if (!apiDocs || !apiDocs.classes) {
@@ -35,7 +35,7 @@ let ApiDocumentationViewer = class ApiDocumentationViewer extends PolymerElement
         const clazz = apiDocs.classes.find((c) => {
             return types.some((t) => c.id === t);
         });
-        selectClass.call(this, clazz);
+        this.selectClass(clazz);
     }
     isCurrent(typeId) {
         return this.modelTypes.some((t) => {
@@ -48,6 +48,20 @@ let ApiDocumentationViewer = class ApiDocumentationViewer extends PolymerElement
     }
     closeToast() {
         this.$.toast.close();
+    }
+    selectClass(clas) {
+        if (typeof clas === 'string') {
+            this.selectClassById(clas);
+        }
+        this.selectedClass = clas;
+        if (!clas) {
+            this.$.toast.open();
+            this.$.classSelect.value = null;
+        }
+        else {
+            this.$.toast.close();
+            this.$.classSelect.value = clas.id;
+        }
     }
     static get template() {
         return html([`<style>${style}</style> ${template}`]);
@@ -71,14 +85,3 @@ __decorate([
 ApiDocumentationViewer = __decorate([
     customElement('api-documentation-viewer')
 ], ApiDocumentationViewer);
-function selectClass(clas) {
-    this.selectedClass = clas;
-    if (!clas) {
-        this.$.toast.open();
-        this.$.classSelect.value = null;
-    }
-    else {
-        this.$.toast.close();
-        this.$.classSelect.value = clas.id;
-    }
-}

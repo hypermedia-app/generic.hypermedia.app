@@ -14,10 +14,10 @@ let SideMenu = class SideMenu extends PolymerElement {
     _getEntrypoint(resource) {
         resource.apiDocumentation.loadEntrypoint()
             .then((entrypoint) => {
-            this._setEntrypoint(entrypoint.root);
+            this._setProperty('entrypoint', entrypoint.root);
         })
             .catch(() => {
-            this._setEntrypoint({});
+            this._setProperty('entrypoint', {});
         });
     }
     static get template() {

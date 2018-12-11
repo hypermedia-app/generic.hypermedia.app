@@ -33,7 +33,7 @@ export class ResourceOutline extends PolymerElement {
   public readonly hasHistory = false
 
   @computed('resource')
-  public get currentProperties(): string[] {
+  public get currentProperties() {
     const enumerableProperties = Object.entries(this.resource)
       .filter((entry) => entry[1]['@id'] || Array.isArray(entry[1]))
       .map((entry) => {
@@ -62,24 +62,24 @@ export class ResourceOutline extends PolymerElement {
 
   @observe()
   public _rootChanged(rootResource: IHydraResource) {
-    this._setResource(rootResource)
+    this._setProperty('resource', rootResource)
   }
 
   public _changeResource(e: CustomEvent) {
     const property = e.target.data
     this.history.push(this.resource)
-    this._setResource(this.resource[property])
-    this._setHasHistory(true)
+    this._setProperty('resource', this.resource[property])
+    this._setProperty('hasHistory', true)
   }
 
   public _goUp() {
-    const previous = this._history.pop()
+    const previous = this.history.pop()
 
     if (previous) {
-      this._setResource(previous)
+      this._setProperty('resource', previous)
     }
 
-    this._setHasHistory(this.history.length > 0)
+    this._setProperty('hasHistory', this.history.length > 0)
   }
 
   public _showSource() {
@@ -93,6 +93,6 @@ export class ResourceOutline extends PolymerElement {
   }
 
   static get template() {
-    return html([`${template}`])
+    return html([`${template}`] as any)
   }
 }

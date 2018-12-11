@@ -16,7 +16,7 @@ let EntrypointSelector = class EntrypointSelector extends PolymerElement {
                 value: apiEl.getAttribute('data-url'),
             };
         });
-        this._setApis(apis);
+        this._setProperty('apis', apis);
         if (apis.filter((api) => api.value === this.url)) {
             this.selector.value = this.url;
         }

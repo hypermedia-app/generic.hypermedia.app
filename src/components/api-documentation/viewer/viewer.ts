@@ -25,7 +25,7 @@ class ApiDocumentationViewer extends PolymerElement {
   @property({ type: Object })
   public selectedClass: Class
 
-  public selectClass(classId: string) {
+  public selectClassById(classId: string) {
     if (!this.apiDocs || !this.apiDocs.classes) {
       return
     }
@@ -34,7 +34,7 @@ class ApiDocumentationViewer extends PolymerElement {
       return c.id === classId
     })
 
-    selectClass.call(this, clazz)
+    this.selectClass(clazz)
   }
 
   @observe('apiDocs', 'modelTypes')
@@ -47,7 +47,7 @@ class ApiDocumentationViewer extends PolymerElement {
       return types.some((t) => c.id === t)
     })
 
-    selectClass.call(this, clazz)
+    this.selectClass(clazz)
   }
 
   public isCurrent(typeId: string) {
@@ -65,19 +65,23 @@ class ApiDocumentationViewer extends PolymerElement {
     this.$.toast.close()
   }
 
-  static get template() {
-    return html([`<style>${style}</style> ${template}`])
+  private selectClass(clas: any) {
+    if (typeof clas === 'string') {
+      this.selectClassById(clas)
+    }
+
+    this.selectedClass = clas
+
+    if (!clas) {
+      this.$.toast.open()
+      this.$.classSelect.value = null
+    } else {
+      this.$.toast.close()
+      this.$.classSelect.value = clas.id
+    }
   }
-}
 
-function selectClass(clas: Class) {
-  this.selectedClass = clas
-
-  if (!clas) {
-    this.$.toast.open()
-    this.$.classSelect.value = null
-  } else {
-    this.$.toast.close()
-    this.$.classSelect.value = clas.id
+  static get template() {
+    return html([`<style>${style}</style> ${template}`] as any)
   }
 }

@@ -36,8 +36,10 @@
   },
   "devDependencies": {
     "@babel/core": "7.1.6",
+    "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-object-rest-spread": "7.0.0",
     "@babel/preset-env": "7.1.6",
+    "@types/lodash.flatten": "4.4.4",
     "autoprefixer": "9.4.2",
     "babel-loader": "8.0.4",
     "clean-webpack-plugin": "1.0.0",
@@ -76,7 +78,6 @@
     "xo": "0.23.0"
   },
   "dependencies": {
-    "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@polymer/app-layout": "3.0.2",
     "@polymer/decorators": "3.0.0",
     "@polymer/iron-icons": "3.0.1",
@@ -96,6 +97,7 @@
     "@webcomponents/webcomponentsjs": "2.2.0",
     "LdNavigation": "git+https://github.com/tpluscode/ld-navigation.git",
     "alcaeus": "0.4.4-a1",
-    "core-decorators": "0.20.0"
+    "core-decorators": "0.20.0",
+    "lodash.flatten": "4.4.0"
   }
 }

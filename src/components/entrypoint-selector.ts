@@ -25,7 +25,7 @@ export default class EntrypointSelector extends PolymerElement {
       }
     })
 
-    this._setApis(apis)
+    this._setProperty('apis', apis)
 
     if (apis.filter((api: any) => api.value === this.url)) {
       this.selector.value = this.url

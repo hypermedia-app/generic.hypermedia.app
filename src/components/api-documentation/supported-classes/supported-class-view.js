@@ -4,10 +4,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { computed, customElement, observe, property } from '@polymer/decorators';
+import { computed, customElement, observe, property, query } from '@polymer/decorators';
 import '@polymer/iron-pages/iron-pages';
 import '@polymer/paper-card/paper-card';
-import '@polymer/paper-tabs/paper-tabs';
 import { html, PolymerElement } from '@polymer/polymer';
 // import '../supported-operations/supported-operations-viewer'
 // import '../supported-properties/supported-property-view'
@@ -34,14 +33,14 @@ let SupportedClassView = class SupportedClassView extends PolymerElement {
     }
     connectedCallback() {
         super.connectedCallback();
-        this.$.classTabs.select(0);
+        this.classTabs.select(0);
     }
     openProperties() {
         this.$.props.toggle();
     }
     getProperties(supportedClass) {
-        this.$.supportedProperties.value = null;
-        this.$.classTabs.selected = 0;
+        this.supportedProperties.value = null;
+        this.classTabs.selected = 0;
     }
 };
 __decorate([
@@ -59,6 +58,12 @@ __decorate([
 __decorate([
     property({ type: Object })
 ], SupportedClassView.prototype, "selectedProperty", void 0);
+__decorate([
+    query('#classTabs')
+], SupportedClassView.prototype, "classTabs", void 0);
+__decorate([
+    query('#supportedProperties')
+], SupportedClassView.prototype, "supportedProperties", void 0);
 __decorate([
     observe('supportedClass')
 ], SupportedClassView.prototype, "getProperties", null);

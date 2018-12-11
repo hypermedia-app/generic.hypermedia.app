@@ -1,4 +1,3 @@
-import {IHydraResponse} from 'alcaeus/types/HydraResponse'
 import {IHydraResource} from 'alcaeus/types/Resources'
 // import 'bower:mat-elements/mat-list.html'
 // import 'bower:mat-elements/mat-sublist.html'
@@ -19,11 +18,11 @@ export default class SideMenu extends PolymerElement {
   @observe('resource')
   public _getEntrypoint(resource: IHydraResource) {
     resource.apiDocumentation.loadEntrypoint()
-      .then((entrypoint: IHydraResponse) => {
-        this._setEntrypoint(entrypoint.root)
+      .then((entrypoint: any) => {
+        this._setProperty('entrypoint', entrypoint.root)
       })
       .catch(() => {
-        this._setEntrypoint({})
+        this._setProperty('entrypoint', {})
       })
   }
 

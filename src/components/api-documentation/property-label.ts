@@ -1,9 +1,9 @@
-import '@polymer/paper-tooltip/paper-tooltip'
-
 import { computed, customElement, observe, property } from '@polymer/decorators'
+import '@polymer/paper-tooltip/paper-tooltip'
 import { html, PolymerElement } from '@polymer/polymer'
 import {HydraResource, IClass, SupportedProperty} from 'alcaeus/types/Resources'
 import {IResource} from 'alcaeus/types/Resources/Resource'
+import { flatten } from 'lodash'
 
 @customElement('property-label')
 class PropertyLabel extends PolymerElement {
@@ -28,17 +28,17 @@ class PropertyLabel extends PolymerElement {
   @observe('resource', 'propertyId')
   public getTitle(resource: HydraResource, propertyId: string) {
     if (resource && resource.apiDocumentation) {
-      const properties = resource.types.map((t: IClass) => resource.apiDocumentation.getProperties(t))
+      const properties = resource.types.map((t) => resource.apiDocumentation.getProperties(t))
 
-      const supportedProps = Utils.flatten(properties)
-      const [ supportedProp, ...tail ] = supportedProps.filter((prop: SupportedProperty) => prop.property.id === propertyId)
+      const supportedProps = flatten(properties)
+      const [ supportedProp, ...tail ] = supportedProps.filter((prop) => prop.property.id === propertyId)
 
       if (supportedProp) {
-        this._setSupportedProperty(supportedProp)
+        this._setProperty('supportedProperty', supportedProp)
         return
       }
     }
 
-    this._setSupportedProperty(propertyId)
+    this._setProperty('supportedProperty', propertyId)
   }
 }

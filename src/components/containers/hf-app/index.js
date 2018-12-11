@@ -94,7 +94,6 @@ let HfApp = class HfApp extends DeclarativeEventListeners(PolymerElement) {
             this._setLastError(err);
             this.state = 'error';
             this._setIsLoading(false);
-            console.error(err);
         }
     }
     _loadOutlineElement() {

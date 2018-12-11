@@ -48,20 +48,20 @@ let ResourceOutline = class ResourceOutline extends PolymerElement {
         }
     }
     _rootChanged(rootResource) {
-        this._setResource(rootResource);
+        this._setProperty('resource', rootResource);
     }
     _changeResource(e) {
         const property = e.target.data;
         this.history.push(this.resource);
-        this._setResource(this.resource[property]);
-        this._setHasHistory(true);
+        this._setProperty('resource', this.resource[property]);
+        this._setProperty('hasHistory', true);
     }
     _goUp() {
-        const previous = this._history.pop();
+        const previous = this.history.pop();
         if (previous) {
-            this._setResource(previous);
+            this._setProperty('resource', previous);
         }
-        this._setHasHistory(this.history.length > 0);
+        this._setProperty('hasHistory', this.history.length > 0);
     }
     _showSource() {
         this.dispatchEvent(new CustomEvent('show-resource-json', {
