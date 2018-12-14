@@ -149,7 +149,10 @@ module.exports = {
                 debug: true
               }
             ]],
-            plugins: [['@babel/plugin-syntax-object-rest-spread', {useBuiltIns: true}]]
+            plugins: [
+              ['@babel/plugin-syntax-object-rest-spread', {useBuiltIns: true}],
+              '@babel/plugin-syntax-dynamic-import'
+            ]
           }
         }
       }

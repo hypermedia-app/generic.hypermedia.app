@@ -1,5 +1,5 @@
 {
-  "name": "polymer-skeleton",
+  "name": "generic-hypermedia-app",
   "version": "1.1.4",
   "main": "src/index.js",
   "license": "MIT",
@@ -12,6 +12,7 @@
   "scripts": {
     "build": "webpack",
     "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
+    "build:stats": "webpack --env production --json > stats.json",
     "dev": "webpack-dev-server --hot --inline",
     "pretest": "yarn build",
     "test": "yarn lint && wct --npm && yarn test:lighthouse",
@@ -78,15 +79,18 @@
     "xo": "0.23.0"
   },
   "dependencies": {
-    "@polymer/app-layout": "3.0.2",
+    "@hydrofoil/hydrofoil-shell": "git+https://github.com/wikibus/hydrofoill-shell.git",
     "@polymer/decorators": "3.0.0",
+    "@polymer/iron-icon": "^3.0.1",
     "@polymer/iron-icons": "3.0.1",
-    "@polymer/iron-overlay-behavior": "3.0.2",
     "@polymer/iron-pages": "3.0.1",
     "@polymer/paper-card": "3.0.1",
     "@polymer/paper-dialog": "3.0.1",
+    "@polymer/paper-dropdown-menu": "3.0.1",
     "@polymer/paper-icon-button": "3.0.1",
     "@polymer/paper-input": "3",
+    "@polymer/paper-item": "3.0.1",
+    "@polymer/paper-listbox": "3.0.1",
     "@polymer/paper-spinner": "3.0.1",
     "@polymer/paper-styles": "3.0.1",
     "@polymer/paper-tabs": "3.0.1",
@@ -95,7 +99,6 @@
     "@polymer/polymer": "3.1.0",
     "@vaadin/vaadin-combo-box": "4.2.0",
     "@webcomponents/webcomponentsjs": "2.2.0",
-    "LdNavigation": "git+https://github.com/tpluscode/ld-navigation.git",
     "alcaeus": "0.4.4-a1",
     "core-decorators": "0.20.0",
     "lodash.flatten": "4.4.0"

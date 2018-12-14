@@ -5,12 +5,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { customElement, property, query } from '@polymer/decorators';
-import { html, PolymerElement } from '@polymer/polymer/polymer-element';
-import '@vaadin/vaadin-combo-box/vaadin-combo-box';
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
+import '@polymer/paper-item/paper-item';
+import '@polymer/paper-listbox/paper-listbox';
+import { html, PolymerElement } from '@polymer/polymer';
+import '@polymer/polymer/lib/elements/dom-repeat';
 let EntrypointSelector = class EntrypointSelector extends PolymerElement {
     ready() {
         super.ready();
-        const apis = Array.prototype.map.call(this.children, (apiEl) => {
+        const apis = Array.prototype.map.call(this.querySelectorAll('span'), (apiEl) => {
             return {
                 label: apiEl.textContent,
                 value: apiEl.getAttribute('data-url'),
@@ -23,14 +26,40 @@ let EntrypointSelector = class EntrypointSelector extends PolymerElement {
     }
     _entrypointSelected(e) {
         if (e.detail.value) {
-            this.url = e.detail.value;
+            this.url = e.detail.value.dataUrl;
         }
     }
     static get template() {
-        return html `<vaadin-combo-box id="selector"
-                                  label="Select Hydra API"
-                                  items="[[apis]]"
-                                  on-value-changed="_entrypointSelected"></vaadin-combo-box>`;
+        return html `
+<style>
+  :host {
+    display: flex;
+    pointer-events: all !important;
+
+    --paper-dropdown-menu: {
+      flex-grow: 1;
+    };
+
+    --paper-input-container-color: white;
+    --paper-input-container-input-color: white;
+    --paper-dropdown-menu-icon: {
+      color: white;
+    };
+  }
+
+  ::slotted(paper-item) {
+    display: auto;
+  }
+  </style>
+<paper-dropdown-menu id="selector" label="Select Hydra API">
+  <paper-listbox slot="dropdown-content" on-selected-item-changed="_entrypointSelected">
+    <dom-repeat items="[[apis]]" as="api">
+      <template>
+        <paper-item data-url="[[api.value]]">[[api.label]]</paper-item>
+      </template>
+    </dom-repeat>
+  </paper-listbox>
+</paper-dropdown-menu>`;
     }
 };
 __decorate([

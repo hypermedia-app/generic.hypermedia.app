@@ -37,13 +37,8 @@
   <meta property="og:image" content="/assets/icons/polymer-skeleton-192x192.png" />
 
 	<style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-      line-height: 1.5;
       overflow: hidden;
       text-rendering: geometricPrecision;
       -webkit-font-smoothing: antialiased;
@@ -56,6 +51,10 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+    }
+
+    entrypoint-selector > span {
+      display: none;
     }
 	</style>
 
@@ -103,9 +102,23 @@
 </head>
 
 <body>
-	<hf-app>
+	<hf-app show-address-bar>
     <div class="Loader">Loading...</div>
+
+    <app-toolbar slot="toolbar-left">
+      <entrypoint-selector main-title>
+        <span data-url="http://wikibus-test.gear.host/">Bus encyclopedia</span>
+        <span data-url="http://www.markus-lanthaler.com/hydra/api-demo/">Hydra demo API</span>
+      </entrypoint-selector>
+    </app-toolbar>
   </hf-app>
+
+  <script>
+    document.querySelector('entrypoint-selector')
+      .addEventListener('url-changed', function(e) {
+        document.querySelector('hf-app').url = e.detail.value
+      })
+  </script>
 
   <script defer src="<%= htmlWebpackPlugin.options.paths.webcomponents %>"></script>
 </body>

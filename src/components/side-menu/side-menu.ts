@@ -18,7 +18,7 @@ export default class SideMenu extends PolymerElement {
   @observe('resource')
   public _getEntrypoint(resource: IHydraResource) {
     resource.apiDocumentation.loadEntrypoint()
-      .then((entrypoint: any) => {
+      .then((entrypoint) => {
         this._setProperty('entrypoint', entrypoint.root)
       })
       .catch(() => {
