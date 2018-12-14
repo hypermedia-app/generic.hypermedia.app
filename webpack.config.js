@@ -8,6 +8,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const pkg = require('./package.json');
 
@@ -159,6 +160,11 @@ module.exports = {
     ]
   },
   plugins,
+  optimization: {
+    minimizer: [new TerserPlugin({
+      extractComments: 'all'
+    })]
+  },
   devServer: {
     contentBase: OUTPUT_PATH,
     compress: true,

@@ -67,6 +67,7 @@
     "standard-version": "4.4.0",
     "stylelint": "9.9.0",
     "stylelint-config-standard": "18.2.0",
+    "terser-webpack-plugin": "1.1.0",
     "text-loader": "0.0.1",
     "tslint": "5.11.0",
     "typescript": "3.2.2",
