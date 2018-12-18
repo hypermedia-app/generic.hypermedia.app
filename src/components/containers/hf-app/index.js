@@ -5,13 +5,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import HydrofoilShell from '@hydrofoil/hydrofoil-shell';
-import { customElement } from '@polymer/decorators';
+import { customElement, observe } from '@polymer/decorators';
 let HfApp = class HfApp extends HydrofoilShell {
     connectedCallback() {
         super.connectedCallback();
         import('../../entrypoint-selector');
     }
+    async onLoaded(isLoading) {
+        if (isLoading) {
+            await import('../../../views');
+        }
+    }
 };
+__decorate([
+    observe('isLoading')
+], HfApp.prototype, "onLoaded", null);
 HfApp = __decorate([
     customElement('hf-app')
 ], HfApp);

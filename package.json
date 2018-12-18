@@ -80,11 +80,13 @@
     "xo": "0.23.0"
   },
   "dependencies": {
-    "@hydrofoil/hydrofoil-shell": "git+https://github.com/wikibus/hydrofoill-shell.git",
+    "@hydrofoil/hydrofoil-shell": "git+https://github.com/wikibus/hydrofoil-shell.git",
+    "@lit-any/lit-any": "0.6.1-alpha.13",
     "@polymer/decorators": "3.0.0",
     "@polymer/iron-icon": "^3.0.1",
     "@polymer/iron-icons": "3.0.1",
     "@polymer/iron-pages": "3.0.1",
+    "@polymer/lit-element": "^0.6.5",
     "@polymer/paper-card": "3.0.1",
     "@polymer/paper-dialog": "3.0.1",
     "@polymer/paper-dropdown-menu": "3.0.1",
@@ -102,6 +104,7 @@
     "@webcomponents/webcomponentsjs": "2.2.0",
     "alcaeus": "0.4.4-a1",
     "core-decorators": "0.20.0",
+    "lit-html": "^1.0.0-rc.1",
     "lodash.flatten": "4.4.0"
   }
 }

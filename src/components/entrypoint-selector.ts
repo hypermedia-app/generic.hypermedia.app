@@ -49,6 +49,7 @@ export default class EntrypointSelector extends PolymerElement {
 
     --paper-dropdown-menu: {
       flex-grow: 1;
+      top: -10px;
     };
 
     --paper-input-container-color: white;
