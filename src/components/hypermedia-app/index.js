@@ -6,21 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import HydrofoilShell from '@hydrofoil/hydrofoil-shell';
 import { customElement, observe } from '@polymer/decorators';
-let HfApp = class HfApp extends HydrofoilShell {
+let HypermediaApp = class HypermediaApp extends HydrofoilShell {
     connectedCallback() {
         super.connectedCallback();
-        import('../../entrypoint-selector');
+        import('../entrypoint-selector');
     }
     async onLoaded(isLoading) {
         if (isLoading) {
-            await import('../../../views');
+            await import('../../views');
         }
     }
 };
 __decorate([
     observe('isLoading')
-], HfApp.prototype, "onLoaded", null);
-HfApp = __decorate([
-    customElement('hf-app')
-], HfApp);
-export default HfApp;
+], HypermediaApp.prototype, "onLoaded", null);
+HypermediaApp = __decorate([
+    customElement('hypermedia-app')
+], HypermediaApp);
+export default HypermediaApp;
