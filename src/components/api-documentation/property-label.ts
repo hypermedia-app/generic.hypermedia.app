@@ -1,9 +1,9 @@
 import { computed, customElement, observe, property } from '@polymer/decorators'
 import '@polymer/paper-tooltip/paper-tooltip'
 import { html, PolymerElement } from '@polymer/polymer'
-import {HydraResource, IClass, SupportedProperty} from 'alcaeus/types/Resources'
+import {HydraResource, SupportedProperty} from 'alcaeus/types/Resources'
 import {IResource} from 'alcaeus/types/Resources/Resource'
-import { flatten } from 'lodash'
+import * as flatten from 'lodash/flatten'
 
 @customElement('property-label')
 class PropertyLabel extends PolymerElement {
@@ -40,5 +40,14 @@ class PropertyLabel extends PolymerElement {
     }
 
     this._setProperty('supportedProperty', propertyId)
+  }
+
+  static get template() {
+    return html`<span id="title">[[propertyTitle]]</span>
+<paper-tooltip for="title" position="right">
+    [[propertyId]]
+    <br><br>
+    [[supportedProperty.description]]
+</paper-tooltip>`
   }
 }

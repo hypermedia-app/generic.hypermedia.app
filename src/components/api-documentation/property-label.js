@@ -6,8 +6,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { customElement, observe, property } from '@polymer/decorators';
 import '@polymer/paper-tooltip/paper-tooltip';
-import { PolymerElement } from '@polymer/polymer';
-import { flatten } from 'lodash';
+import { html, PolymerElement } from '@polymer/polymer';
+import * as flatten from 'lodash/flatten';
 let PropertyLabel = class PropertyLabel extends PolymerElement {
     _getPropertyTitle(supportedProperty, propertyId) {
         if (supportedProperty && supportedProperty.title) {
@@ -26,6 +26,14 @@ let PropertyLabel = class PropertyLabel extends PolymerElement {
             }
         }
         this._setProperty('supportedProperty', propertyId);
+    }
+    static get template() {
+        return html `<span id="title">[[propertyTitle]]</span>
+<paper-tooltip for="title" position="right">
+    [[propertyId]]
+    <br><br>
+    [[supportedProperty.description]]
+</paper-tooltip>`;
     }
 };
 __decorate([

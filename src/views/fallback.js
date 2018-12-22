@@ -7,3 +7,15 @@ ViewTemplates.default.when
     import('../components/resource-views/default-resource-viewer');
     return html `<default-resource-viewer property="${property}" resource="${v}"></default-resource-viewer>`;
 });
+ViewTemplates.default.when
+    .valueMatches((v) => !!v['@id'] && !v['@id'].match(/^_/)) // TODO: simpler way to tell a blank node
+    .renders((r, v, ...rest) => {
+    import('@polymer/iron-icon/iron-icon');
+    return html `<ld-link resource-url="${v['@id']}">
+<a><iron-icon icon=link></iron-icon></a>
+</ld-link>
+`;
+});
+ViewTemplates.default.when
+    .valueMatches(() => true)
+    .renders((r, v) => v);
