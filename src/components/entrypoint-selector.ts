@@ -1,10 +1,11 @@
 import {customElement, property, query} from '@polymer/decorators'
+import {PaperDropdownMenuElement} from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
+import {html, PolymerElement} from '@polymer/polymer'
+
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@polymer/paper-item/paper-item'
 import '@polymer/paper-listbox/paper-listbox'
-import {html, PolymerElement} from '@polymer/polymer'
 import '@polymer/polymer/lib/elements/dom-repeat'
-import {ComboBoxElement} from '@vaadin/vaadin-combo-box/src/vaadin-combo-box'
 
 @customElement('entrypoint-selector')
 export default class EntrypointSelector extends PolymerElement {
@@ -15,10 +16,10 @@ export default class EntrypointSelector extends PolymerElement {
   public readonly apis: string[]
 
   @query('#selector')
-  private selector: ComboBoxElement
+  private selector: PaperDropdownMenuElement
 
-  public ready() {
-    super.ready()
+  public connectedCallback() {
+    super.connectedCallback()
 
     const apis = Array.prototype.map.call(this.querySelectorAll('span'), (apiEl: HTMLElement) => {
       return {

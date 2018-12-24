@@ -6,7 +6,7 @@ ViewTemplates.default.when
   .valueMatches((v) => typeof(v) === 'object' && v !== null)
   .renders((r, v, property) => {
     import('../components/resource-views/default-resource-viewer')
-    return html`<default-resource-viewer property="${property}" resource="${v}"></default-resource-viewer>`
+    return html`${v.id}<default-resource-viewer property="${property}" .resource="${v}"></default-resource-viewer>`
   })
 
 ViewTemplates.default.when

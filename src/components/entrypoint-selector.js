@@ -5,14 +5,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { customElement, property, query } from '@polymer/decorators';
+import { html, PolymerElement } from '@polymer/polymer';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu';
 import '@polymer/paper-item/paper-item';
 import '@polymer/paper-listbox/paper-listbox';
-import { html, PolymerElement } from '@polymer/polymer';
 import '@polymer/polymer/lib/elements/dom-repeat';
 let EntrypointSelector = class EntrypointSelector extends PolymerElement {
-    ready() {
-        super.ready();
+    connectedCallback() {
+        super.connectedCallback();
         const apis = Array.prototype.map.call(this.querySelectorAll('span'), (apiEl) => {
             return {
                 label: apiEl.textContent,

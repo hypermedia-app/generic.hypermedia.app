@@ -102,20 +102,17 @@
 <body>
 	<hypermedia-app show-address-bar>
     <div class="Loader">Loading...</div>
-
-    <app-toolbar slot="toolbar-left">
-      <entrypoint-selector main-title>
-        <span data-url="http://wikibus-test.gear.host/">Bus encyclopedia</span>
-        <span data-url="http://www.markus-lanthaler.com/hydra/api-demo/">Hydra demo API</span>
-      </entrypoint-selector>
-    </app-toolbar>
   </hypermedia-app>
 
   <script>
-    document.querySelector('entrypoint-selector')
-      .addEventListener('url-changed', function(e) {
-        document.querySelector('hypermedia-app').url = e.detail.value
-      })
+    let _define = window.customElements.define
+    window.customElements.define = function () {
+      let componentName = arguments[0]
+
+      try {
+        return _define.apply(this, arguments)
+      } catch (e) {}
+    }
   </script>
 
   <script defer src="<%= htmlWebpackPlugin.options.paths.webcomponents %>"></script>
