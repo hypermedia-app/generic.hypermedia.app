@@ -7,11 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { customElement, property, query } from '@polymer/decorators';
 import { html, PolymerElement } from '@polymer/polymer';
 import fireNavigation from 'ld-navigation/fireNavigation';
-import '@hydrofoil/hydrofoil-shell/hydrofoil-paper-shell';
+import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell';
 let HypermediaApp = class HypermediaApp extends PolymerElement {
     connectedCallback() {
         super.connectedCallback();
-        import('@hydrofoil/hydrofoil-shell/hydrofoil-address-bar');
+        import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar');
         import('../entrypoint-selector');
         import('../../views');
     }

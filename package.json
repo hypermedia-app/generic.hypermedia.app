@@ -78,7 +78,9 @@
     "xo": "0.23.0"
   },
   "dependencies": {
-    "@hydrofoil/hydrofoil-shell": "git+https://github.com/wikibus/hydrofoil-shell.git",
+    "@hydrofoil/hydrofoil-paper-shell": "git+https://github.com/hypermedia-app/hydrofoil-paper-shell.git",
+    "@hydrofoil/hydrofoil-shell": "git+https://github.com/hypermedia-app/hydrofoil-shell.git",
+    "@lit-any/components-paper-elements": "0.7.0",
     "@lit-any/lit-any": "^0.7.0",
     "@polymer/decorators": "3.0.0",
     "@polymer/iron-icon": "^3.0.1",

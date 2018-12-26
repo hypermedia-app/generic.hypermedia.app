@@ -1,10 +1,10 @@
-import {HydrofoilPaperShell} from '@hydrofoil/hydrofoil-shell/hydrofoil-paper-shell'
+import {HydrofoilPaperShell} from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell'
 import {customElement, observe, property, query} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
 import fireNavigation from 'ld-navigation/fireNavigation'
 
-import HydrofoilAddressBar from '@hydrofoil/hydrofoil-shell/hydrofoil-address-bar'
-import '@hydrofoil/hydrofoil-shell/hydrofoil-paper-shell'
+import HydrofoilAddressBar from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar'
+import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell'
 import {until} from 'lit-html/directives/until'
 
 @customElement('hypermedia-app')
@@ -20,7 +20,7 @@ export default class HypermediaApp extends PolymerElement {
 
   public connectedCallback() {
     super.connectedCallback()
-    import('@hydrofoil/hydrofoil-shell/hydrofoil-address-bar')
+    import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar')
     import('../entrypoint-selector')
     import('../../views')
   }

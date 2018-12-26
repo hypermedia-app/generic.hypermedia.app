@@ -6,6 +6,9 @@ import { repeat } from 'lit-html/directives/repeat';
 import '../../components/api-documentation/property-label';
 import { getProperties } from '../../lib/alcaeus-helper';
 import { typedResource } from '../matchers';
+function search(e) {
+    fireNavigation(e.detail.url);
+}
 ViewTemplates.default.when
     .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#Collection'))
     .scopeMatches('collection-members')
@@ -13,7 +16,13 @@ ViewTemplates.default.when
     const members = collection.members;
     // TODO: remove by introducing `manages block` to Alcaeus
     const properties = getProperties(members[0]);
+    const searchTemplate = collection['http://www.w3.org/ns/hydra/core#search'];
+    if (searchTemplate) {
+        import('../../components/url-template-form');
+    }
     return html `<link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css" rel="stylesheet" type="text/css" />
+
+<url-template-form .template="${searchTemplate}" @submit="${search}"></url-template-form>
 
 <table class="mui-table">
   <thead>
@@ -51,7 +60,8 @@ ViewTemplates.default.when
         .filter((v) => !!v)
         .filter((v) => v.types.contains('http://www.w3.org/ns/hydra/core#PartialCollectionView'));
     const view = pcv[0];
-    return html `${render(collection, 'collection-members')} ${view ? render(view, 'collection-pager') : ''}`;
+    return html `${render(collection, 'collection-members')}
+                ${view ? html `<lit-view .value="${view}" template-scope="collection-pager"></lit-view>` : ''}`;
 });
 ViewTemplates.default.when
     .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#PartialCollectionView'))
@@ -65,7 +75,17 @@ ViewTemplates.default.when
     function go(page) {
         fireNavigation(page.id);
     }
-    return html `<paper-card elevation="1" style="position: fixed; bottom:0; width: 100%">
+    const style = html `
+    paper-card {
+      position: fixed;
+      bottom:0;
+      width: 100%
+    }
+
+    @supports(position:sticky) {
+      paper-card { position: sticky }
+    }`;
+    return html `<style>${style}</style><paper-card elevation="1" style="">
       <div class="card-actions">
           <paper-button @tap="${go.bind(null, view.first)}" ?disabled="${disableFirst}">First</paper-button>
           <paper-button @tap="${go.bind(null, view.previous)}" ?disabled="${disablePrevious}">Previous</paper-button>
