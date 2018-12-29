@@ -40,7 +40,7 @@ export default class HypermediaApp extends PolymerElement {
 
   static get template() {
     return html`
-      <hydrofoil-paper-shell url="{{url}}">
+      <hydrofoil-paper-shell url="{{url}}" use-hash-urls>
         <app-toolbar slot="toolbar-left">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
             <span data-url="http://wikibus-test.gear.host/">Bus encyclopedia</span>

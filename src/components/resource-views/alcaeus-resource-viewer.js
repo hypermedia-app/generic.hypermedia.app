@@ -9,6 +9,7 @@ import { html, PolymerElement } from '@polymer/polymer';
 import fireNavigation from 'ld-navigation/fireNavigation';
 import { getProperties } from '../../lib/alcaeus-helper';
 import '@polymer/app-layout/app-grid/app-grid-style';
+import '@polymer/iron-icons/image-icons';
 import '@polymer/iron-icons/iron-icons';
 import '@polymer/paper-icon-button/paper-icon-button';
 import '@polymer/paper-item/paper-item';
@@ -16,6 +17,10 @@ import '@polymer/paper-listbox/paper-listbox';
 import '@polymer/paper-styles/element-styles/paper-material-styles';
 import '@polymer/polymer/lib/elements/dom-repeat';
 let AlcaeusResourceViewer = class AlcaeusResourceViewer extends PolymerElement {
+    constructor() {
+        super(...arguments);
+        this.closeable = false;
+    }
     get hasClasses() {
         return this.resource.types.length > 0;
     }
@@ -63,13 +68,37 @@ let AlcaeusResourceViewer = class AlcaeusResourceViewer extends PolymerElement {
         const url = new URL(urlStr);
         return url.pathname + url.search;
     }
-    expandLink() {
-        console.log('a');
+    expandLink(e) {
+        this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                resource: e.model.value,
+            },
+        }));
+    }
+    showOperation(e) {
+        this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                resource: e.model.op,
+            },
+        }));
     }
     followLink(e) {
         fireNavigation(this, e.model.value.id);
         e.preventDefault();
         e.stopPropagation();
+    }
+    close() {
+        this.dispatchEvent(new CustomEvent('hydrofoil-close-resource', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                resource: this.resource,
+            },
+        }));
     }
     static get template() {
         return html `<style include="paper-material-styles"></style>
@@ -119,14 +148,17 @@ let AlcaeusResourceViewer = class AlcaeusResourceViewer extends PolymerElement {
     --app-grid-item-height: 15vh;
   }
 
-  mat-sublist .item {
-    padding-left: 20px;
-  }
-
   h2 {
     @apply --paper-font-common-base;
   }
+
+  #close {
+    position: absolute;
+    right: 10px
+  }
 </style>
+
+<paper-icon-button id="close" icon="close" hidden$="[[!closeable]]" on-click="close"></paper-icon-button>
 
 <ul class="app-grid">
   <li id="basic" class="item" hidden$="[[!hasClasses]]">
@@ -140,7 +172,7 @@ let AlcaeusResourceViewer = class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[type.title]]</span>
                 <span scondary>[[type.id]]</span>
               </paper-item-body>
-              <paper-icon-button icon="help-outline" on-click="_showClassDocumentation"></paper-icon-button>
+              <paper-icon-button icon="help-outline" on-click="showClassDocumentation"></paper-icon-button>
             </paper-item>
           </template>
         </dom-repeat>
@@ -158,7 +190,7 @@ let AlcaeusResourceViewer = class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[op.title]]</span>
                 <span secondary>[[op.description]]</span>
               </paper-item-body>
-              <iron-icon icon="image:flash-on"></iron-icon>
+              <paper-icon-button icon="image:flash-on" on-click="showOperation"></paper-icon-button>
             </paper-item>
           </template>
         </dom-repeat>
@@ -218,6 +250,9 @@ let AlcaeusResourceViewer = class AlcaeusResourceViewer extends PolymerElement {
 __decorate([
     property({ type: Object })
 ], AlcaeusResourceViewer.prototype, "resource", void 0);
+__decorate([
+    property({ type: Boolean })
+], AlcaeusResourceViewer.prototype, "closeable", void 0);
 __decorate([
     computed('resource')
 ], AlcaeusResourceViewer.prototype, "hasClasses", null);

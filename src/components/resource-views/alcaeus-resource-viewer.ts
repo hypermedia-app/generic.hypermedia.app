@@ -5,6 +5,7 @@ import fireNavigation from 'ld-navigation/fireNavigation'
 import {getProperties} from '../../lib/alcaeus-helper'
 
 import '@polymer/app-layout/app-grid/app-grid-style'
+import '@polymer/iron-icons/image-icons'
 import '@polymer/iron-icons/iron-icons'
 import '@polymer/paper-icon-button/paper-icon-button'
 import '@polymer/paper-item/paper-item'
@@ -16,6 +17,9 @@ import '@polymer/polymer/lib/elements/dom-repeat'
 export default class AlcaeusResourceViewer extends PolymerElement {
   @property({ type: Object })
   public resource: HydraResource
+
+  @property({ type: Boolean })
+  public closeable: boolean = false
 
   @computed('resource')
   private get hasClasses() {
@@ -88,14 +92,40 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return url.pathname + url.search
   }
 
-  private expandLink() {
-    console.log('a')
+  private expandLink(e: any) {
+    this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        resource: e.model.value,
+      },
+    }))
+  }
+
+  private showOperation(e: any) {
+    this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        resource: e.model.op,
+      },
+    }))
   }
 
   private followLink(e: CustomEvent) {
     fireNavigation(this, e.model.value.id)
     e.preventDefault()
     e.stopPropagation()
+  }
+
+  private close() {
+    this.dispatchEvent(new CustomEvent('hydrofoil-close-resource', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        resource: this.resource,
+      },
+    }))
   }
 
   static get template() {
@@ -146,14 +176,17 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     --app-grid-item-height: 15vh;
   }
 
-  mat-sublist .item {
-    padding-left: 20px;
-  }
-
   h2 {
     @apply --paper-font-common-base;
   }
+
+  #close {
+    position: absolute;
+    right: 10px
+  }
 </style>
+
+<paper-icon-button id="close" icon="close" hidden$="[[!closeable]]" on-click="close"></paper-icon-button>
 
 <ul class="app-grid">
   <li id="basic" class="item" hidden$="[[!hasClasses]]">
@@ -167,7 +200,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[type.title]]</span>
                 <span scondary>[[type.id]]</span>
               </paper-item-body>
-              <paper-icon-button icon="help-outline" on-click="_showClassDocumentation"></paper-icon-button>
+              <paper-icon-button icon="help-outline" on-click="showClassDocumentation"></paper-icon-button>
             </paper-item>
           </template>
         </dom-repeat>
@@ -185,7 +218,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[op.title]]</span>
                 <span secondary>[[op.description]]</span>
               </paper-item-body>
-              <iron-icon icon="image:flash-on"></iron-icon>
+              <paper-icon-button icon="image:flash-on" on-click="showOperation"></paper-icon-button>
             </paper-item>
           </template>
         </dom-repeat>
