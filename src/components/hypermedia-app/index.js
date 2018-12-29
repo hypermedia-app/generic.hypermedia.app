@@ -8,7 +8,12 @@ import { customElement, property, query } from '@polymer/decorators';
 import { html, PolymerElement } from '@polymer/polymer';
 import fireNavigation from 'ld-navigation/fireNavigation';
 import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell';
+import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings';
 let HypermediaApp = class HypermediaApp extends PolymerElement {
+    constructor() {
+        super();
+        setPassiveTouchGestures(true);
+    }
     connectedCallback() {
         super.connectedCallback();
         import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar');

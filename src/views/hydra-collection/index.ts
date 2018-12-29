@@ -99,10 +99,10 @@ ViewTemplates.default.when
 
     return html`<style>${style}</style><paper-card elevation="1" style="">
       <div class="card-actions">
-          <paper-button @tap="${go.bind(null, view.first)}" ?disabled="${disableFirst}">First</paper-button>
-          <paper-button @tap="${go.bind(null, view.previous)}" ?disabled="${disablePrevious}">Previous</paper-button>
-          <paper-button @tap="${go.bind(null, view.next)}" ?disabled="${disableNext}">Next</paper-button>
-          <paper-button @tap="${go.bind(null, view.last)}" ?disabled="${disableLast}">Last</paper-button>
+          <paper-button @click="${go.bind(null, view.first)}" ?disabled="${disableFirst}">First</paper-button>
+          <paper-button @click="${go.bind(null, view.previous)}" ?disabled="${disablePrevious}">Previous</paper-button>
+          <paper-button @click="${go.bind(null, view.next)}" ?disabled="${disableNext}">Next</paper-button>
+          <paper-button @click="${go.bind(null, view.last)}" ?disabled="${disableLast}">Last</paper-button>
       </div>
   </paper-card>`
   })

@@ -5,10 +5,15 @@ import fireNavigation from 'ld-navigation/fireNavigation'
 
 import HydrofoilAddressBar from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar'
 import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell'
-import {until} from 'lit-html/directives/until'
+import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings'
 
 @customElement('hypermedia-app')
 export default class HypermediaApp extends PolymerElement {
+  constructor() {
+    super()
+    setPassiveTouchGestures(true)
+  }
+
   @property({ type: String })
   public url: string
 

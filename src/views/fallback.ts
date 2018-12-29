@@ -5,8 +5,8 @@ ViewTemplates.default.when
   .scopeMatches((s) => !s)
   .valueMatches((v) => typeof(v) === 'object' && v !== null)
   .renders((r, v, property) => {
-    import('../components/resource-views/default-resource-viewer')
-    return html`${v.id}<default-resource-viewer property="${property}" .resource="${v}"></default-resource-viewer>`
+    import('../components/resource-views/alcaeus-resource-viewer')
+    return html`<alcaeus-resource-viewer .resource="${v}"></alcaeus-resource-viewer>`
   })
 
 ViewTemplates.default.when
