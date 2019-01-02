@@ -1,5 +1,4 @@
 {
-  "project": "generic-hypermedia-app",
   "hosting": {
     "public": "dist"
   }
