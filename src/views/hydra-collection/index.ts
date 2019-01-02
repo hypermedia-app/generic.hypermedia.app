@@ -25,6 +25,19 @@ ViewTemplates.default.when
       import('../../components/url-template-form')
     }
 
+    function more(model) {
+      return (e) => {
+        e.target.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            parent: collection,
+            resource: model,
+          },
+        }))
+      }
+    }
+
     return html`<link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css" rel="stylesheet" type="text/css" />
 
 <url-template-form .template="${searchTemplate}" @submit="${search}"></url-template-form>
@@ -52,6 +65,8 @@ ViewTemplates.default.when
               <ld-link resource-url="${member.id}">
                   <paper-icon-button icon="chevron-right"></paper-icon-button>
               </ld-link>
+
+              <paper-icon-button icon="link" @click="${more(member)}"></paper-icon-button>
           </td>
       </tr>`)}
   </tbody>
@@ -60,15 +75,15 @@ ViewTemplates.default.when
 
 ViewTemplates.default.when
   .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#Collection'))
-  .scopeMatches((s) => s === null)
+  .scopeMatches('hydrofoil-multi-resource')
   .renders((render, collection) => {
     const pcv = collection.views
       .filter((v) => !!v)
       .filter((v: HydraResource) => v.types.contains('http://www.w3.org/ns/hydra/core#PartialCollectionView'))
     const view = pcv[0]
 
-    return html`${render(collection, 'collection-members')}
-                ${view ? html`<lit-view .value="${view}" template-scope="collection-pager"></lit-view>` : ''}`
+    return html`<div>${render(collection, 'collection-members')}
+                ${view ? html`<lit-view .value="${view}" template-scope="collection-pager"></lit-view>` : ''}</div>`
   })
 
 ViewTemplates.default.when

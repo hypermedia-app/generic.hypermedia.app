@@ -85,6 +85,7 @@
     "@polymer/decorators": "3.0.0",
     "@polymer/paper-card": "3.0.1",
     "@polymer/paper-styles": "3.0.1",
+    "@polymer/paper-tabs": "3.0.1",
     "@polymer/paper-tooltip": "3.0.1",
     "@polymer/polymer": "3.1.0",
     "@webcomponents/webcomponentsjs": "2.2.0",

@@ -18,9 +18,6 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   @property({ type: Object })
   public resource: HydraResource
 
-  @property({ type: Boolean })
-  public closeable: boolean = false
-
   @computed('resource')
   private get hasClasses() {
     return this.resource.types.length > 0
@@ -97,6 +94,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
       bubbles: true,
       composed: true,
       detail: {
+        parent: this.resource,
         resource: e.model.value,
       },
     }))
@@ -107,6 +105,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
       bubbles: true,
       composed: true,
       detail: {
+        parent: this.resource,
         resource: e.model.op,
       },
     }))
@@ -118,20 +117,12 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     e.stopPropagation()
   }
 
-  private close() {
-    this.dispatchEvent(new CustomEvent('hydrofoil-close-resource', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        resource: this.resource,
-      },
-    }))
-  }
-
   static get template() {
     return html`<style include="paper-material-styles"></style>
 <style include="app-grid-style">
   :host {
+    display: block;
+
     --app-grid-columns: 2;
     --app-grid-gutter: 10px;
     --app-grid-expandible-item-columns: 2;
@@ -186,8 +177,6 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   }
 </style>
 
-<paper-icon-button id="close" icon="close" hidden$="[[!closeable]]" on-click="close"></paper-icon-button>
-
 <ul class="app-grid">
   <li id="basic" class="item" hidden$="[[!hasClasses]]">
     <h2>Type</h2>
@@ -198,7 +187,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
             <paper-item>
               <paper-item-body two-line>
                 <span>[[type.title]]</span>
-                <span scondary>[[type.id]]</span>
+                <span secondary>[[type.id]]</span>
               </paper-item-body>
               <paper-icon-button icon="help-outline" on-click="showClassDocumentation"></paper-icon-button>
             </paper-item>
@@ -231,11 +220,11 @@ export default class AlcaeusResourceViewer extends PolymerElement {
       <paper-listbox>
         <dom-repeat as="property" items="[[properties]]">
           <template>
-            <paper-item hidden$="[[!hasValues(property)]]">
+            <paper-item hidden$="[[!hasValues(property, resource)]]">
               <paper-item-body two-line>
                 <span>[[property.title]]</span>
                 <div secondary>
-                  <dom-repeat as="value" items="[[getValues(property)]]">
+                  <dom-repeat as="value" items="[[getValues(property, resource)]]">
                     <template>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
                     </template>
@@ -254,7 +243,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
       <paper-listbox>
         <dom-repeat as="property" items="[[links]]">
           <template>
-            <dom-repeat as="value" items="[[getValues(property)]]">
+            <dom-repeat as="value" items="[[getValues(property, resource)]]">
               <template>
                 <paper-item on-click="expandLink">
                   <paper-item-body two-line>

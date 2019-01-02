@@ -52,7 +52,7 @@ let EntrypointSelector = class EntrypointSelector extends PolymerElement {
     display: auto;
   }
   </style>
-<paper-dropdown-menu id="selector" label="Select Hydra API">
+<paper-dropdown-menu id="selector" label="Select Hydra API" no-animations>
   <paper-listbox slot="dropdown-content" on-selected-item-changed="_entrypointSelected">
     <dom-repeat items="[[apis]]" as="api">
       <template>
