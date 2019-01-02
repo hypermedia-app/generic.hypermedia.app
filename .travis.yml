@@ -4,17 +4,13 @@ node_js:
   - '9'
   - '8'
 
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+script: skip
 
-script:
-  - yarn test:travis
+before_deploy:
+  - npm install -g firebase-tools
+  - yarn build:prod
 
-addons:
-  firefox: latest
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+deploy:
+  provider: firebase
+  token:
+    secure: VvRyTOf/ip7xzUpn6LHSg47PysmxqBDqJY26nmJmc7Izl3RqW3w9VdpJ7T5unrnvx0Y77JjNN2hZbBSXdp3TR0obaViyjaD3Iqk+/iOq8MRPrLBcpNYDMjCsOn+Gjeolfdgj12+ehHjOb6Cp4ahNp1VaZKC177UJ0lWzhaIXuSymRCG74xlinZxevkWuUaRQr/UxF6P2VlKnSjgOmBAm5Fj/Wzi5wN++9alKZuD7MgbmJDKVzkqNq8H8OfDAXMSBl0EQzEFZC/l5LxTdSYy+1WaO99Prs1MZgxtcdhzLwbpUgQT9Mz5nMr8BTwboVJKzq0sen8IxFI/vx6HCsYBKOXJNE/lQDhSrOwTQxrvqKUTsBrPauyTzCj07kS1oBuefA1scENtuMeB8jIVAzZacuPTK4DfQCKLCRzKTe2RBsyUjYpNnp7jdqObK2o//mYRygy2Y04r1BALFwOHcWtBZpICmLSgSsjd3QfHnNq0fLaauVHRGdu85sHZZi57dCYDYZiUoGwO9ZQl5wfyjzVLS8FM/VkTddWQGdfXg/xxYp9Xt8MzzVoY9lQfJYYl4Jz4u/fOdSM6vaMlccdxk6l8/3dRk1mCEX5u+dVTA3q7VGTQBL8DeXpgst4YLTsrFHx7gaT2Y0p23uTU2u0rqfFS5QWaF+63KtBcf/Gy+cO3pcQQ=
