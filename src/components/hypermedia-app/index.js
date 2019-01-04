@@ -31,7 +31,7 @@ let HypermediaApp = class HypermediaApp extends PolymerElement {
       <hydrofoil-paper-shell url="{{url}}" use-hash-urls>
         <app-toolbar slot="toolbar-left">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
-            <span data-url="http://wikibus-test.gear.host/">Bus encyclopedia</span>
+            <span data-url="https://wikibus-test.gear.host/">Bus encyclopedia</span>
             <span data-url="http://www.markus-lanthaler.com/hydra/api-demo/">Hydra demo API</span>
           </entrypoint-selector>
         </app-toolbar>
