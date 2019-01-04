@@ -89,6 +89,7 @@
     "@polymer/paper-tooltip": "3.0.1",
     "@polymer/polymer": "3.1.0",
     "@webcomponents/webcomponentsjs": "2.2.0",
+    "ld-navigation": "0.5.0",
     "lit-html": "^1.0.0-rc.1",
     "lodash.flatten": "4.4.0"
   }
