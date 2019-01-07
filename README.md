@@ -12,3 +12,29 @@
 [a]: https://alcaeus.hydra.how/
 [pe]: https://www.webcomponents.org/author/PolymerElements
 [la]: https://github.com/wikibus/lit-any
+
+## Features
+
+1. Generic, universal view for resource documented in Hydra's API documentaiton
+1. Specialized views for Hydra collections
+1. Collections support paging and filtering
+
+## Coming soon
+
+1. API documentation viewer
+1. Support for operations
+
+## Limitations
+
+Due to HTTP restrictions, the API has to be served over SSL. For that reason the API published under http://www.markus-lanthaler.com/hydra/api-demo/ does not currently work on the published app. You can however [run locally](#running-locally)
+
+## Running locally
+
+Clone, then:
+
+```
+npm install
+npm dev
+```
+
+And open the browser at webpack-dev-server's URL. Typically http://localhost:3000
