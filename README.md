@@ -3,7 +3,7 @@
 
 > A modern, standards-based Hydra console
 
-## Buidling blocks
+## Building blocks
 
 1. Uses [Alcaeus Hydra client][a]. 100% in-browser, no server-side proxy
 1. UI build using [material design web components][pe]
