@@ -51,7 +51,22 @@ export default class extends PolymerElement {
   }
 
   static get template() {
-    return html`<lit-form no-labels contract="[[contract]]"
+    return html`
+<style>
+  :host {
+    --lit-form-field: {
+      flex: 1;
+      margin: 5px;
+    }
+
+    --lit-form-fieldset: {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+</style>
+
+<lit-form no-labels contract="[[contract]]"
                           submit-button-label="Filter"
                           value="[[value]]"
                           on-submit="submit"></lit-form>`

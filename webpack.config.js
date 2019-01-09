@@ -84,7 +84,7 @@ const renderHtmlPlugins = () =>
       compile: true,
       excludeAssets: [/(bundle|polyfills)(\..*)?\.js$/],
       paths: {
-        webcomponents: './vendor/webcomponents-loader.js'
+        webcomponents: './vendor/webcomponents-bundle.js'
       }
     }),
     new HtmlWebpackExcludeAssetsPlugin(),
