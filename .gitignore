@@ -12,3 +12,6 @@ src/vendor/webcomponents-loader.js
 *.report.html
 # To be sure...
 bower_components
+
+src/**/*.js
+!src/lib/decycle.js

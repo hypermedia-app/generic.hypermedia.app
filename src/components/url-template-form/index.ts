@@ -45,7 +45,7 @@ export default class extends PolymerElement {
   private submit() {
     this.dispatchEvent(new CustomEvent('submit', {
       detail: {
-        url: this.template.expand(this.form.value)
+        url: this.template.expand(this.form.value),
       },
     }))
   }

@@ -1,36 +1,36 @@
 const updateReady = () =>
-  document.dispatchEvent(new CustomEvent('updateReady'));
+  document.dispatchEvent(new CustomEvent('updateReady'))
 
 const trackInstalling = worker => {
   worker.addEventListener('statechange', () => {
     if (worker.state === 'installed') {
-      updateReady();
+      updateReady()
     }
-  });
-};
+  })
+}
 
 export default () => {
   if (!('serviceWorker' in navigator)) {
-    console.info('SW is not supported');
-    return;
+    console.info('SW is not supported')
+    return
   }
 
   navigator.serviceWorker.register('/sw.js')
     .then(registration => {
       if (!navigator.serviceWorker.controller) {
-        return;
+        return
       }
 
       if (registration.waiting) {
-        return updateReady();
+        return updateReady()
       }
 
       if (registration.installing) {
-        return trackInstalling(registration.installing);
+        return trackInstalling(registration.installing)
       }
 
-      registration.addEventListener('updatefound', () => trackInstalling(registration.installing));
+      registration.addEventListener('updatefound', () => trackInstalling(registration.installing))
     }).catch(error => {
-      console.error('Error during service worker registration:', error);
-    });
-};
+      console.error('Error during service worker registration:', error)
+    })
+}
