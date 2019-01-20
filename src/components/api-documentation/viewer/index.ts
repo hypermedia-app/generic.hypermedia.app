@@ -1,15 +1,19 @@
 import {computed, customElement, observe, property } from '@polymer/decorators'
-import '@polymer/paper-toast/paper-toast'
 import {html, PolymerElement} from '@polymer/polymer'
-import '@vaadin/vaadin-combo-box/vaadin-combo-box'
 import {Class, IApiDocumentation} from 'alcaeus/types/Resources'
+
+import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
+import '@polymer/paper-item/paper-item'
+import '@polymer/paper-listbox/paper-listbox'
+import '@polymer/paper-toast/paper-toast'
+import '@polymer/polymer/lib/elements/dom-repeat'
 import '../supported-classes/supported-class-view'
 
-import style from './viewer.pcss'
 import template from './viewer.html'
+import style from './viewer.pcss'
 
 @customElement('api-documentation-viewer')
-class ApiDocumentationViewer extends PolymerElement {
+export default class ApiDocumentationViewer extends PolymerElement {
 
   @computed('selectedClass')
   public get classFound(): boolean {
@@ -24,6 +28,10 @@ class ApiDocumentationViewer extends PolymerElement {
 
   @property({ type: Object })
   public selectedClass: Class
+
+  public classClicked(e) {
+    this.selectClassById(e.model.item.id)
+  }
 
   public selectClassById(classId: string) {
     if (!this.apiDocs || !this.apiDocs.classes) {
@@ -77,7 +85,7 @@ class ApiDocumentationViewer extends PolymerElement {
       this.$.classSelect.value = null
     } else {
       this.$.toast.close()
-      this.$.classSelect.value = clas.id
+      this.$.classSelect.value = clas.title
     }
   }
 

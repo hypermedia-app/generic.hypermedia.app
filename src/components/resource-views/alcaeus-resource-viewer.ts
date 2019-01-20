@@ -111,7 +111,17 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     }))
   }
 
-  private followLink(e: CustomEvent) {
+  private showClassDocumentation(e: any) {
+    this.dispatchEvent(new CustomEvent('console-open-documentation', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        class: e.model.type.id,
+      },
+    }))
+  }
+
+  private followLink(e: any) {
     fireNavigation(this, e.model.value.id)
     e.preventDefault()
     e.stopPropagation()
