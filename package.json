@@ -10,10 +10,10 @@
     "Mattia Astorino (http://equinsuocha.io/)"
   ],
   "scripts": {
-    "build": "webpack",
-    "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
-    "build:stats": "webpack --env production --json > stats.json",
-    "dev": "webpack-dev-server --hot --inline",
+    "build": "tsc; webpack",
+    "build:prod": "tsc; webpack --env.NODE_ENV=production --optimize-minimize",
+    "build:stats": "tsc; webpack --env production --json > stats.json",
+    "dev": "tsc -w & webpack-dev-server --hot --inline",
     "pretest": "yarn build",
     "test": "yarn lint && wct --npm && yarn test:lighthouse",
     "test:lighthouse": "concurrently --kill-others \"http-server dist\" \"lighthouse --view http://localhost:8080\" ",

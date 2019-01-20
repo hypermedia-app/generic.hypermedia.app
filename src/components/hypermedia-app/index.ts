@@ -75,6 +75,8 @@ export default class HypermediaApp extends PolymerElement {
           Links are presented as a clickable icon <iron-icon icon="link"></iron-icon>. Clicking them will fetch the
           resource and present it in the resource area.
         </div>
+
+        <paper-spinner slot="loader" active></paper-spinner>
       </hydrofoil-paper-shell>`
   }
 }
