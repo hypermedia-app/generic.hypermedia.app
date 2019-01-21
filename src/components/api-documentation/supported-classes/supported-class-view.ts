@@ -1,12 +1,15 @@
 import {computed, customElement, observe, property, query} from '@polymer/decorators'
-import '@polymer/iron-pages/iron-pages'
-import '@polymer/paper-card/paper-card'
+import {PaperDropdownMenuElement} from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import {PaperTabsElement} from '@polymer/paper-tabs/paper-tabs'
 import {html, PolymerElement} from '@polymer/polymer'
-import {ComboBoxElement} from '@vaadin/vaadin-combo-box/src/vaadin-combo-box'
 import {Class, SupportedProperty} from 'alcaeus/types/Resources'
+
+import '@polymer/iron-pages/iron-pages'
+import '@polymer/paper-card/paper-card'
+import '@polymer/paper-item/paper-item'
+import '@polymer/paper-listbox/paper-listbox'
 // import '../supported-operations/supported-operations-viewer'
-// import '../supported-properties/supported-property-view'
+import '../supported-properties/supported-property-view'
 
 import template from './supported-class-view.html'
 import style from './supported-class-view.pcss'
@@ -15,41 +18,42 @@ import style from './supported-class-view.pcss'
 export class SupportedClassView extends PolymerElement {
   @computed('selectedProperty')
   public get propertyIsSelected(): boolean {
-    return typeof this.selectedProperty !== 'undefined' && this.selectedProperty !== null
+    return this.selectedProperty !== null
   }
 
   @computed('supportedClass')
   get hasProperties(): boolean {
-    if (!this.supportedClass) {
-      return false
+    if (this.supportedClass && this.supportedClass.supportedProperties) {
+      return this.supportedClass.supportedProperties.length > 0
     }
 
-    return this.supportedClass.supportedProperties.length > 0
+    return false
   }
 
   @computed('supportedClass')
   get hasOperations(): boolean {
-    if (!this.supportedClass) {
-      return false
+    if (this.supportedClass && this.supportedClass.supportedOperations) {
+      return this.supportedClass.supportedOperations.length > 0
     }
 
-    return this.supportedClass.supportedOperations.length > 0
+    return false
   }
 
   static get template() {
     return html([`<style>${style}</style> ${template}`] as any)
   }
+
   @property({type: Object})
   public supportedClass: Class
 
   @property({type: Object})
-  public selectedProperty: SupportedProperty
+  public selectedProperty: SupportedProperty = null
 
   @query('#classTabs')
   private classTabs: PaperTabsElement
 
   @query('#supportedProperties')
-  private supportedProperties: ComboBoxElement
+  private supportedProperties: PaperDropdownMenuElement
 
   public connectedCallback() {
     super.connectedCallback()
@@ -61,8 +65,13 @@ export class SupportedClassView extends PolymerElement {
   }
 
   @observe('supportedClass')
-  private getProperties(supportedClass: Class) {
-    this.supportedProperties.value = null
+  private getProperties() {
+    this.supportedProperties.value = ''
     this.classTabs.selected = 0
+    this.selectedProperty = null
+  }
+
+  private propertySelected(e) {
+    this.selectedProperty = e.model.item
   }
 }

@@ -13,11 +13,15 @@
 
             <div>
                 <div hidden$="[[!hasProperties]]">
-                    <vaadin-combo-box label="Supported Property" item-value-path="id" item-label-path="title"
-                                      items="[[supportedClass.supportedProperties]]"
-                                      selected-item="{{selectedProperty}}"
-                                      id="supportedProperties">
-                    </vaadin-combo-box>
+                    <paper-dropdown-menu label="Supported Property" id="supportedProperties" no-animations>
+                      <paper-listbox slot="dropdown-content">
+                        <dom-repeat items="[[supportedClass.supportedProperties]]">
+                          <template>
+                            <paper-item on-click="propertySelected">[[item.title]]</paper-item>
+                          </template>
+                        </dom-repeat>
+                      </paper-listbox>
+                    </paper-dropdown-menu>
 
                     <supported-property-view supported-property="[[selectedProperty]]"
                                              hidden$="[[!propertyIsSelected]]"></supported-property-view>
