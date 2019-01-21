@@ -32,6 +32,14 @@ class SupportedClassLink extends PolymerElement {
 
   static get template() {
     return html`
+<style>
+  :host {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
+
 <a id="link" href$="[[supportedClass.id]]" on-tap="selectClass" target="_blank">[[classTitle]]</a>
 <paper-tooltip for="link" position="left">
     [[supportedClass.id]]
