@@ -19,12 +19,12 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   public resource: HydraResource
 
   @computed('resource')
-  private get hasClasses() {
+  public get hasClasses() {
     return this.resource.types.length > 0
   }
 
   @computed('resource')
-  private get classes() {
+  public get classes() {
     return this.resource.types.map((cId: string) => {
       const clas = this.resource.apiDocumentation.getClass(cId)
 
@@ -37,37 +37,37 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   }
 
   @computed('operations')
-  private get hasOperations() {
+  public get hasOperations() {
     return this.operations.length > 0
   }
 
   @computed('resource')
-  private get operations() {
+  public get operations() {
     return this.resource.operations
   }
 
   @computed('allProperties')
-  private get links() {
+  public get links() {
     return _getLinks(this.allProperties)
   }
 
   @computed('links')
-  private get hasLinks() {
+  public get hasLinks() {
     return this.links.length > 0
   }
 
   @computed('resource')
-  private get allProperties() {
+  public get allProperties() {
     return getProperties(this.resource)
   }
 
   @computed('allProperties')
-  private get properties() {
+  public get properties() {
     return _getNonLinks(this.allProperties)
   }
 
   @computed('properties')
-  private get hasProperties() {
+  public get hasProperties() {
     return this.properties.length > 0
   }
 
