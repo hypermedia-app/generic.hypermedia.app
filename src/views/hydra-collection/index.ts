@@ -15,7 +15,7 @@ function search(e) {
 ViewTemplates.default.when
   .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#Collection'))
   .scopeMatches('collection-members')
-  .renders((render, collection) => {
+  .renders((collection, render) => {
     const members = collection.members
     // TODO: remove by introducing `manages block` to Alcaeus
     const properties = getProperties(members[0])
@@ -76,7 +76,7 @@ ViewTemplates.default.when
 ViewTemplates.default.when
   .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#Collection'))
   .scopeMatches('hydrofoil-multi-resource')
-  .renders((render, collection) => {
+  .renders((collection, render) => {
     const pcv = collection.views
       .filter((v) => !!v)
       .filter((v: HydraResource) => v.types.contains('http://www.w3.org/ns/hydra/core#PartialCollectionView'))
@@ -88,7 +88,7 @@ ViewTemplates.default.when
 
 ViewTemplates.default.when
   .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#PartialCollectionView'))
-  .renders((_, view) => {
+  .renders((view) => {
     import('@polymer/paper-button/paper-button')
     import('@polymer/paper-card/paper-card')
 

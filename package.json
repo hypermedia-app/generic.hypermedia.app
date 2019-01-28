@@ -78,10 +78,10 @@
     "xo": "0.23.0"
   },
   "dependencies": {
+    "@hydrofoil/alcaeus-loader": "git+https://github.com/hypermedia-app/alcaeus-loader.git",
     "@hydrofoil/hydrofoil-paper-shell": "git+https://github.com/hypermedia-app/hydrofoil-paper-shell.git",
-    "@hydrofoil/hydrofoil-shell": "git+https://github.com/hypermedia-app/hydrofoil-shell.git",
-    "@lit-any/components-paper-elements": "0.7.0",
-    "@lit-any/lit-any": "^0.7.0",
+    "@lit-any/components-paper-elements": "^0.8.0",
+    "@lit-any/lit-any": "^0.8.0",
     "@polymer/decorators": "3.0.0",
     "@polymer/paper-card": "3.0.1",
     "@polymer/paper-dropdown-menu": "3.0.1",
@@ -93,7 +93,7 @@
     "@polymer/polymer": "3.1.0",
     "@webcomponents/webcomponentsjs": "2.2.0",
     "ld-navigation": "0.5.0",
-    "lit-html": "^1.0.0-rc.1",
+    "lit-html": "^1.0.0-rc.2",
     "lodash.flatten": "4.4.0"
   }
 }

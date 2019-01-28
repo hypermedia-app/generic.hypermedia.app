@@ -216,6 +216,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
               <paper-item-body two-line>
                 <span>[[op.title]]</span>
                 <span secondary>[[op.description]]</span>
+                <span secondary>(/[[op.method]])</span>
               </paper-item-body>
               <paper-icon-button icon="image:flash-on" on-click="showOperation"></paper-icon-button>
             </paper-item>
