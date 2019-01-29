@@ -1,6 +1,6 @@
 {
-  "name": "Polymer Skeleton",
-  "short_name": "Polymer SK",
+  "name": "Generic Hydra Console",
+  "short_name": "Hydra App",
   "icons": [{
       "src": "/assets/icons/polymer-skeleton-48x48.png",
       "sizes": "48x48",
@@ -27,7 +27,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#A7FFEB",
+  "theme_color": "#42a5f5",
   "background_color": "#ffffff",
   "display": "standalone",
   "start_url": "/",
