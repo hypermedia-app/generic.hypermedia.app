@@ -1,17 +1,18 @@
 import HydrofoilAddressBar from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar'
 import {HydrofoilPaperShell} from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell'
-import {customElement, observe, property, query} from '@polymer/decorators'
+import {computed, customElement, observe, property, query} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
+import '@polymer/polymer/lib/elements/dom-if'
 import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings'
+import {HydraResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
-
-import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell'
 import ApiDocumentationViewer from '../api-documentation/viewer'
+import '../hypermedia-app-shell'
 
 @customElement('hypermedia-app')
 export default class HypermediaApp extends PolymerElement {
-  @query('hydrofoil-paper-shell')
-  private shell: HydrofoilPaperShell
+  @query('hypermedia-app-shell')
+  public shell: HydrofoilPaperShell
 
   @query('hydrofoil-address-bar')
   private address: HydrofoilAddressBar
@@ -29,6 +30,14 @@ export default class HypermediaApp extends PolymerElement {
 
   @property({ type: Boolean })
   public hasApiDocumentation = false
+
+  @property({ type: Object })
+  public entrypoint: HydraResource = null
+
+  @computed('entrypoint')
+  public get entrypointLoaded() {
+    return !!this.entrypoint
+  }
 
   public connectedCallback() {
     super.connectedCallback()
@@ -74,8 +83,8 @@ export default class HypermediaApp extends PolymerElement {
         div { padding: 20px }
       </style>
 
-      <hydrofoil-paper-shell url="{{url}}" use-hash-urls on-model-changed="enableDoc"
-                             on-console-open-documentation="showClassDoc">
+      <hypermedia-app-shell url="{{url}}" use-hash-urls on-model-changed="enableDoc"
+                            on-console-open-documentation="showClassDoc" entrypoint="{{entrypoint}}">
         <app-toolbar slot="toolbar-left">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
             <span data-url="https://wikibus-test.gear.host/">Bus encyclopedia</span>
@@ -99,6 +108,20 @@ export default class HypermediaApp extends PolymerElement {
             </api-documentation-viewer>
         </div>
 
+        <dom-if if="[[entrypointLoaded]]">
+          <template>
+            <hydrofoil-entrypoint-menu entrypoint="[[entrypoint]]" slot="toolbar-left"></hydrofoil-entrypoint-menu>
+          </template>
+        </dom-if>
+        <dom-if if="[[!entrypointLoaded]]">
+          <template>
+            <paper-item slot="toolbar-left">
+              <paper-item-body>Main menu (loading...)</paper-item-body>
+              <iron-icon icon="hourglass-empty"></iron-icon>
+            </paper-item>
+          </template>
+        </dom-if>
+
         <div slot="shell-ready">
           Hi,
 
@@ -119,6 +142,6 @@ export default class HypermediaApp extends PolymerElement {
         </div>
 
         <paper-spinner slot="loader" active></paper-spinner>
-      </hydrofoil-paper-shell>`
+      </hypermedia-app-shell>`
   }
 }

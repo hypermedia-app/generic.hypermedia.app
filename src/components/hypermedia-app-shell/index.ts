@@ -1,10 +1,8 @@
+import AlcaeusLoader from '@hydrofoil/alcaeus-loader'
 import {HydrofoilPaperShell} from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell'
-import {html} from '@polymer/lit-element'
-
 import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-resource-accordion'
+import {customElement} from 'lit-element'
 
-export default class HypermediaAppShell extends HydrofoilPaperShell {
-  protected renderMain() {
-    return html`<hydrofoil-resource-accordion .root="${this.model}"></hydrofoil-resource-accordion>`
-  }
+@customElement('hypermedia-app-shell')
+export default class HypermediaAppShell extends AlcaeusLoader(HydrofoilPaperShell) {
 }
