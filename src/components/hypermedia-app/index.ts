@@ -45,6 +45,7 @@ export default class HypermediaApp extends PolymerElement {
     import('../entrypoint-selector')
     import('../../views')
     import('@polymer/iron-icon/iron-icon')
+    import('@hydrofoil/hydrofoil-paper-shell/alcaeus-entrypoint-menu')
   }
 
   protected showDocs() {
@@ -85,7 +86,7 @@ export default class HypermediaApp extends PolymerElement {
 
       <hypermedia-app-shell url="{{url}}" use-hash-urls on-model-changed="enableDoc"
                             on-console-open-documentation="showClassDoc" entrypoint="{{entrypoint}}">
-        <app-toolbar slot="toolbar-left">
+        <app-toolbar slot="drawer-left">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
             <span data-url="https://wikibus-test.gear.host/">Bus encyclopedia</span>
             <span data-url="http://www.markus-lanthaler.com/hydra/api-demo/">Hydra demo API</span>
@@ -110,12 +111,12 @@ export default class HypermediaApp extends PolymerElement {
 
         <dom-if if="[[entrypointLoaded]]">
           <template>
-            <hydrofoil-entrypoint-menu entrypoint="[[entrypoint]]" slot="toolbar-left"></hydrofoil-entrypoint-menu>
+            <alcaeus-entrypoint-menu entrypoint="[[entrypoint]]" slot="drawer-left"></alcaeus-entrypoint-menu>
           </template>
         </dom-if>
         <dom-if if="[[!entrypointLoaded]]">
           <template>
-            <paper-item slot="toolbar-left">
+            <paper-item slot="drawer-left">
               <paper-item-body>Main menu (loading...)</paper-item-body>
               <iron-icon icon="hourglass-empty"></iron-icon>
             </paper-item>

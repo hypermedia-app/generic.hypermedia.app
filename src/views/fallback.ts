@@ -5,8 +5,8 @@ ViewTemplates.default.when
   .scopeMatches('hydrofoil-shell')
   .valueMatches((v) => v.id)
   .renders((v, property) => {
-    import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-resource-tabs')
-    return html`<hydrofoil-resource-tabs .root="${v}"></hydrofoil-resource-tabs>`
+    import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-resource-accordion')
+    return html`<hydrofoil-resource-accordion .root="${v}"></hydrofoil-resource-accordion>`
   })
 
 ViewTemplates.default.when
