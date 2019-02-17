@@ -40,7 +40,9 @@ ViewTemplates.default.when
 
     return html`<link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css" rel="stylesheet" type="text/css" />
 
-<url-template-form .template="${searchTemplate}" @submit="${search}"></url-template-form>
+<url-template-form .template="${searchTemplate}"
+                   @submit="${search}"
+                   .filters="${collection.currentFilter}"></url-template-form>
 
 <table class="mui-table">
   <thead>

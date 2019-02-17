@@ -25,7 +25,7 @@ export default class extends PolymerElement {
   public template: any
 
   @property({ type: Object, notify: true })
-  public value: object
+  public filters: object
 
   @computed('template')
   public get contract() {
@@ -68,7 +68,7 @@ export default class extends PolymerElement {
 
 <lit-form no-labels contract="[[contract]]"
                           submit-button-label="Filter"
-                          value="[[value]]"
+                          value="[[filters]]"
                           on-submit="submit"></lit-form>`
   }
 }
