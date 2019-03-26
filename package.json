@@ -85,7 +85,7 @@
     "@polymer/decorators": "3.0.0",
     "@polymer/paper-card": "3.0.1",
     "@polymer/paper-dropdown-menu": "3.0.1",
-    "@polymer/paper-spinner": "git+https://github.com/tpluscode/paper-spinner.git#safari",
+    "@polymer/paper-spinner": "^3.0.2",
     "@polymer/paper-styles": "3.0.1",
     "@polymer/paper-tabs": "3.0.1",
     "@polymer/paper-toast": "3.0.1",
@@ -94,6 +94,7 @@
     "@webcomponents/webcomponentsjs": "2.2.0",
     "ld-navigation": "^0.5.0",
     "lit-html": "^1.0.0",
-    "lodash.flatten": "4.4.0"
+    "lodash.flatten": "4.4.0",
+    "alcaeus": "^0.5.0"
   }
 }
