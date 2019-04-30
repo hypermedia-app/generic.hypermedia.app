@@ -89,7 +89,6 @@ export default class HypermediaApp extends PolymerElement {
         <app-toolbar slot="drawer-left">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
             <span data-url="https://hydra-movies.herokuapp.com/">HydraCG movies API</span>
-            <span data-url="http://www.markus-lanthaler.com/hydra/api-demo/">Original Hydra demo API</span>
             <span data-url="https://test.wikibus.org/">wikibus.org sources (test server)</span>
           </entrypoint-selector>
         </app-toolbar>
