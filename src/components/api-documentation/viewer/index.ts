@@ -1,4 +1,7 @@
 import {computed, customElement, observe, property } from '@polymer/decorators'
+import {query} from '@polymer/decorators/lib/decorators'
+import {PaperDropdownMenuElement} from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
+import {PaperToastElement} from '@polymer/paper-toast/paper-toast'
 import {html, PolymerElement} from '@polymer/polymer'
 import {Class, IApiDocumentation} from 'alcaeus/types/Resources'
 
@@ -29,8 +32,19 @@ export default class ApiDocumentationViewer extends PolymerElement {
   @property({ type: Object })
   public selectedClass: Class
 
+  @query('paper-toast')
+  private toast: PaperToastElement
+
+  @query('#classSelect')
+  private classSelect: PaperDropdownMenuElement
+
   public classClicked(e) {
     this.selectClassById(e.model.item.id)
+  }
+
+  public connectedCallback() {
+    super.connectedCallback()
+    this.toast.fitInto = this
   }
 
   public selectClassById(classId: string) {
@@ -70,7 +84,7 @@ export default class ApiDocumentationViewer extends PolymerElement {
   }
 
   private closeToast() {
-    this.$.toast.close()
+    this.toast.close()
   }
 
   private selectClass(clas: any) {
@@ -81,11 +95,11 @@ export default class ApiDocumentationViewer extends PolymerElement {
     this.selectedClass = clas
 
     if (!clas) {
-      this.$.toast.open()
-      this.$.classSelect.value = null
+      this.toast.open()
+      this.classSelect.value = null
     } else {
-      this.$.toast.close()
-      this.$.classSelect.value = clas.title
+      this.toast.close()
+      this.classSelect.value = clas.title
     }
   }
 

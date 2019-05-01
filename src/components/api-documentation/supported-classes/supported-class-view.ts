@@ -8,6 +8,7 @@ import '@polymer/iron-pages/iron-pages'
 import '@polymer/paper-card/paper-card'
 import '@polymer/paper-item/paper-item'
 import '@polymer/paper-listbox/paper-listbox'
+import '@polymer/paper-tabs/paper-tabs'
 import '../supported-operations/supported-operations-viewer'
 import '../supported-properties/supported-property-view'
 

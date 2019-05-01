@@ -4,7 +4,7 @@ import {computed, customElement, observe, property, query} from '@polymer/decora
 import {html, PolymerElement} from '@polymer/polymer'
 import '@polymer/polymer/lib/elements/dom-if'
 import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings'
-import {HydraResource} from 'alcaeus/types/Resources'
+import {HydraResource, IApiDocumentation} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import ApiDocumentationViewer from '../api-documentation/viewer'
 import '../hypermedia-app-shell'
@@ -14,11 +14,14 @@ export default class HypermediaApp extends PolymerElement {
   @query('hypermedia-app-shell')
   public shell: HydrofoilPaperShell
 
+  @property({ type: Object })
+  public apiDocumentation: IApiDocumentation
+
   @query('hydrofoil-address-bar')
   private address: HydrofoilAddressBar
 
   @query('api-documentation-viewer')
-  private apiDocumentation: ApiDocumentationViewer
+  private apiDocumentationViewer: ApiDocumentationViewer
 
   constructor() {
     super()
@@ -28,8 +31,10 @@ export default class HypermediaApp extends PolymerElement {
   @property({ type: String })
   public url: string
 
-  @property({ type: Boolean })
-  public hasApiDocumentation = false
+  @computed('apiDocumentation')
+  public get hasApiDocumentation() {
+    return !!this.apiDocumentation
+  }
 
   @property({ type: Object })
   public entrypoint: HydraResource = null
@@ -62,18 +67,13 @@ export default class HypermediaApp extends PolymerElement {
   }
 
   private enableDoc(e: CustomEvent) {
-    if (e.detail.apiDocumentation) {
-      this.hasApiDocumentation = true
-      this.apiDocumentation.apiDocs = e.detail.apiDocumentation
-      this.apiDocumentation.modelTypes = e.detail.types
-    } else {
-      this.hasApiDocumentation = false
-    }
+    this.apiDocumentation = e.detail.apiDocumentation
+    this.apiDocumentationViewer.modelTypes = e.detail.types
   }
 
   private showClassDoc(e: CustomEvent) {
     import('../api-documentation/viewer').then(() => {
-      this.apiDocumentation.selectClassById(e.detail.class)
+      this.apiDocumentationViewer.selectClassById(e.detail.class)
       this.showDocs()
     })
   }
@@ -82,6 +82,14 @@ export default class HypermediaApp extends PolymerElement {
     return html`
       <style>
         div { padding: 20px }
+
+        app-toolbar[slot="drawer-right"] [main-title] {
+          text-align: left;
+        }
+
+        a {
+          color: white;
+        }
       </style>
 
       <hypermedia-app-shell url="{{url}}" use-hash-urls on-model-changed="enableDoc"
@@ -102,10 +110,11 @@ export default class HypermediaApp extends PolymerElement {
                                    on-tap="showDocs"></paper-icon-button>
 
         <app-toolbar slot="drawer-right">
-            <div class="title">Documentation</div>
+            <div main-title>ApiDocumentation</div>
+            <a href$="[[apiDocumentation.id]]" target="_blank"><iron-icon icon="launch"></iron-icon></a>
         </app-toolbar>
         <div id="api-docs-container" slot="drawer-right">
-            <api-documentation-viewer id="apiDocumentation" api-docs="[[model.apiDocumentation]]">
+            <api-documentation-viewer api-docs="[[apiDocumentation]]">
             </api-documentation-viewer>
         </div>
 
