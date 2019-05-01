@@ -93,7 +93,10 @@ export default class HypermediaApp extends PolymerElement {
       </style>
 
       <hypermedia-app-shell url="{{url}}" use-hash-urls on-model-changed="enableDoc"
-                            on-console-open-documentation="showClassDoc" entrypoint="{{entrypoint}}">
+                            on-console-open-documentation="showClassDoc" entrypoint="{{entrypoint}}"
+                            title="Generic Hydra Application">
+        <span slot="right-drawer-title">Options</span>
+
         <app-toolbar slot="drawer-left">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
             <span data-url="https://hydra-movies.herokuapp.com/">HydraCG movies API</span>
