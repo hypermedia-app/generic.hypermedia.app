@@ -142,7 +142,7 @@ export default class HypermediaApp extends PolymerElement {
             <li>the address bar on the top,</li>
             <li>the main resource area, which renders response contents,</li>
             <li>entrypoint links in left sidebar,</li>
-            <li>documentation pane in right sidebar (coming soon).</li>
+            <li>documentation pane in right sidebar.</li>
           </ol>
 
           You may also start by selecting an API from the dropdown from the sidebar header.
