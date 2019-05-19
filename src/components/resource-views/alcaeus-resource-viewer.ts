@@ -1,8 +1,7 @@
-import {computed, customElement, property, query} from '@polymer/decorators'
+import {computed, customElement, property} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
-import {HydraResource, SupportedProperty} from 'alcaeus/types/Resources'
+import {HydraResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
-import {getProperties} from '../../lib/alcaeus-helper'
 
 import '@polymer/app-layout/app-grid/app-grid-style'
 import '@polymer/iron-icons/image-icons'
@@ -25,15 +24,19 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
   @computed('resource')
   public get classes() {
-    return this.resource.types.map((cId: string) => {
-      const clas = this.resource.apiDocumentation.getClass(cId)
+    return this.resource.apiDocumentation
+      .map((apiDocumentation) => ({ apiDocumentation, getClass: apiDocumentation.getClass }))
+      .map(({apiDocumentation, getClass}) => {
+        return this.resource.types.map((cId: string) => {
+          const clas = getClass.bind(apiDocumentation)(cId)
 
-      if (!clas) {
-        return { title: cId }
-      }
+          if (!clas) {
+            return { title: cId }
+          }
 
-      return clas
-    })
+          return clas
+        })
+      }).valueOr([])
   }
 
   @computed('operations')
@@ -46,9 +49,9 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return this.resource.operations
   }
 
-  @computed('allProperties')
+  @computed('resource')
   public get links() {
-    return _getLinks(this.allProperties)
+    return this.resource.getLinks(false)
   }
 
   @computed('links')
@@ -57,31 +60,15 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   }
 
   @computed('resource')
-  public get allProperties() {
-    return getProperties(this.resource)
-  }
-
-  @computed('allProperties')
   public get properties() {
-    return _getNonLinks(this.allProperties)
+    return this.resource.getProperties()
+      .filter((tuple) => tuple.supportedProperty.property.isLink === false)
+      .filter((tuple) => tuple.objects.length > 0)
   }
 
   @computed('properties')
   public get hasProperties() {
     return this.properties.length > 0
-  }
-
-  private hasValues(p: SupportedProperty) {
-    return this.getValues(p).length > 0
-  }
-
-  private getValues(p: SupportedProperty) {
-    let values = this.resource[p.property.id]
-    if (Array.isArray(values) === false) {
-      values = [ values ]
-    }
-
-    return values.filter((i: any) => typeof i !== 'undefined')
   }
 
   private getPath(urlStr: string) {
@@ -229,13 +216,13 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     <h2>Properties</h2>
     <div class="paper-material" elevation="1">
       <paper-listbox>
-        <dom-repeat as="property" items="[[properties]]">
+        <dom-repeat as="propTuple" items="[[properties]]">
           <template>
-            <paper-item hidden$="[[!hasValues(property, resource)]]">
+            <paper-item>
               <paper-item-body two-line>
-                <span>[[property.title]]</span>
+                <span>[[propTuple.supportedProperty.title]]</span>
                 <div secondary>
-                  <dom-repeat as="value" items="[[getValues(property, resource)]]">
+                  <dom-repeat as="value" items="[[propTuple.objects]]">
                     <template>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
                     </template>
@@ -252,13 +239,13 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     <h2>Links</h2>
     <div class="paper-material" elevation="1">
       <paper-listbox>
-        <dom-repeat as="property" items="[[links]]">
+        <dom-repeat as="link" items="[[links]]">
           <template>
-            <dom-repeat as="value" items="[[getValues(property, resource)]]">
+            <dom-repeat as="value" items="[[link.resources]]">
               <template>
                 <paper-item on-click="expandLink">
                   <paper-item-body two-line>
-                    <span>[[property.title]]</span>
+                    <span>[[link.supportedProperty.title]]</span>
                     <span secondary>[[getPath(value.id)]]</span>
                   </paper-item-body>
                   <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
@@ -274,16 +261,4 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   </li>
 </ul>`
   }
-}
-
-function _getLinks(properties: SupportedProperty[]) {
-  return properties.filter((prop: SupportedProperty) => {
-    return prop.property.types.indexOf('http://www.w3.org/ns/hydra/core#Link') !== -1
-  })
-}
-
-function _getNonLinks(properties: SupportedProperty[]) {
-  return properties.filter((prop: SupportedProperty) => {
-    return prop.property.types.indexOf('http://www.w3.org/ns/hydra/core#Link') === -1
-  })
 }

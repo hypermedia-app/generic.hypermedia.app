@@ -1,51 +1,32 @@
-import { computed, customElement, observe, property } from '@polymer/decorators'
+import { customElement, property } from '@polymer/decorators'
 import '@polymer/paper-tooltip/paper-tooltip'
 import { html, PolymerElement } from '@polymer/polymer'
-import {HydraResource, SupportedProperty} from 'alcaeus/types/Resources'
-import {IResource} from 'alcaeus/types/Resources/Resource'
-import * as flatten from 'lodash/flatten'
+import {SupportedProperty} from 'alcaeus/types/Resources'
 
 @customElement('property-label')
 class PropertyLabel extends PolymerElement {
 
-  public readonly supportedProperty: SupportedProperty
-
-  public propertyId: string
-
-  public resource: IResource
+  public supportedProperty: SupportedProperty
 
   @property({ computed: '_getPropertyTitle(supportedProperty, propertyId)', type: String, notify: true })
   public propertyTitle: string
 
-  public _getPropertyTitle(supportedProperty: SupportedProperty, propertyId: string): string {
-    if (supportedProperty && supportedProperty.title) {
-      return supportedProperty.title
-    }
-
-    return propertyId
-  }
-
-  @observe('resource', 'propertyId')
-  public getTitle(resource: HydraResource, propertyId: string) {
-    if (resource && resource.apiDocumentation) {
-      const properties = resource.types.map((t) => resource.apiDocumentation.getProperties(t))
-
-      const supportedProps = flatten(properties)
-      const [ supportedProp, ...tail ] = supportedProps.filter((prop) => prop.property.id === propertyId)
-
-      if (supportedProp) {
-        this._setProperty('supportedProperty', supportedProp)
-        return
+  public _getPropertyTitle(supportedProperty: SupportedProperty): string {
+    if (supportedProperty) {
+      if (supportedProperty.title) {
+        return supportedProperty.title
       }
+
+      return supportedProperty.property.id
     }
 
-    this._setProperty('supportedProperty', propertyId)
+    return ''
   }
 
   static get template() {
     return html`<span id="title">[[propertyTitle]]</span>
 <paper-tooltip for="title" position="right">
-    [[propertyId]]
+    [[supportedProperty.property.id]]
     <br><br>
     [[supportedProperty.description]]
 </paper-tooltip>`

@@ -67,7 +67,7 @@ export default class HypermediaApp extends PolymerElement {
   }
 
   private enableDoc(e: CustomEvent) {
-    this.apiDocumentation = e.detail.apiDocumentation
+    this.apiDocumentation = e.detail.apiDocumentation.valueOr(null)
     this.apiDocumentationViewer.modelTypes = e.detail.types
   }
 
@@ -95,7 +95,7 @@ export default class HypermediaApp extends PolymerElement {
       <hypermedia-app-shell url="{{url}}" use-hash-urls on-model-changed="enableDoc"
                             on-console-open-documentation="showClassDoc" entrypoint="{{entrypoint}}"
                             title="Generic Hydra Application">
-        <span slot="right-drawer-title">Options</span>
+        <span slot="left-drawer-title">Options</span>
 
         <app-toolbar slot="drawer-left">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
@@ -135,7 +135,7 @@ export default class HypermediaApp extends PolymerElement {
           </template>
         </dom-if>
 
-        <div slot="shell-ready">
+        <div>
           Hi,
 
           This is the Hydra Console - a generic client for Hydra-powered Web APIs. The

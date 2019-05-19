@@ -1,24 +1,36 @@
 import ViewTemplates from '@lit-any/lit-any/views'
-import {HydraResource} from 'alcaeus/types/Resources'
+import {rdf} from 'alcaeus/lib/es/Vocabs'
+import {Collection, HydraResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import 'ld-navigation/ld-link'
 import {html} from 'lit-html'
 import {repeat} from 'lit-html/directives/repeat'
 import '../../components/api-documentation/property-label'
-import {getProperties} from '../../lib/alcaeus-helper'
 import {typedResource} from '../matchers'
 
 function search(e) {
   fireNavigation(e.detail.url)
 }
 
+function getCollectionProperties(collection: Collection) {
+  const typeManagesBlock = collection.manages.find((managesBlock) => managesBlock.predicate.id === rdf.type)
+
+  if (typeManagesBlock) {
+    return typeManagesBlock.object.supportedProperties
+  }
+
+  if (collection.members.length > 0) {
+    return collection.members[0].getProperties().map((t) => t.supportedProperty)
+  }
+
+  return []
+}
+
 ViewTemplates.default.when
   .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#Collection'))
   .scopeMatches('collection-members')
-  .renders((collection, render) => {
-    const members = collection.members
-    // TODO: remove by introducing `manages block` to Alcaeus
-    const properties = getProperties(members[0])
+  .renders((collection: Collection & any, render) => {
+    const properties = getCollectionProperties(collection)
     const searchTemplate = collection['http://www.w3.org/ns/hydra/core#search']
 
     if (searchTemplate) {
@@ -50,14 +62,14 @@ ViewTemplates.default.when
       ${repeat(properties, (property) => html`
         <th>
           <span>
-            <property-label .resource="${members[0]}" .propertyId="${property.property.id}"></property-label>
+            <property-label .supportedProperty="${property}"></property-label>
           </span>
         </th>`)}
         <th></th>
     </tr>
   </thead>
   <tbody>
-    ${repeat(members, (member: HydraResource) => html`
+    ${repeat(collection.members, (member: HydraResource) => html`
       <tr>
           ${repeat(properties, (property) => html`
           <td>
