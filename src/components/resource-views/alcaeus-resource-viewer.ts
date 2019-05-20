@@ -1,6 +1,6 @@
 import {computed, customElement, property} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
-import {HydraResource} from 'alcaeus/types/Resources'
+import {HydraResource, IDocumentedResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 
 import '@polymer/app-layout/app-grid/app-grid-style'
@@ -54,9 +54,14 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return this.resource.getLinks(false)
   }
 
-  @computed('links')
+  @computed('resource')
+  public get collections() {
+    return this.resource.getCollections()
+  }
+
+  @computed('links', 'collections')
   public get hasLinks() {
-    return this.links.length > 0
+    return this.links.length > 0 || this.collections.length > 0
   }
 
   @computed('resource')
@@ -69,6 +74,10 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   @computed('properties')
   public get hasProperties() {
     return this.properties.length > 0
+  }
+
+  private getCollectionTitle(collection: HydraResource & IDocumentedResource) {
+    return collection.title || 'Collection'
   }
 
   private getPath(urlStr: string) {
@@ -252,6 +261,20 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 </paper-item>
               </template>
             </dom-repeat>
+            </paper-item-body>
+            </paper-item>
+          </template>
+        </dom-repeat>
+
+        <dom-repeat as="value" items="[[collections]]">
+          <template>
+            <paper-item on-click="expandLink">
+              <paper-item-body two-line>
+                <span>[[getCollectionTitle(value)]]</span>
+                <span secondary>[[getPath(value.id)]]</span>
+              </paper-item-body>
+              <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
+            </paper-item>
             </paper-item-body>
             </paper-item>
           </template>
