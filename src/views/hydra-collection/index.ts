@@ -13,7 +13,7 @@ function search(e) {
 }
 
 function getCollectionProperties(collection: Collection) {
-  const typeManagesBlock = collection.manages.find((managesBlock) => managesBlock.predicate.id === rdf.type)
+  const typeManagesBlock = collection.manages.find((managesBlock) => managesBlock.property.id === rdf.type)
 
   if (typeManagesBlock) {
     return typeManagesBlock.object.supportedProperties
