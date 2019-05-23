@@ -81,7 +81,7 @@
     "@hydrofoil/alcaeus-loader": "^0.3.0",
     "@hydrofoil/hydrofoil-paper-shell": "^0.2.0-beta.2",
     "@lit-any/components-paper-elements": "^0.8.0",
-    "@lit-any/lit-any": "^0.8.1",
+    "@lit-any/lit-any": "^0.8.2",
     "@polymer/decorators": "3.0.0",
     "@polymer/paper-card": "3.0.1",
     "@polymer/paper-dropdown-menu": "3.0.1",

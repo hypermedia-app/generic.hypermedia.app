@@ -76,6 +76,32 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return this.properties.length > 0
   }
 
+  @computed('resource', 'properties')
+  public get remainingValues() {
+    const knownProperties = this.resource.getProperties()
+      .map((prop) => prop.supportedProperty.property.id)
+
+    return Object.keys(this.resource)
+      .filter((prop) => !prop.startsWith('@'))
+      .filter((prop) => !knownProperties.includes(prop))
+      .map((prop) => {
+        let objects = this.resource[prop]
+        if (!Array.isArray(objects)) {
+          objects = [ objects ]
+        }
+
+        return {
+          objects,
+          property: prop,
+        }
+      })
+  }
+
+  @computed('remainingValues')
+  public get hasOtherValues() {
+    return this.remainingValues.length > 0
+  }
+
   private getCollectionTitle(collection: HydraResource & IDocumentedResource) {
     return collection.title || 'Collection'
   }
@@ -276,6 +302,29 @@ export default class AlcaeusResourceViewer extends PolymerElement {
               <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
             </paper-item>
             </paper-item-body>
+            </paper-item>
+          </template>
+        </dom-repeat>
+      </paper-listbox>
+    </div>
+  </li>
+  <li class="item" hidden$="[[!hasOtherValues]]">
+    <h2>Other values</h2>
+    <div class="paper-material" elevation="1">
+      <paper-listbox>
+        <dom-repeat as="propTuple" items="[[remainingValues]]">
+          <template>
+            <paper-item>
+              <paper-item-body two-line>
+                <span>[[propTuple.property]]</span>
+                <div secondary>
+                  <dom-repeat as="value" items="[[propTuple.objects]]">
+                    <template>
+                      <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
+                    </template>
+                  </dom-repeat>
+                </div>
+              </paper-item-body>
             </paper-item>
           </template>
         </dom-repeat>

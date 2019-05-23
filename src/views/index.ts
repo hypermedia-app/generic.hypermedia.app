@@ -1,2 +1,2 @@
 import './hydra-collection'
-import './fallback'
+import './defaults'
