@@ -278,11 +278,12 @@ export default class AlcaeusResourceViewer extends PolymerElement {
           <template>
             <dom-repeat as="value" items="[[link.resources]]">
               <template>
-                <paper-item on-click="expandLink">
+                <paper-item>
                   <paper-item-body two-line>
                     <span>[[link.supportedProperty.title]]</span>
                     <span secondary>[[getPath(value.id)]]</span>
                   </paper-item-body>
+                  <paper-icon-button icon="zoom-in" on-click="expandLink"></paper-icon-button>
                   <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
                 </paper-item>
               </template>
@@ -294,11 +295,12 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
         <dom-repeat as="value" items="[[collections]]">
           <template>
-            <paper-item on-click="expandLink">
+            <paper-item>
               <paper-item-body two-line>
                 <span>[[getCollectionTitle(value)]]</span>
                 <span secondary>[[getPath(value.id)]]</span>
               </paper-item-body>
+              <paper-icon-button icon="zoom-in" on-click="expandLink"></paper-icon-button>
               <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
             </paper-item>
             </paper-item-body>
