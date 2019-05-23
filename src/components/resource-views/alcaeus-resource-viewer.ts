@@ -11,6 +11,7 @@ import '@polymer/paper-item/paper-item'
 import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/paper-styles/element-styles/paper-material-styles'
 import '@polymer/polymer/lib/elements/dom-repeat'
+import {Core} from 'alcaeus/lib/es/Constants'
 
 @customElement('alcaeus-resource-viewer')
 export default class AlcaeusResourceViewer extends PolymerElement {
@@ -83,6 +84,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
     return Object.keys(this.resource)
       .filter((prop) => !prop.startsWith('@'))
+      .filter((prop) => !prop.startsWith(Core.Vocab('')))
       .filter((prop) => !knownProperties.includes(prop))
       .map((prop) => {
         let objects = this.resource[prop]
