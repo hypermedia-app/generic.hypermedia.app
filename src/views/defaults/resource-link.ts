@@ -1,5 +1,6 @@
 import ViewTemplates from '@lit-any/lit-any/views'
 import {html} from 'lit-html'
+import {getPath} from '../helpers'
 
 ViewTemplates.default.when
   .valueMatches((v) => !!v['@id'] && !v['@id'].match(/^_/)) // TODO: simpler way to tell a blank node
@@ -12,5 +13,5 @@ ViewTemplates.default.when
 </ld-link>`
     }
 
-    return v.id
+    return getPath(v.id)
   })

@@ -12,6 +12,7 @@ import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/paper-styles/element-styles/paper-material-styles'
 import '@polymer/polymer/lib/elements/dom-repeat'
 import {Core} from 'alcaeus/lib/es/Constants'
+import {getPath} from '../../views/helpers'
 
 @customElement('alcaeus-resource-viewer')
 export default class AlcaeusResourceViewer extends PolymerElement {
@@ -109,8 +110,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   }
 
   private getPath(urlStr: string) {
-    const url = new URL(urlStr)
-    return url.pathname + url.search
+    return getPath(urlStr)
   }
 
   private expandLink(e: any) {

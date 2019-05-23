@@ -10,3 +10,8 @@ export function more(resource, parent) {
     }))
   }
 }
+
+export function getPath(urlStr: string) {
+  const url = new URL(urlStr)
+  return url.pathname + url.search
+}
