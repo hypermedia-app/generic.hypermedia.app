@@ -67,8 +67,10 @@ export default class HypermediaApp extends PolymerElement {
   }
 
   private enableDoc(e: CustomEvent) {
-    this.apiDocumentation = e.detail.apiDocumentation.valueOr(null)
-    this.apiDocumentationViewer.modelTypes = e.detail.types
+    if (e.detail) {
+      this.apiDocumentation = e.detail.apiDocumentation.valueOr(null)
+      this.apiDocumentationViewer.modelTypes = e.detail.types
+    }
   }
 
   private showClassDoc(e: CustomEvent) {
