@@ -1,4 +1,5 @@
 import ViewTemplates from '@lit-any/lit-any/views'
+import {Vocab} from 'alcaeus'
 import {rdf} from 'alcaeus/lib/es/Vocabs'
 import {Collection, HydraResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
@@ -26,11 +27,11 @@ function getCollectionProperties(collection: Collection) {
 }
 
 ViewTemplates.default.when
-  .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#Collection'))
+  .valueMatches(typedResource(Vocab('Collection')))
   .scopeMatches('collection-members')
   .renders((collection: Collection & any, render) => {
     const properties = getCollectionProperties(collection)
-    const searchTemplate = collection['http://www.w3.org/ns/hydra/core#search']
+    const searchTemplate = collection[Vocab('search' as any)] // TODO: remove with alcaeus 0.6.3
 
     if (searchTemplate) {
       import('../../components/url-template-form')

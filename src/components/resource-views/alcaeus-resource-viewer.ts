@@ -1,5 +1,6 @@
 import {computed, customElement, property} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
+import {Vocab} from 'alcaeus'
 import {HydraResource, IDocumentedResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 
@@ -11,7 +12,6 @@ import '@polymer/paper-item/paper-item'
 import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/paper-styles/element-styles/paper-material-styles'
 import '@polymer/polymer/lib/elements/dom-repeat'
-import {Core} from 'alcaeus/lib/es/Constants'
 import {getPath} from '../../views/helpers'
 
 @customElement('alcaeus-resource-viewer')
@@ -85,7 +85,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
     return Object.keys(this.resource)
       .filter((prop) => !prop.startsWith('@'))
-      .filter((prop) => !prop.startsWith(Core.Vocab('')))
+      .filter((prop) => !prop.startsWith(Vocab()))
       .filter((prop) => !knownProperties.includes(prop))
       .map((prop) => {
         let objects = this.resource[prop]

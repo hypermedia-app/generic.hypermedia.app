@@ -1,10 +1,11 @@
 import ViewTemplates from '@lit-any/lit-any/views'
+import {Vocab} from 'alcaeus'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import {html} from 'lit-html'
 import {typedResource} from '../matchers'
 
 ViewTemplates.default.when
-  .valueMatches(typedResource('http://www.w3.org/ns/hydra/core#PartialCollectionView'))
+  .valueMatches(typedResource(Vocab('PartialCollectionView')))
   .renders((view) => {
     import('@polymer/paper-button/paper-button')
     import('@polymer/paper-card/paper-card')
