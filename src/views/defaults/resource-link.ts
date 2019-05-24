@@ -4,7 +4,7 @@ import {html} from 'lit-html'
 import {getPath} from '../helpers'
 
 ViewTemplates.default.when
-  .valueMatches((v: IResource) => v && !v.isAnonymous)
+  .valueMatches((v: IResource) => v && v.id && !v.isAnonymous)
   .renders((v: IResource, r, scope, params) => {
     import('@polymer/iron-icon/iron-icon')
 
