@@ -5,7 +5,6 @@ import {Collection, HydraResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import {html} from 'lit-html'
 import {repeat} from 'lit-html/directives/repeat'
-import {more} from '../helpers'
 import {typedResource} from '../matchers'
 
 function search(e) {
@@ -69,11 +68,7 @@ ViewTemplates.default.when
               })}</span>
           </td>`)}
         <td>
-            <ld-link resource-url="${member.id}">
-                <paper-icon-button icon="link"></paper-icon-button>
-            </ld-link>
-
-            <paper-icon-button icon="zoom-in" @click="${more(member, collection)}"></paper-icon-button>
+            <resource-buttons .resource="${member}"></resource-buttons>
         </td>
       </tr>`)}
   </tbody>
