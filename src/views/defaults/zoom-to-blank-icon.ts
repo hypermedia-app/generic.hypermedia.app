@@ -8,5 +8,5 @@ ViewTemplates.default.when
   .renders((v: IResource, r, scope, params) => {
     import('@polymer/paper-icon-button/paper-icon-button')
 
-    return html`<paper-icon-button icon="zoom-in" @click="${more(v, params.parent)}"></paper-icon-button>`
+    return html`<resource-buttons .resource="${v}" .subject="${params.parent}"></resource-buttons>`
   })

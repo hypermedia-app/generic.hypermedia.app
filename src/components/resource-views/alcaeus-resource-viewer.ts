@@ -112,27 +112,6 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return getPath(urlStr)
   }
 
-  private showOperation(e: any) {
-    this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        parent: this.resource,
-        resource: e.model.op,
-      },
-    }))
-  }
-
-  private showClassDocumentation(e: any) {
-    this.dispatchEvent(new CustomEvent('console-open-documentation', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        class: e.model.type.id,
-      },
-    }))
-  }
-
   static get template() {
     return html`<style include="paper-material-styles"></style>
 <style include="app-grid-style">
@@ -205,7 +184,9 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[type.title]]</span>
                 <span secondary>[[type.id]]</span>
               </paper-item-body>
-              <paper-icon-button icon="help-outline" on-click="showClassDocumentation"></paper-icon-button>
+              <resource-buttons resource="[[type]]"
+                                predicate='{ "@id": "@type" }'
+                                subject="[[resource]]"></resource-buttons>
             </paper-item>
           </template>
         </dom-repeat>
@@ -224,7 +205,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span secondary>[[op.description]]</span>
                 <span secondary>(/[[op.method]])</span>
               </paper-item-body>
-              <paper-icon-button icon="image:flash-on" on-click="showOperation"></paper-icon-button>
+              <resource-buttons resource="[[op]]" subject="[[resource]]"></resource-buttons>
             </paper-item>
           </template>
         </dom-repeat>
@@ -248,6 +229,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                   </dom-repeat>
                 </div>
               </paper-item-body>
+              <resource-buttons resource="[[value]]" subject="[[resource]]"></resource-buttons>
             </paper-item>
           </template>
         </dom-repeat>
@@ -267,7 +249,9 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                     <span>[[link.supportedProperty.title]]</span>
                     <span secondary>[[getPath(value.id)]]</span>
                   </paper-item-body>
-                  <resource-buttons resource="[[value]]"></resource-buttons>
+                  <resource-buttons resource="[[value]]"
+                                    predicate="[[link.supportedProperty.property]]"
+                                    subject="[[resource]]"></resource-buttons>
                 </paper-item>
               </template>
             </dom-repeat>
@@ -283,7 +267,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[getCollectionTitle(value)]]</span>
                 <span secondary>[[getPath(value.id)]]</span>
               </paper-item-body>
-              <resource-buttons resource="[[value]]"></resource-buttons>
+              <resource-buttons resource="[[value]]" subject="[[resource]]"></resource-buttons>
             </paper-item>
             </paper-item-body>
             </paper-item>

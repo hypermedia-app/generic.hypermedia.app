@@ -68,7 +68,7 @@ ViewTemplates.default.when
               })}</span>
           </td>`)}
         <td>
-            <resource-buttons .resource="${member}"></resource-buttons>
+            <resource-buttons .resource="${member}" .subject="${collection}"></resource-buttons>
         </td>
       </tr>`)}
   </tbody>

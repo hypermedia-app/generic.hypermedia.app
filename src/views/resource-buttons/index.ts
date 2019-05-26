@@ -1,51 +1,71 @@
 import LitView from '@lit-any/lit-any/lit-view'
 import ViewTemplates from '@lit-any/lit-any/views'
-import fireNavigation from 'ld-navigation/fireNavigation'
+import {HydraResource, RdfProperty} from 'alcaeus/types/Resources'
 import {html} from 'lit-html'
-
-export const Scope = 'resource-buttons'
-
-function followLink(resource) {
-  return function(e: Event) {
-    fireNavigation(this, resource.id)
-    e.preventDefault()
-    e.stopPropagation()
-  }
-}
-
-function expand(resource, parent) {
-  return function() {
-    this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        parent,
-        resource,
-      },
-    }))
-  }
-}
+import './docs-button'
+import './expand-button'
+import './link-button'
+import {Scope} from './scope'
 
 ViewTemplates.default.when
   .scopeMatches(Scope)
-  .renders((resource, next, scope, params) => {
+  .renders((v: IResourceButtonModel, next, scope) => {
     return html`
-      <paper-icon-button icon="zoom-in" @click="${expand(resource, params.resource)}"></paper-icon-button>
-      <paper-icon-button icon="link" @click="${followLink(resource)}"></paper-icon-button>`
+      ${next(v, `${scope}-expand`)}
+      ${next(v, `${scope}-link`)}
+      ${v.resource.operations.map((op) => next({ resource: op, subject: v.resource }, `${scope}-expand`))}`
   })
 
+export interface IResourceButtonModel {
+  resource: HydraResource
+  subject: HydraResource
+  predicate: RdfProperty
+}
+
 class ResourceButtons extends LitView {
+  static get properties() {
+    return {
+      predicate: { type: Object },
+    }
+  }
+
   constructor() {
     super()
     this.templateScope = Scope
+    this.value = {}
   }
 
   get resource() {
-    return this.value
+    return this.value.resource
   }
 
-  set resource(value) {
-    this.value = value
+  set resource(resource) {
+    this.value = {
+      ...this.value,
+      resource,
+    }
+  }
+
+  get subject() {
+    return this.value.subject
+  }
+
+  set subject(subject) {
+    this.value = {
+      ...this.value,
+      subject,
+    }
+  }
+
+  get predicate() {
+    return this.value.predicate
+  }
+
+  set predicate(predicate) {
+    this.value = {
+      ...this.value,
+      predicate,
+    }
   }
 }
 
