@@ -38,9 +38,9 @@ ViewTemplates.default.when
 
     return html`<link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css" rel="stylesheet" type="text/css" />
 
-<url-template-form .template="${searchTemplate}"
+${searchTemplate ? html`<url-template-form .template="${searchTemplate}"
                    @submit="${search}"
-                   .filters="${collection.currentFilter}"></url-template-form>
+                   .filters="${collection.currentFilter}"></url-template-form>` : ''}
 
 <table class="mui-table">
   <thead>
