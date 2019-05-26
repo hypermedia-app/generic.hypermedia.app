@@ -4,9 +4,6 @@ import {html} from 'lit-html'
 import {more} from '../helpers'
 
 ViewTemplates.default.when
+  .scopeMatches('default-resource-view')
   .valueMatches((v: IResource) => v && v.isAnonymous)
-  .renders((v: IResource, r, scope, params) => {
-    import('@polymer/paper-icon-button/paper-icon-button')
-
-    return html`<resource-buttons .resource="${v}" .subject="${params.parent}"></resource-buttons>`
-  })
+  .renders(() => '')

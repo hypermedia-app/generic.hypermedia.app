@@ -9,12 +9,17 @@ import {Scope} from './scope'
 
 ViewTemplates.default.when
   .scopeMatches(Scope)
+  .valueMatches((v) => v.resource && v.resource.id)
   .renders((v: IResourceButtonModel, next, scope) => {
     return html`
       ${next(v, `${scope}-expand`)}
       ${next(v, `${scope}-link`)}
       ${v.resource.operations.map((op) => next({ resource: op, subject: v.resource }, `${scope}-expand`))}`
   })
+
+ViewTemplates.default.when
+  .scopeMatches(Scope)
+  .renders(() => '')
 
 export interface IResourceButtonModel {
   resource: HydraResource
