@@ -14,7 +14,9 @@ ViewTemplates.default.when
     return html`
       ${next(v, `${scope}-expand`)}
       ${next(v, `${scope}-link`)}
-      ${v.resource.operations.map((op) => next({ resource: op, subject: v.resource }, `${scope}-expand`))}`
+      ${v.resource.operations
+        .filter((op) => op.requiresInput && op.method !== 'GET')
+        .map((op) => next({ resource: op, subject: v.resource }, `${scope}-expand`))}`
   })
 
 ViewTemplates.default.when
