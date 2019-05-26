@@ -47,7 +47,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
   @computed('resource')
   public get operations() {
-    return this.resource.operations
+    return this.resource.operations.filter((op) => op.method !== 'GET' || op.requiresInput)
   }
 
   @computed('resource')

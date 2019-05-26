@@ -9,13 +9,18 @@ import {Scope} from './scope'
 
 ViewTemplates.default.when
   .scopeMatches(Scope)
-  .valueMatches((v) => v.resource && v.resource.id)
+  .valueMatches((v) => v.resource.constructor.name === 'Operation')
+  .renders((v, next) => next(v, `${Scope}-expand`))
+
+ViewTemplates.default.when
+  .scopeMatches(Scope)
+  .valueMatches((v) => typeof v.resource === 'object')
   .renders((v: IResourceButtonModel, next, scope) => {
     return html`
       ${next(v, `${scope}-expand`)}
       ${next(v, `${scope}-link`)}
       ${v.resource.operations
-        .filter((op) => op.requiresInput && op.method !== 'GET')
+        .filter((op) => op.method !== 'GET' || op.requiresInput)
         .map((op) => next({ resource: op, subject: v.resource }, `${scope}-expand`))}`
   })
 
