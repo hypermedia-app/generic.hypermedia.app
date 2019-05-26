@@ -65,7 +65,7 @@ export class ResourceOutline extends PolymerElement {
     this._setProperty('resource', rootResource)
   }
 
-  public _changeResource(e: CustomEvent) {
+  public _changeResource(e: any) {
     const property = e.target.data
     this.history.push(this.resource)
     this._setProperty('resource', this.resource[property])

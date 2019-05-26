@@ -1,5 +1,6 @@
 import {computed, customElement, property} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
+import {Vocab} from 'alcaeus'
 import {HydraResource, IDocumentedResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 
@@ -11,6 +12,7 @@ import '@polymer/paper-item/paper-item'
 import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/paper-styles/element-styles/paper-material-styles'
 import '@polymer/polymer/lib/elements/dom-repeat'
+import {getPath} from '../../views/helpers'
 
 @customElement('alcaeus-resource-viewer')
 export default class AlcaeusResourceViewer extends PolymerElement {
@@ -76,13 +78,39 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return this.properties.length > 0
   }
 
+  @computed('resource', 'properties')
+  public get remainingValues() {
+    const knownProperties = this.resource.getProperties()
+      .map((prop) => prop.supportedProperty.property.id)
+
+    return Object.keys(this.resource)
+      .filter((prop) => !prop.startsWith('@'))
+      .filter((prop) => !prop.startsWith(Vocab()))
+      .filter((prop) => !knownProperties.includes(prop))
+      .map((prop) => {
+        let objects = this.resource[prop]
+        if (!Array.isArray(objects)) {
+          objects = [ objects ]
+        }
+
+        return {
+          objects,
+          property: prop,
+        }
+      })
+  }
+
+  @computed('remainingValues')
+  public get hasOtherValues() {
+    return this.remainingValues.length > 0
+  }
+
   private getCollectionTitle(collection: HydraResource & IDocumentedResource) {
     return collection.title || 'Collection'
   }
 
   private getPath(urlStr: string) {
-    const url = new URL(urlStr)
-    return url.pathname + url.search
+    return getPath(urlStr)
   }
 
   private expandLink(e: any) {
@@ -252,11 +280,12 @@ export default class AlcaeusResourceViewer extends PolymerElement {
           <template>
             <dom-repeat as="value" items="[[link.resources]]">
               <template>
-                <paper-item on-click="expandLink">
+                <paper-item>
                   <paper-item-body two-line>
                     <span>[[link.supportedProperty.title]]</span>
                     <span secondary>[[getPath(value.id)]]</span>
                   </paper-item-body>
+                  <paper-icon-button icon="zoom-in" on-click="expandLink"></paper-icon-button>
                   <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
                 </paper-item>
               </template>
@@ -268,14 +297,38 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
         <dom-repeat as="value" items="[[collections]]">
           <template>
-            <paper-item on-click="expandLink">
+            <paper-item>
               <paper-item-body two-line>
                 <span>[[getCollectionTitle(value)]]</span>
                 <span secondary>[[getPath(value.id)]]</span>
               </paper-item-body>
+              <paper-icon-button icon="zoom-in" on-click="expandLink"></paper-icon-button>
               <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
             </paper-item>
             </paper-item-body>
+            </paper-item>
+          </template>
+        </dom-repeat>
+      </paper-listbox>
+    </div>
+  </li>
+  <li class="item" hidden$="[[!hasOtherValues]]">
+    <h2>Other values</h2>
+    <div class="paper-material" elevation="1">
+      <paper-listbox>
+        <dom-repeat as="propTuple" items="[[remainingValues]]">
+          <template>
+            <paper-item>
+              <paper-item-body two-line>
+                <span>[[propTuple.property]]</span>
+                <div secondary>
+                  <dom-repeat as="value" items="[[propTuple.objects]]">
+                    <template>
+                      <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
+                    </template>
+                  </dom-repeat>
+                </div>
+              </paper-item-body>
             </paper-item>
           </template>
         </dom-repeat>

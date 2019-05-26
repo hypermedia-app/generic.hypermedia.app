@@ -67,8 +67,10 @@ export default class HypermediaApp extends PolymerElement {
   }
 
   private enableDoc(e: CustomEvent) {
-    this.apiDocumentation = e.detail.apiDocumentation.valueOr(null)
-    this.apiDocumentationViewer.modelTypes = e.detail.types
+    if (e.detail) {
+      this.apiDocumentation = e.detail.apiDocumentation.valueOr(null)
+      this.apiDocumentationViewer.modelTypes = e.detail.types
+    }
   }
 
   private showClassDoc(e: CustomEvent) {
@@ -136,9 +138,9 @@ export default class HypermediaApp extends PolymerElement {
         </dom-if>
 
         <div>
-          Hi,
+          <h2>Generic Hypermedia Application</h2>
 
-          This is the Hydra Console - a generic client for Hydra-powered Web APIs. The
+          This is a generic client for Hydra-powered Web APIs. The
           user interface consists of four parts:
 
           <ol>
@@ -148,10 +150,14 @@ export default class HypermediaApp extends PolymerElement {
             <li>documentation pane in right sidebar.</li>
           </ol>
 
-          You may also start by selecting an API from the dropdown from the sidebar header.
+          <p>You may also start by selecting an API from the dropdown from the sidebar header.</p>
 
-          Links are presented as a clickable icon <iron-icon icon="link"></iron-icon>. Clicking them will fetch the
-          resource and present it in the resource area.
+          <p>Links are presented as a clickable icon <iron-icon icon="link"></iron-icon>. Clicking them will fetch the
+            resource and present it in the resource area.</p>
+
+          <p>You may also see a magnifying glass icon <iron-icon icon="zoom-in"></iron-icon>.
+            It opens embedded resources within the current view, without dereferencing them.
+            Especially useful for blank nodes.</p>
         </div>
 
         <paper-spinner slot="loader" active></paper-spinner>
