@@ -284,18 +284,21 @@ export default class AlcaeusResourceViewer extends PolymerElement {
       <paper-listbox>
         <dom-repeat as="propTuple" items="[[remainingValues]]">
           <template>
-            <paper-item>
-              <paper-item-body two-line>
-                <span>[[propTuple.property]]</span>
-                <div secondary>
-                  <dom-repeat as="value" items="[[propTuple.objects]]">
-                    <template>
+            <dom-repeat as="value" items="[[propTuple.objects]]">
+              <template>
+                <paper-item>
+                  <paper-item-body two-line>
+                    <span>[[propTuple.property]]</span>
+                    <div secondary>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
-                    </template>
-                  </dom-repeat>
-                </div>
-              </paper-item-body>
-            </paper-item>
+                    </div>
+                  </paper-item-body>
+                  <resource-buttons resource="[[value]]"
+                                    predicate="[[propTuple.property]]"
+                                    subject="[[resource]]"></resource-buttons>
+                </paper-item>
+              </template>
+            </dom-repeat>
           </template>
         </dom-repeat>
       </paper-listbox>
