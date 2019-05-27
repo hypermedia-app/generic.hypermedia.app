@@ -93,6 +93,7 @@
     "@polymer/polymer": "3.1.0",
     "@webcomponents/webcomponentsjs": "2.2.0",
     "alcaeus": "^0.6.2",
+    "feather-icon-literals": "1.0.0-rc.6",
     "ld-navigation": "^0.5.0",
     "lit-html": "^1.0.0",
     "lodash.flatten": "4.4.0"

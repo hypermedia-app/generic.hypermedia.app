@@ -5,79 +5,26 @@ import {html, PolymerElement} from '@polymer/polymer'
 import '@polymer/polymer/lib/elements/dom-if'
 import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings'
 import {HydraResource, IApiDocumentation} from 'alcaeus/types/Resources'
+import { GitHub } from 'feather-icon-literals'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import ApiDocumentationViewer from '../api-documentation/viewer'
 import '../hypermedia-app-shell'
 
 @customElement('hypermedia-app')
 export default class HypermediaApp extends PolymerElement {
-  @query('hypermedia-app-shell')
-  public shell: HydrofoilPaperShell
-
-  @property({ type: Object })
-  public apiDocumentation: IApiDocumentation
-
-  @query('hydrofoil-address-bar')
-  private address: HydrofoilAddressBar
-
-  @query('api-documentation-viewer')
-  private apiDocumentationViewer: ApiDocumentationViewer
-
-  constructor() {
-    super()
-    setPassiveTouchGestures(true)
-  }
-
-  @property({ type: String })
-  public url: string
 
   @computed('apiDocumentation')
   public get hasApiDocumentation() {
     return !!this.apiDocumentation
   }
 
-  @property({ type: Object })
-  public entrypoint: HydraResource = null
-
   @computed('entrypoint')
   public get entrypointLoaded() {
     return !!this.entrypoint
   }
 
-  public connectedCallback() {
-    super.connectedCallback()
-    import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar')
-    import('../entrypoint-selector')
-    import('../../views')
-    import('@polymer/iron-icon/iron-icon')
-    import('@hydrofoil/hydrofoil-paper-shell/alcaeus-entrypoint-menu')
-  }
-
-  protected showDocs() {
-    import('../api-documentation/viewer')
-    this.shell.openRightDrawer()
-  }
-
-  private navigate() {
-    fireNavigation(this, this.address.url)
-  }
-
-  private updateAddressBar(e: CustomEvent) {
-    this.address.url = e.detail.value
-  }
-
-  private enableDoc(e: CustomEvent) {
-    if (e.detail) {
-      this.apiDocumentation = e.detail.apiDocumentation.valueOr(null)
-      this.apiDocumentationViewer.modelTypes = e.detail.types
-    }
-  }
-
-  private showClassDoc(e: CustomEvent) {
-    import('../api-documentation/viewer').then(() => {
-      this.apiDocumentationViewer.selectClassById(e.detail.class)
-      this.showDocs()
-    })
+  public get githubIcon() {
+    return GitHub()
   }
 
   static get template() {
@@ -89,8 +36,13 @@ export default class HypermediaApp extends PolymerElement {
           text-align: left;
         }
 
-        a {
+        app-toolbar a {
           color: white;
+        }
+
+        a {
+          text-decoration: none;
+          color: unset;
         }
       </style>
 
@@ -136,6 +88,12 @@ export default class HypermediaApp extends PolymerElement {
             </paper-item>
           </template>
         </dom-if>
+        <paper-listbox slot="drawer-left">
+          <paper-icon-item>
+            <span slot="item-icon" inner-h-t-m-l="[[githubIcon]]"></span>
+            <a href="https://github.com/hypermedia-app/generic.hypermedia.app">See project on GitHub</a>
+          </paper-icon-item>
+        </paper-listbox>
 
         <div>
           <h2>Generic Hypermedia Application</h2>
@@ -162,5 +120,64 @@ export default class HypermediaApp extends PolymerElement {
 
         <paper-spinner slot="loader" active></paper-spinner>
       </hypermedia-app-shell>`
+  }
+  @query('hypermedia-app-shell')
+  public shell: HydrofoilPaperShell
+
+  @property({ type: Object })
+  public apiDocumentation: IApiDocumentation
+
+  @property({ type: String })
+  public url: string
+
+  @property({ type: Object })
+  public entrypoint: HydraResource = null
+
+  @query('hydrofoil-address-bar')
+  private address: HydrofoilAddressBar
+
+  @query('api-documentation-viewer')
+  private apiDocumentationViewer: ApiDocumentationViewer
+
+  constructor() {
+    super()
+    setPassiveTouchGestures(true)
+  }
+
+  public connectedCallback() {
+    super.connectedCallback()
+    import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar')
+    import('../entrypoint-selector')
+    import('../../views')
+    import('@polymer/iron-icon/iron-icon')
+    import('@polymer/paper-item/paper-icon-item')
+    import('@hydrofoil/hydrofoil-paper-shell/alcaeus-entrypoint-menu')
+  }
+
+  protected showDocs() {
+    import('../api-documentation/viewer')
+    this.shell.openRightDrawer()
+  }
+
+  private navigate() {
+    fireNavigation(this, this.address.url)
+  }
+
+  private updateAddressBar(e: CustomEvent) {
+    this.address.url = e.detail.value
+  }
+
+  private enableDoc(e: CustomEvent) {
+    if (e.detail) {
+      this.apiDocumentation = e.detail.apiDocumentation.valueOr(null)
+      this.apiDocumentationViewer.modelTypes = e.detail.types
+    }
+  }
+
+  private showClassDoc(e: CustomEvent) {
+    import('../api-documentation/viewer').then(() => {
+      this.apiDocumentationViewer.selectClassById(e.detail.class)
+      this.showDocs()
+    })
   }
 }
