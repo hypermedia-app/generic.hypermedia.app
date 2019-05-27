@@ -1,4 +1,5 @@
 import ViewTemplates from '@lit-any/lit-any/views'
+import {Operation} from 'alcaeus/lib/es/Resources/Operation'
 import iconButton from './button-render'
 import {IResourceButtonModel} from './index'
 import {Scope} from './scope'
@@ -18,7 +19,7 @@ export function expand({ resource, subject }: IResourceButtonModel) {
 
 ViewTemplates.default.when
   .scopeMatches(`${Scope}-expand`)
-  .valueMatches((v: IResourceButtonModel) => v.resource && v.resource.constructor.name === 'Operation')
+  .valueMatches((v: IResourceButtonModel) => v.resource instanceof Operation)
   .renders(iconButton('image:flash-on', expand))
 
 ViewTemplates.default.when

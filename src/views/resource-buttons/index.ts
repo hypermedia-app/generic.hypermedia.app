@@ -1,5 +1,6 @@
 import LitView from '@lit-any/lit-any/lit-view'
 import ViewTemplates from '@lit-any/lit-any/views'
+import {Operation} from 'alcaeus/lib/es/Resources/Operation'
 import {HydraResource, RdfProperty} from 'alcaeus/types/Resources'
 import {html} from 'lit-html'
 import './docs-button'
@@ -9,7 +10,7 @@ import {Scope} from './scope'
 
 ViewTemplates.default.when
   .scopeMatches(Scope)
-  .valueMatches((v) => v.resource.constructor.name === 'Operation')
+  .valueMatches((v) => v.resource instanceof Operation)
   .renders((v, next) => next(v, `${Scope}-expand`))
 
 ViewTemplates.default.when
