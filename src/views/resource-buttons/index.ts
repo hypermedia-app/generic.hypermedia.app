@@ -22,7 +22,7 @@ ViewTemplates.default.when
       ${next(v, `${scope}-link`)}
       ${v.resource.operations
         .filter((op) => op.method !== 'GET' || op.requiresInput)
-        .map((op) => next({ resource: op, subject: v.resource }, `${scope}-expand`))}`
+        .map((op) => next({resource: op, subject: v.subject}, `${scope}-expand`))}`
   })
 
 ViewTemplates.default.when
