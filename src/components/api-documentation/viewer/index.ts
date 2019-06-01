@@ -4,6 +4,7 @@ import {PaperDropdownMenuElement} from '@polymer/paper-dropdown-menu/paper-dropd
 import {PaperToastElement} from '@polymer/paper-toast/paper-toast'
 import {html, PolymerElement} from '@polymer/polymer'
 import {Class, IApiDocumentation} from 'alcaeus/types/Resources'
+import {shrink} from '../../../lib/shrink'
 
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@polymer/paper-item/paper-item'
@@ -31,6 +32,15 @@ export default class ApiDocumentationViewer extends PolymerElement {
 
   @property({ type: Object })
   public selectedClass: Class
+
+  @computed('selectedClass')
+  public get prefixedSelectedClassId() {
+    if (!this.selectedClass) {
+      return ''
+    }
+
+    return shrink(this.selectedClass.id) || this.selectedClass.id
+  }
 
   @query('paper-toast')
   private toast: PaperToastElement
