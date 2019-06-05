@@ -2,7 +2,6 @@ import {computed, customElement, property} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
 import {Vocab} from 'alcaeus'
 import {HydraResource, IDocumentedResource} from 'alcaeus/types/Resources'
-import fireNavigation from 'ld-navigation/fireNavigation'
 
 import '@polymer/app-layout/app-grid/app-grid-style'
 import '@polymer/iron-icons/image-icons'
@@ -113,44 +112,6 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return getPath(urlStr)
   }
 
-  private expandLink(e: any) {
-    this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        parent: this.resource,
-        resource: e.model.value,
-      },
-    }))
-  }
-
-  private showOperation(e: any) {
-    this.dispatchEvent(new CustomEvent('hydrofoil-append-resource', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        parent: this.resource,
-        resource: e.model.op,
-      },
-    }))
-  }
-
-  private showClassDocumentation(e: any) {
-    this.dispatchEvent(new CustomEvent('console-open-documentation', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        class: e.model.type.id,
-      },
-    }))
-  }
-
-  private followLink(e: any) {
-    fireNavigation(this, e.model.value.id)
-    e.preventDefault()
-    e.stopPropagation()
-  }
-
   static get template() {
     return html`<style include="paper-material-styles"></style>
 <style include="app-grid-style">
@@ -223,7 +184,9 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[type.title]]</span>
                 <span secondary>[[type.id]]</span>
               </paper-item-body>
-              <paper-icon-button icon="help-outline" on-click="showClassDocumentation"></paper-icon-button>
+              <resource-buttons resource="[[type]]"
+                                predicate='{ "@id": "@type" }'
+                                subject="[[resource]]"></resource-buttons>
             </paper-item>
           </template>
         </dom-repeat>
@@ -242,7 +205,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span secondary>[[op.description]]</span>
                 <span secondary>(/[[op.method]])</span>
               </paper-item-body>
-              <paper-icon-button icon="image:flash-on" on-click="showOperation"></paper-icon-button>
+              <resource-buttons resource="[[op]]" subject="[[resource]]"></resource-buttons>
             </paper-item>
           </template>
         </dom-repeat>
@@ -255,18 +218,21 @@ export default class AlcaeusResourceViewer extends PolymerElement {
       <paper-listbox>
         <dom-repeat as="propTuple" items="[[properties]]">
           <template>
-            <paper-item>
-              <paper-item-body two-line>
-                <span>[[propTuple.supportedProperty.title]]</span>
-                <div secondary>
-                  <dom-repeat as="value" items="[[propTuple.objects]]">
-                    <template>
+            <dom-repeat as="value" items="[[propTuple.objects]]">
+              <template>
+                <paper-item>
+                  <paper-item-body two-line>
+                    <span>[[propTuple.supportedProperty.title]]</span>
+                    <div secondary>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
-                    </template>
-                  </dom-repeat>
-                </div>
-              </paper-item-body>
-            </paper-item>
+                    </div>
+                  </paper-item-body>
+                  <resource-buttons resource="[[value]]"
+                                    subject="[[resource]]"
+                                    predicate="[[propTuple.supportedProperty.property]]"></resource-buttons>
+                </paper-item>
+              </template>
+            </dom-repeat>
           </template>
         </dom-repeat>
       </paper-listbox>
@@ -285,8 +251,9 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                     <span>[[link.supportedProperty.title]]</span>
                     <span secondary>[[getPath(value.id)]]</span>
                   </paper-item-body>
-                  <paper-icon-button icon="zoom-in" on-click="expandLink"></paper-icon-button>
-                  <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
+                  <resource-buttons resource="[[value]]"
+                                    predicate="[[link.supportedProperty.property]]"
+                                    subject="[[resource]]"></resource-buttons>
                 </paper-item>
               </template>
             </dom-repeat>
@@ -302,8 +269,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
                 <span>[[getCollectionTitle(value)]]</span>
                 <span secondary>[[getPath(value.id)]]</span>
               </paper-item-body>
-              <paper-icon-button icon="zoom-in" on-click="expandLink"></paper-icon-button>
-              <paper-icon-button icon="link" on-click="followLink"></paper-icon-button>
+              <resource-buttons resource="[[value]]" subject="[[resource]]"></resource-buttons>
             </paper-item>
             </paper-item-body>
             </paper-item>
@@ -318,18 +284,21 @@ export default class AlcaeusResourceViewer extends PolymerElement {
       <paper-listbox>
         <dom-repeat as="propTuple" items="[[remainingValues]]">
           <template>
-            <paper-item>
-              <paper-item-body two-line>
-                <span>[[propTuple.property]]</span>
-                <div secondary>
-                  <dom-repeat as="value" items="[[propTuple.objects]]">
-                    <template>
+            <dom-repeat as="value" items="[[propTuple.objects]]">
+              <template>
+                <paper-item>
+                  <paper-item-body two-line>
+                    <span>[[propTuple.property]]</span>
+                    <div secondary>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
-                    </template>
-                  </dom-repeat>
-                </div>
-              </paper-item-body>
-            </paper-item>
+                    </div>
+                  </paper-item-body>
+                  <resource-buttons resource="[[value]]"
+                                    predicate="[[propTuple.property]]"
+                                    subject="[[resource]]"></resource-buttons>
+                </paper-item>
+              </template>
+            </dom-repeat>
           </template>
         </dom-repeat>
       </paper-listbox>

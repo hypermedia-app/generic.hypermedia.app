@@ -1,11 +1,10 @@
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
 import {Vocab} from 'alcaeus'
 import {rdf} from 'alcaeus/lib/es/Vocabs'
 import {Collection, HydraResource} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import {html} from 'lit-html'
 import {repeat} from 'lit-html/directives/repeat'
-import {more} from '../helpers'
 import {typedResource} from '../matchers'
 
 function search(e) {
@@ -39,9 +38,9 @@ ViewTemplates.default.when
 
     return html`<link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css" rel="stylesheet" type="text/css" />
 
-<url-template-form .template="${searchTemplate}"
+${searchTemplate ? html`<url-template-form .template="${searchTemplate}"
                    @submit="${search}"
-                   .filters="${collection.currentFilter}"></url-template-form>
+                   .filters="${collection.currentFilter}"></url-template-form>` : ''}
 
 <table class="mui-table">
   <thead>
@@ -69,11 +68,7 @@ ViewTemplates.default.when
               })}</span>
           </td>`)}
         <td>
-            <ld-link resource-url="${member.id}">
-                <paper-icon-button icon="link"></paper-icon-button>
-            </ld-link>
-
-            <paper-icon-button icon="zoom-in" @click="${more(member, collection)}"></paper-icon-button>
+            <resource-buttons .resource="${member}" .subject="${collection}"></resource-buttons>
         </td>
       </tr>`)}
   </tbody>

@@ -80,10 +80,12 @@
     "xo": "0.23.0"
   },
   "dependencies": {
-    "@hydrofoil/alcaeus-loader": "^0.3.0",
-    "@hydrofoil/hydrofoil-paper-shell": "^0.2.0-beta.2",
-    "@lit-any/components-paper-elements": "^0.8.0",
-    "@lit-any/lit-any": "^0.8.2",
+    "@hydrofoil/alcaeus-loader": "^0.3.1",
+    "@hydrofoil/hydrofoil-shell": "^0.2.2",
+    "@hydrofoil/hydrofoil-paper-shell": "^0.2.0",
+    "@lit-any/components-paper-elements": "^0.9.0",
+    "@lit-any/forms": "^0.9.0",
+    "@lit-any/views": "^0.9.0",
     "@polymer/decorators": "3.0.0",
     "@polymer/paper-card": "3.0.1",
     "@polymer/paper-dropdown-menu": "3.0.1",
@@ -96,7 +98,9 @@
     "@webcomponents/webcomponentsjs": "2.2.0",
     "@zazuko/rdf-vocabularies": "2019.5.13",
     "alcaeus": "^0.6.2",
+    "feather-icon-literals": "1.0.0-rc.6",
     "ld-navigation": "^0.5.0",
+    "lit-element": "^2.1.0",
     "lit-html": "^1.0.0",
     "lodash.flatten": "4.4.0"
   }

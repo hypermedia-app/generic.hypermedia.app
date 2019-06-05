@@ -1,5 +1,5 @@
 /* tslint:disable:ordered-imports */
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
 import './hydrofoil-shell'
 import './alcaeus-resource-viewer'
 import './resource-link'
@@ -8,8 +8,8 @@ import {html} from 'lit-html'
 
 ViewTemplates.default.when
   .valueMatches((v) => typeof v === 'string')
-  .renders((v) => v)
+  .renders((v: string) => v)
 
 ViewTemplates.default.when
   .valueMatches((v) => Array.isArray(v))
-  .renders((v: any[], render) => v.map((el) => html`${render(el)} `))
+  .renders((v: any[], render) => html`${v.map((el) => html`${render(el)} `)}`)
