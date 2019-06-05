@@ -1,4 +1,4 @@
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
 import {Vocab} from 'alcaeus'
 import {rdf} from 'alcaeus/lib/es/Vocabs'
 import {Collection, HydraResource} from 'alcaeus/types/Resources'

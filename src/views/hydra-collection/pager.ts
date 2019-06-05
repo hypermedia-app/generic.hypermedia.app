@@ -1,12 +1,13 @@
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
 import {Vocab} from 'alcaeus'
+import {PartialCollectionView} from 'alcaeus/types/Resources'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import {html} from 'lit-html'
 import {typedResource} from '../matchers'
 
 ViewTemplates.default.when
   .valueMatches(typedResource(Vocab('PartialCollectionView')))
-  .renders((view) => {
+  .renders((view: PartialCollectionView) => {
     import('@polymer/paper-button/paper-button')
     import('@polymer/paper-card/paper-card')
 

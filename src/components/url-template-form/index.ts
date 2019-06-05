@@ -1,7 +1,7 @@
 import {computed, customElement, property, query} from '@polymer/decorators'
 import {html, PolymerElement} from '@polymer/polymer'
 
-import '@lit-any/lit-any/lit-form'
+import '@lit-any/forms/lit-form'
 import '../../forms'
 
 const decorator = {
