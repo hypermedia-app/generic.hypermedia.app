@@ -1,4 +1,4 @@
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
 import {Operation} from 'alcaeus/lib/es/Resources/Operation'
 import iconButton from './button-render'
 import {IResourceButtonModel} from './index'
@@ -24,7 +24,7 @@ ViewTemplates.default.when
 
 ViewTemplates.default.when
   .scopeMatches(`${Scope}-expand`)
-  .valueMatches((v: IResourceButtonModel) => v.resource && v.resource.id)
+  .valueMatches((v: IResourceButtonModel) => !!v.resource && !!v.resource.id)
   .renders(iconButton('zoom-in', expand))
 
 ViewTemplates.default.when

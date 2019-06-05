@@ -1,4 +1,4 @@
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
 import iconButton from './button-render'
 import {IResourceButtonModel} from './index'
 import {Scope} from './scope'

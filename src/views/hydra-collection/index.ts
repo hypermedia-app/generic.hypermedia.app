@@ -2,7 +2,7 @@ import './collection'
 import './collection-table'
 import './pager'
 
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
 import {IResource} from 'alcaeus/types/Resources/Resource'
 import {html} from 'lit-html'
 

@@ -1,5 +1,5 @@
-import LitView from '@lit-any/lit-any/lit-view'
-import ViewTemplates from '@lit-any/lit-any/views'
+import {ViewTemplates} from '@lit-any/views'
+import LitView from '@lit-any/views/lit-view'
 import {Operation} from 'alcaeus/lib/es/Resources/Operation'
 import {HydraResource, RdfProperty} from 'alcaeus/types/Resources'
 import {html} from 'lit-html'
@@ -10,12 +10,12 @@ import {Scope} from './scope'
 
 ViewTemplates.default.when
   .scopeMatches(Scope)
-  .valueMatches((v) => v.resource instanceof Operation)
+  .valueMatches((v: IResourceButtonModel) => v.resource instanceof Operation)
   .renders((v, next) => next(v, `${Scope}-expand`))
 
 ViewTemplates.default.when
   .scopeMatches(Scope)
-  .valueMatches((v) => typeof v.resource === 'object')
+  .valueMatches((v: IResourceButtonModel) => typeof v.resource === 'object')
   .renders((v: IResourceButtonModel, next, scope) => {
     return html`
       ${next(v, `${scope}-expand`)}
@@ -30,9 +30,9 @@ ViewTemplates.default.when
   .renders(() => '')
 
 export interface IResourceButtonModel {
-  resource: HydraResource
-  subject: HydraResource
-  predicate: RdfProperty
+  resource?: HydraResource
+  subject?: HydraResource
+  predicate?: RdfProperty
 }
 
 class ResourceButtons extends LitView {
@@ -41,6 +41,8 @@ class ResourceButtons extends LitView {
       predicate: { type: Object },
     }
   }
+
+  public value: IResourceButtonModel
 
   constructor() {
     super()
