@@ -82,7 +82,7 @@
     "@hydrofoil/hydrofoil-shell": "^0.2.2",
     "@hydrofoil/hydrofoil-paper-shell": "^0.2.0",
     "@lit-any/components-paper-elements": "^0.9.0",
-    "@lit-any/forms": "^0.9.0",
+    "@lit-any/forms": "^0.9.1",
     "@lit-any/views": "^0.9.0",
     "@polymer/decorators": "3.0.0",
     "@polymer/paper-card": "3.0.1",
