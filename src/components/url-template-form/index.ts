@@ -1,7 +1,5 @@
-import {computed, customElement, property, query} from '@polymer/decorators'
-import {html, PolymerElement} from '@polymer/polymer'
-
 import '@lit-any/forms/lit-form'
+import {css, customElement, html, LitElement, property, query} from 'lit-element'
 import '../../forms'
 
 const decorator = {
@@ -20,14 +18,13 @@ const decorator = {
 }
 
 @customElement('url-template-form')
-export default class extends PolymerElement {
+export default class UrlTemplateForm extends LitElement {
   @property({ type: Object })
   public template: any
 
-  @property({ type: Object, notify: true })
+  @property({ type: Object })
   public filters: object
 
-  @computed('template')
   public get contract() {
     return {
       fields: this.template.mappings.map((f) => ({
@@ -39,8 +36,26 @@ export default class extends PolymerElement {
     }
   }
 
+  private static get fieldStyle() {
+    return css`flex: 1; margin: 5px;`
+  }
+
+  private static get fieldsetStyle() {
+    return css`display: flex; flex-direction: row;`
+  }
+
   @query('lit-form')
   private form: any
+
+  public render() {
+    return html`
+<lit-form no-labels .contract="${this.contract}"
+                          submit-button-label="Filter"
+                          .fieldStyles="${UrlTemplateForm.fieldStyle}"
+                          .fieldsetStyles="${UrlTemplateForm.fieldsetStyle}"
+                          .value="${this.filters}"
+                          @submit="${this.submit}"></lit-form>`
+  }
 
   private submit() {
     this.dispatchEvent(new CustomEvent('submit', {
@@ -48,27 +63,5 @@ export default class extends PolymerElement {
         url: this.template.expand(this.form.value),
       },
     }))
-  }
-
-  static get template() {
-    return html`
-<style>
-  :host {
-    --lit-form-field: {
-      flex: 1;
-      margin: 5px;
-    }
-
-    --lit-form-fieldset: {
-      display: flex;
-      flex-direction: row;
-    }
-  }
-</style>
-
-<lit-form no-labels contract="[[contract]]"
-                          submit-button-label="Filter"
-                          value="[[filters]]"
-                          on-submit="submit"></lit-form>`
   }
 }
