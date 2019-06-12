@@ -5,11 +5,11 @@ import { Class } from 'alcaeus/types/Resources'
 import '@polymer/paper-tooltip/paper-tooltip'
 
 @customElement('supported-class-link')
-class SupportedClassLink extends PolymerElement {
+export default class SupportedClassLink extends PolymerElement {
   public supportedClass: Class
 
   @computed('supportedClass')
-  get classTitle() {
+  public get classTitle() {
     if (!this.supportedClass) {
       return ''
     }
@@ -31,7 +31,7 @@ class SupportedClassLink extends PolymerElement {
     e.preventDefault()
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <style>
         :host {

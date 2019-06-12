@@ -1,11 +1,11 @@
 import { ViewTemplates } from '@lit-any/views'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import iconButton from './button-render'
-import { IResourceButtonModel } from './index'
+import { ResourceButtonModel } from '.'
 import { Scope } from './scope'
 
-function followLink({ resource }: IResourceButtonModel) {
-  return function(e: Event) {
+function followLink({ resource }: ResourceButtonModel) {
+  return function (e: Event) {
     fireNavigation(this, resource.id)
     e.preventDefault()
     e.stopPropagation()
@@ -14,7 +14,7 @@ function followLink({ resource }: IResourceButtonModel) {
 
 ViewTemplates.default.when
   .scopeMatches(`${Scope}-link`)
-  .valueMatches((v: IResourceButtonModel) => {
+  .valueMatches((v: ResourceButtonModel) => {
     const resourceIsAnonymous = v.resource && v.resource.isAnonymous
 
     if (v.predicate) {

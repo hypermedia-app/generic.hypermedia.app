@@ -1,11 +1,11 @@
 import { ViewTemplates } from '@lit-any/views'
 import { Operation } from 'alcaeus/lib/es/Resources/Operation'
 import iconButton from './button-render'
-import { IResourceButtonModel } from './index'
+import { ResourceButtonModel } from './index'
 import { Scope } from './scope'
 
-export function expand({ resource, subject }: IResourceButtonModel) {
-  return function() {
+export function expand({ resource, subject }: ResourceButtonModel) {
+  return function () {
     this.dispatchEvent(
       new CustomEvent('hydrofoil-append-resource', {
         bubbles: true,
@@ -21,12 +21,12 @@ export function expand({ resource, subject }: IResourceButtonModel) {
 
 ViewTemplates.default.when
   .scopeMatches(`${Scope}-expand`)
-  .valueMatches((v: IResourceButtonModel) => v.resource instanceof Operation)
+  .valueMatches((v: ResourceButtonModel) => v.resource instanceof Operation)
   .renders(iconButton('image:flash-on', expand))
 
 ViewTemplates.default.when
   .scopeMatches(`${Scope}-expand`)
-  .valueMatches((v: IResourceButtonModel) => !!v.resource && !!v.resource.id)
+  .valueMatches((v: ResourceButtonModel) => !!v.resource && !!v.resource.id)
   .renders(iconButton('zoom-in', expand))
 
 ViewTemplates.default.when.scopeMatches(`${Scope}-expand`).renders(() => '')

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import '@polymer/iron-icons/iron-icons'
 // import 'bower:mat-elements/mat-avatar.html'
 // import 'bower:mat-elements/mat-divider.html'

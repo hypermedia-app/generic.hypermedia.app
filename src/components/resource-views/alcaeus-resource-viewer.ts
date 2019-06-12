@@ -27,8 +27,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   public get classes() {
     return this.resource.apiDocumentation
       .map(apiDocumentation => ({ apiDocumentation, getClass: apiDocumentation.getClass }))
-      .map(({ apiDocumentation, getClass }) => {
-        return this.resource.types.map((cId: string) => {
+      .map(({ apiDocumentation, getClass }) => this.resource.types.map((cId: string) => {
           const clas = getClass.bind(apiDocumentation)(cId)
 
           if (!clas) {
@@ -36,8 +35,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
           }
 
           return clas
-        })
-      })
+        }))
       .valueOr([])
   }
 
@@ -115,7 +113,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return getPath(urlStr)
   }
 
-  static get template() {
+  public static get template() {
     return html`<style include="paper-material-styles"></style>
 <style include="app-grid-style">
   :host {

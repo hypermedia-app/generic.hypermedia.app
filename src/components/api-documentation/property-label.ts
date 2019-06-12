@@ -4,7 +4,7 @@ import { html, PolymerElement } from '@polymer/polymer'
 import { SupportedProperty } from 'alcaeus/types/Resources'
 
 @customElement('property-label')
-class PropertyLabel extends PolymerElement {
+export default class PropertyLabel extends PolymerElement {
   public supportedProperty: SupportedProperty
 
   @property({
@@ -26,7 +26,7 @@ class PropertyLabel extends PolymerElement {
     return ''
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <span id="title">[[propertyTitle]]</span>
       <paper-tooltip for="title" position="right">

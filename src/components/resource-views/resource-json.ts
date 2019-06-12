@@ -6,7 +6,7 @@ import { IHydraResource } from 'alcaeus/types/Resources'
 import { decycle } from '../../lib/decycle'
 
 @customElement('resource-json')
-class ResourceJson extends PolymerElement {
+export default class ResourceJson extends PolymerElement {
   @property({ type: Object })
   public resource: IHydraResource
 
@@ -19,7 +19,7 @@ class ResourceJson extends PolymerElement {
     this.$.dialog.open()
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <style>
         paper-dialog {

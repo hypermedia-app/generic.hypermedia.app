@@ -1,6 +1,6 @@
 export function Mixin(Base) {
   return class extends Base {
-    get currentFilter() {
+    public get currentFilter() {
       return this['http://hydra-ex.rest/vocab/currentMappings']
     }
   }

@@ -11,7 +11,7 @@ export default class SupportedPropertyView extends PolymerElement {
   public supportedProperty: ISupportedProperty
 
   @computed('supportedProperty')
-  get hasOperations() {
+  public get hasOperations() {
     if (this.supportedProperty) {
       return this.supportedProperty.property.supportedOperations.length > 0
     }
@@ -27,7 +27,7 @@ export default class SupportedPropertyView extends PolymerElement {
     return 'icons:clear'
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <style>
         :host {

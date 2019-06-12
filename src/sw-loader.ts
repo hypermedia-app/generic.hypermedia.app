@@ -1,3 +1,4 @@
+/* eslint-disable */
 const updateReady = () => document.dispatchEvent(new CustomEvent('updateReady'))
 
 const trackInstalling = worker => {

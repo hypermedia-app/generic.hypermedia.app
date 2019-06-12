@@ -38,6 +38,9 @@
         "peerDependencies": true
       }
     ],
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "class-methods-use-this": "warn",
+    "import/no-duplicates": "warn",
+    "import/named": "warn"
   }
 }

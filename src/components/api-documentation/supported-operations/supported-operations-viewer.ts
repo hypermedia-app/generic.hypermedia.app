@@ -13,7 +13,7 @@ export default class SupportedOperationsViewer extends PolymerElement {
   public selectedOperation: IOperation = null
 
   @computed('selectedOperation')
-  get operationIsSelected() {
+  public get operationIsSelected() {
     return this.selectedOperation !== null
   }
 
@@ -27,7 +27,7 @@ export default class SupportedOperationsViewer extends PolymerElement {
     this.selectedOperation = e.model.item
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <style>
         [hidden] {
