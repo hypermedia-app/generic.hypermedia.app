@@ -1,17 +1,19 @@
-import {ViewTemplates} from '@lit-any/views'
+import { ViewTemplates } from '@lit-any/views'
 import iconButton from './button-render'
-import {IResourceButtonModel} from './index'
-import {Scope} from './scope'
+import { IResourceButtonModel } from './index'
+import { Scope } from './scope'
 
 function showClassDocumentation({ resource }: IResourceButtonModel) {
   return function() {
-    this.dispatchEvent(new CustomEvent('console-open-documentation', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        class: resource.id,
-      },
-    }))
+    this.dispatchEvent(
+      new CustomEvent('console-open-documentation', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          class: resource.id,
+        },
+      }),
+    )
   }
 }
 

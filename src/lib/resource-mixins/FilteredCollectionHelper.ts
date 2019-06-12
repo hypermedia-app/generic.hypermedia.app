@@ -6,4 +6,4 @@ export function Mixin(Base) {
   }
 }
 
-export const shouldApply = (resource) => !!resource['http://hydra-ex.rest/vocab/currentMappings']
+export const shouldApply = resource => !!resource['http://hydra-ex.rest/vocab/currentMappings']

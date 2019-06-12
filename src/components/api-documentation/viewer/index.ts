@@ -1,9 +1,9 @@
-import {computed, customElement, observe, property } from '@polymer/decorators'
-import {query} from '@polymer/decorators/lib/decorators'
-import {PaperDropdownMenuElement} from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
-import {PaperToastElement} from '@polymer/paper-toast/paper-toast'
-import {html, PolymerElement} from '@polymer/polymer'
-import {Class, IApiDocumentation} from 'alcaeus/types/Resources'
+import { computed, customElement, observe, property } from '@polymer/decorators'
+import { query } from '@polymer/decorators/lib/decorators'
+import { PaperDropdownMenuElement } from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
+import { PaperToastElement } from '@polymer/paper-toast/paper-toast'
+import { html, PolymerElement } from '@polymer/polymer'
+import { Class, IApiDocumentation } from 'alcaeus/types/Resources'
 
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@polymer/paper-item/paper-item'
@@ -17,7 +17,6 @@ import style from './viewer.pcss'
 
 @customElement('api-documentation-viewer')
 export default class ApiDocumentationViewer extends PolymerElement {
-
   @computed('selectedClass')
   public get classFound(): boolean {
     return !!this.selectedClass
@@ -66,14 +65,14 @@ export default class ApiDocumentationViewer extends PolymerElement {
     }
 
     const clazz = apiDocs.classes.find((c: Class) => {
-      return types.some((t) => c.id === t)
+      return types.some(t => c.id === t)
     })
 
     this.selectClass(clazz)
   }
 
   public isCurrent(typeId: string) {
-    return this.modelTypes.some((t) => {
+    return this.modelTypes.some(t => {
       return t === typeId
     })
   }
