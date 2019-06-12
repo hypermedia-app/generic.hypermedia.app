@@ -1,5 +1,4 @@
-const updateReady = () =>
-  document.dispatchEvent(new CustomEvent('updateReady'))
+const updateReady = () => document.dispatchEvent(new CustomEvent('updateReady'))
 
 const trackInstalling = worker => {
   worker.addEventListener('statechange', () => {
@@ -15,7 +14,8 @@ export default () => {
     return
   }
 
-  navigator.serviceWorker.register('/sw.js')
+  navigator.serviceWorker
+    .register('/sw.js')
     .then(registration => {
       if (!navigator.serviceWorker.controller) {
         return
@@ -30,7 +30,8 @@ export default () => {
       }
 
       registration.addEventListener('updatefound', () => trackInstalling(registration.installing))
-    }).catch(error => {
+    })
+    .catch(error => {
       console.error('Error during service worker registration:', error)
     })
 }

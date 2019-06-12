@@ -1,15 +1,11 @@
+/* eslint-disable */
 module.exports = () => ({
   plugins: [
     require('postcss-easy-import')({
-      extensions: [
-        '.pcss',
-        '.css',
-        '.postcss',
-        '.sss'
-      ]
+      extensions: ['.pcss', '.css', '.postcss', '.sss'],
     }),
     require('stylelint')({
-      configFile: '.stylelintrc'
+      configFile: '.stylelintrc',
     }),
     require('postcss-mixins'),
     require('postcss-nesting'),
@@ -17,18 +13,14 @@ module.exports = () => ({
     require('postcss-selector-not'),
     require('postcss-discard-comments'),
     require('autoprefixer')({
-      browsers: [
-        '>=1%',
-        'not ie 11',
-        'not op_mini all'
-      ]
+      browsers: ['>=1%', 'not ie 11', 'not op_mini all'],
     }),
     require('cssnano')({
-      preset: 'default'
+      preset: 'default',
     }),
     require('postcss-reporter')({
       clearReportedMessages: true,
-      noPlugin: true
-    })
-  ]
-});
+      noPlugin: true,
+    }),
+  ],
+})

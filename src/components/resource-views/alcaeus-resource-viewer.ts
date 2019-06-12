@@ -1,7 +1,7 @@
-import {computed, customElement, property} from '@polymer/decorators'
-import {html, PolymerElement} from '@polymer/polymer'
-import {Vocab} from 'alcaeus'
-import {HydraResource, IDocumentedResource} from 'alcaeus/types/Resources'
+import { computed, customElement, property } from '@polymer/decorators'
+import { html, PolymerElement } from '@polymer/polymer'
+import { Vocab } from 'alcaeus'
+import { HydraResource, IDocumentedResource } from 'alcaeus/types/Resources'
 
 import '@polymer/app-layout/app-grid/app-grid-style'
 import '@polymer/iron-icons/image-icons'
@@ -11,7 +11,7 @@ import '@polymer/paper-item/paper-item'
 import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/paper-styles/element-styles/paper-material-styles'
 import '@polymer/polymer/lib/elements/dom-repeat'
-import {getPath} from '../../views/helpers'
+import { getPath } from '../../views/helpers'
 
 @customElement('alcaeus-resource-viewer')
 export default class AlcaeusResourceViewer extends PolymerElement {
@@ -26,8 +26,8 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   @computed('resource')
   public get classes() {
     return this.resource.apiDocumentation
-      .map((apiDocumentation) => ({ apiDocumentation, getClass: apiDocumentation.getClass }))
-      .map(({apiDocumentation, getClass}) => {
+      .map(apiDocumentation => ({ apiDocumentation, getClass: apiDocumentation.getClass }))
+      .map(({ apiDocumentation, getClass }) => {
         return this.resource.types.map((cId: string) => {
           const clas = getClass.bind(apiDocumentation)(cId)
 
@@ -37,7 +37,8 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
           return clas
         })
-      }).valueOr([])
+      })
+      .valueOr([])
   }
 
   @computed('operations')
@@ -67,9 +68,10 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
   @computed('resource')
   public get properties() {
-    return this.resource.getProperties()
-      .filter((tuple) => tuple.supportedProperty.property.isLink === false)
-      .filter((tuple) => tuple.objects.length > 0)
+    return this.resource
+      .getProperties()
+      .filter(tuple => tuple.supportedProperty.property.isLink === false)
+      .filter(tuple => tuple.objects.length > 0)
   }
 
   @computed('properties')
@@ -79,17 +81,18 @@ export default class AlcaeusResourceViewer extends PolymerElement {
 
   @computed('resource', 'properties')
   public get remainingValues() {
-    const knownProperties = this.resource.getProperties()
-      .map((prop) => prop.supportedProperty.property.id)
+    const knownProperties = this.resource
+      .getProperties()
+      .map(prop => prop.supportedProperty.property.id)
 
     return Object.keys(this.resource)
-      .filter((prop) => !prop.startsWith('@'))
-      .filter((prop) => !prop.startsWith(Vocab()))
-      .filter((prop) => !knownProperties.includes(prop))
-      .map((prop) => {
+      .filter(prop => !prop.startsWith('@'))
+      .filter(prop => !prop.startsWith(Vocab()))
+      .filter(prop => !knownProperties.includes(prop))
+      .map(prop => {
         let objects = this.resource[prop]
         if (!Array.isArray(objects)) {
-          objects = [ objects ]
+          objects = [objects]
         }
 
         return {

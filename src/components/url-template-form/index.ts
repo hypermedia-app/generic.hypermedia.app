@@ -1,16 +1,16 @@
 import '@lit-any/forms/lit-form'
-import {css, customElement, html, LitElement, property, query} from 'lit-element'
+import { css, customElement, html, LitElement, property, query } from 'lit-element'
 import '../../forms'
 
 const decorator = {
-  unwrap: (v) => {
+  unwrap: v => {
     if (typeof v === 'object' && v !== null) {
       v = v['@value']
     }
 
     return v || ''
   },
-  wrap: (formValue) => {
+  wrap: formValue => {
     return {
       '@value': formValue,
     }
@@ -27,7 +27,7 @@ export default class UrlTemplateForm extends LitElement {
 
   public get contract() {
     return {
-      fields: this.template.mappings.map((f) => ({
+      fields: this.template.mappings.map(f => ({
         property: f.property.id,
         title: f.property.title || f.variable,
         type: f.property.range,
@@ -37,11 +37,17 @@ export default class UrlTemplateForm extends LitElement {
   }
 
   private static get fieldStyle() {
-    return css`flex: 1; margin: 5px;`
+    return css`
+      flex: 1;
+      margin: 5px;
+    `
   }
 
   private static get fieldsetStyle() {
-    return css`display: flex; flex-direction: row;`
+    return css`
+      display: flex;
+      flex-direction: row;
+    `
   }
 
   @query('lit-form')
@@ -49,19 +55,25 @@ export default class UrlTemplateForm extends LitElement {
 
   public render() {
     return html`
-<lit-form no-labels .contract="${this.contract}"
-                          submit-button-label="Filter"
-                          .fieldStyles="${UrlTemplateForm.fieldStyle}"
-                          .fieldsetStyles="${UrlTemplateForm.fieldsetStyle}"
-                          .value="${this.filters}"
-                          @submit="${this.submit}"></lit-form>`
+      <lit-form
+        no-labels
+        .contract="${this.contract}"
+        submit-button-label="Filter"
+        .fieldStyles="${UrlTemplateForm.fieldStyle}"
+        .fieldsetStyles="${UrlTemplateForm.fieldsetStyle}"
+        .value="${this.filters}"
+        @submit="${this.submit}"
+      ></lit-form>
+    `
   }
 
   private submit() {
-    this.dispatchEvent(new CustomEvent('submit', {
-      detail: {
-        url: this.template.expand(this.form.value),
-      },
-    }))
+    this.dispatchEvent(
+      new CustomEvent('submit', {
+        detail: {
+          url: this.template.expand(this.form.value),
+        },
+      }),
+    )
   }
 }
