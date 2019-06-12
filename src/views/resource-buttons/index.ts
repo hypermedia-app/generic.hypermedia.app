@@ -1,12 +1,12 @@
-import {ViewTemplates} from '@lit-any/views'
+import { ViewTemplates } from '@lit-any/views'
 import LitView from '@lit-any/views/lit-view'
-import {Operation} from 'alcaeus/lib/es/Resources/Operation'
-import {HydraResource, RdfProperty} from 'alcaeus/types/Resources'
-import {html} from 'lit-html'
+import { Operation } from 'alcaeus/lib/es/Resources/Operation'
+import { HydraResource, RdfProperty } from 'alcaeus/types/Resources'
+import { html } from 'lit-html'
 import './docs-button'
 import './expand-button'
 import './link-button'
-import {Scope} from './scope'
+import { Scope } from './scope'
 
 ViewTemplates.default.when
   .scopeMatches(Scope)
@@ -18,16 +18,14 @@ ViewTemplates.default.when
   .valueMatches((v: IResourceButtonModel) => typeof v.resource === 'object')
   .renders((v: IResourceButtonModel, next, scope) => {
     return html`
-      ${next(v, `${scope}-expand`)}
-      ${next(v, `${scope}-link`)}
+      ${next(v, `${scope}-expand`)} ${next(v, `${scope}-link`)}
       ${v.resource.operations
-        .filter((op) => op.method !== 'GET' || op.requiresInput)
-        .map((op) => next({resource: op, subject: v.subject}, `${scope}-expand`))}`
+        .filter(op => op.method !== 'GET' || op.requiresInput)
+        .map(op => next({ resource: op, subject: v.subject }, `${scope}-expand`))}
+    `
   })
 
-ViewTemplates.default.when
-  .scopeMatches(Scope)
-  .renders(() => '')
+ViewTemplates.default.when.scopeMatches(Scope).renders(() => '')
 
 export interface IResourceButtonModel {
   resource?: HydraResource

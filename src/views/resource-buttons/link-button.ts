@@ -1,8 +1,8 @@
-import {ViewTemplates} from '@lit-any/views'
+import { ViewTemplates } from '@lit-any/views'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import iconButton from './button-render'
-import {IResourceButtonModel} from './index'
-import {Scope} from './scope'
+import { IResourceButtonModel } from './index'
+import { Scope } from './scope'
 
 function followLink({ resource }: IResourceButtonModel) {
   return function(e: Event) {
@@ -25,6 +25,4 @@ ViewTemplates.default.when
   })
   .renders(iconButton('link', followLink))
 
-ViewTemplates.default.when
-  .scopeMatches(`${Scope}-link`)
-  .renders(() => '')
+ViewTemplates.default.when.scopeMatches(`${Scope}-link`).renders(() => '')

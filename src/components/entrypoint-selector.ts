@@ -1,6 +1,6 @@
-import {customElement, property, query} from '@polymer/decorators'
-import {PaperDropdownMenuElement} from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
-import {html, PolymerElement} from '@polymer/polymer'
+import { customElement, property, query } from '@polymer/decorators'
+import { PaperDropdownMenuElement } from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
+import { html, PolymerElement } from '@polymer/polymer'
 
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@polymer/paper-item/paper-item'
@@ -43,35 +43,36 @@ export default class EntrypointSelector extends PolymerElement {
 
   static get template() {
     return html`
-<style>
-  :host {
-    display: flex;
-    pointer-events: all !important;
+      <style>
+        :host {
+          display: flex;
+          pointer-events: all !important;
 
-    --paper-dropdown-menu: {
-      flex-grow: 1;
-      top: -10px;
-    };
+          --paper-dropdown-menu: {
+            flex-grow: 1;
+            top: -10px;
+          }
 
-    --paper-input-container-color: white;
-    --paper-input-container-input-color: white;
-    --paper-dropdown-menu-icon: {
-      color: white;
-    };
-  }
+          --paper-input-container-color: white;
+          --paper-input-container-input-color: white;
+          --paper-dropdown-menu-icon: {
+            color: white;
+          }
+        }
 
-  ::slotted(paper-item) {
-    display: auto;
-  }
-  </style>
-<paper-dropdown-menu id="selector" label="Select Hydra API" no-animations>
-  <paper-listbox slot="dropdown-content" on-selected-item-changed="_entrypointSelected">
-    <dom-repeat items="[[apis]]" as="api">
-      <template>
-        <paper-item data-url="[[api.value]]">[[api.label]]</paper-item>
-      </template>
-    </dom-repeat>
-  </paper-listbox>
-</paper-dropdown-menu>`
+        ::slotted(paper-item) {
+          display: auto;
+        }
+      </style>
+      <paper-dropdown-menu id="selector" label="Select Hydra API" no-animations>
+        <paper-listbox slot="dropdown-content" on-selected-item-changed="_entrypointSelected">
+          <dom-repeat items="[[apis]]" as="api">
+            <template>
+              <paper-item data-url="[[api.value]]">[[api.label]]</paper-item>
+            </template>
+          </dom-repeat>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    `
   }
 }

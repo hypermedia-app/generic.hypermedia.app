@@ -1,8 +1,8 @@
-import {computed, customElement, observe, property, query} from '@polymer/decorators'
-import {PaperDropdownMenuElement} from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
-import {PaperTabsElement} from '@polymer/paper-tabs/paper-tabs'
-import {html, PolymerElement} from '@polymer/polymer'
-import {Class, SupportedProperty} from 'alcaeus/types/Resources'
+import { computed, customElement, observe, property, query } from '@polymer/decorators'
+import { PaperDropdownMenuElement } from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
+import { PaperTabsElement } from '@polymer/paper-tabs/paper-tabs'
+import { html, PolymerElement } from '@polymer/polymer'
+import { Class, SupportedProperty } from 'alcaeus/types/Resources'
 
 import '@polymer/iron-pages/iron-pages'
 import '@polymer/paper-card/paper-card'
@@ -44,10 +44,10 @@ export class SupportedClassView extends PolymerElement {
     return html([`<style>${style}</style> ${template}`] as any)
   }
 
-  @property({type: Object})
+  @property({ type: Object })
   public supportedClass: Class
 
-  @property({type: Object})
+  @property({ type: Object })
   public selectedProperty: SupportedProperty = null
 
   @query('#classTabs')

@@ -1,6 +1,6 @@
-import {computed, customElement, observe, property} from '@polymer/decorators'
-import {html, PolymerElement} from '@polymer/polymer'
-import {IOperation} from 'alcaeus/types/Resources'
+import { computed, customElement, observe, property } from '@polymer/decorators'
+import { html, PolymerElement } from '@polymer/polymer'
+import { IOperation } from 'alcaeus/types/Resources'
 
 import './supported-operation-view'
 
@@ -29,28 +29,30 @@ export default class SupportedOperationsViewer extends PolymerElement {
 
   static get template() {
     return html`
-<style>
-  [hidden] {
-      display: none;
-  }
+      <style>
+        [hidden] {
+          display: none;
+        }
 
-  paper-dropdown-menu {
-    width: 100%
-  }
-</style>
+        paper-dropdown-menu {
+          width: 100%;
+        }
+      </style>
 
-<paper-dropdown-menu id="supportedOperations" no-animations label="Supported Operation">
-  <paper-listbox slot="dropdown-content">
-    <dom-repeat items="[[supportedOperations]]">
-      <template>
-        <paper-item on-click="operationClicked">[[item.title]]</paper-item>
-      </template>
-    </dom-repeat>
-  </paper-listbox>
-</paper-dropdown-menu>
+      <paper-dropdown-menu id="supportedOperations" no-animations label="Supported Operation">
+        <paper-listbox slot="dropdown-content">
+          <dom-repeat items="[[supportedOperations]]">
+            <template>
+              <paper-item on-click="operationClicked">[[item.title]]</paper-item>
+            </template>
+          </dom-repeat>
+        </paper-listbox>
+      </paper-dropdown-menu>
 
-<supported-operation-view supported-operation="[[selectedOperation]]"
-                          hidden$="[[!operationIsSelected]]"></supported-operation-view>
-`
+      <supported-operation-view
+        supported-operation="[[selectedOperation]]"
+        hidden$="[[!operationIsSelected]]"
+      ></supported-operation-view>
+    `
   }
 }

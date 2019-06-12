@@ -1,6 +1,6 @@
 import { customElement, observe, property } from '@polymer/decorators'
 import { html, PolymerElement } from '@polymer/polymer'
-import {Class, IOperation} from 'alcaeus/types/Resources'
+import { Class, IOperation } from 'alcaeus/types/Resources'
 
 import '../supported-classes/supported-class-link'
 
@@ -37,48 +37,50 @@ export default class SupportedOperationView extends PolymerElement {
 
   static get template() {
     return html`
-    <style>
-      :host {
+      <style>
+        :host {
           display: block;
-      }
+        }
 
-      [hidden] {
-        display: none;
-      }
-    </style>
+        [hidden] {
+          display: none;
+        }
+      </style>
 
-<p>
-    [[supportedOperation.title]]
-</p>
+      <p>
+        [[supportedOperation.title]]
+      </p>
 
-<p>
-    [[supportedOperation.description]]
-</p>
+      <p>
+        [[supportedOperation.description]]
+      </p>
 
-<p>
-    <b>Expects</b>:
-    <supported-class-link hidden$="[[!hasExpects]]"
-                          supported-class="[[supportedOperation.expects]]"></supported-class-link>
-    <span hidden$="[[hasExpects]]">[[expectsTitle]]</span>
-</p>
+      <p>
+        <b>Expects</b>:
+        <supported-class-link
+          hidden$="[[!hasExpects]]"
+          supported-class="[[supportedOperation.expects]]"
+        ></supported-class-link>
+        <span hidden$="[[hasExpects]]">[[expectsTitle]]</span>
+      </p>
 
-<p>
-    <b>Returns</b>:
-    <supported-class-link hidden$="[[!hasReturns]]"
-                          supported-class="[[supportedOperation.returns]]"></supported-class-link>
-    <span hidden$="[[hasReturns]]">[[returnsTitle]]</span>
-</p>
+      <p>
+        <b>Returns</b>:
+        <supported-class-link
+          hidden$="[[!hasReturns]]"
+          supported-class="[[supportedOperation.returns]]"
+        ></supported-class-link>
+        <span hidden$="[[hasReturns]]">[[returnsTitle]]</span>
+      </p>
 
-<div hidden$="[[!supportedOperation.statusCodes]]">
-    <dom-repeat items="[[supportedOperation.statusCodes]]" as="status">
-      <template>
-        <p>
-            <b>[[status.code]]</b>: [[status.description]]
-        </p>
-      </template>
-    </dom-repeat>
-</div>
-`
+      <div hidden$="[[!supportedOperation.statusCodes]]">
+        <dom-repeat items="[[supportedOperation.statusCodes]]" as="status">
+          <template>
+            <p><b>[[status.code]]</b>: [[status.description]]</p>
+          </template>
+        </dom-repeat>
+      </div>
+    `
   }
 }
 
