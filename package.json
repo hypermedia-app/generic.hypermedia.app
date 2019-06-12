@@ -17,7 +17,8 @@
     "format:eslint": "eslint --ext .js,*.ts . --fix",
     "lint:prettier": "prettier \"**/*.ts\" --list-different || (echo '↑↑ these files are not prettier formatted ↑↑' && exit 1)",
     "format:prettier": "prettier \"**/*.ts\" --write",
-    "format": "npm run format:eslint && npm run format:prettier"
+    "format": "npm run format:eslint && npm run format:prettier",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "xo": {
     "space": true,
