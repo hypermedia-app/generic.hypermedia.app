@@ -4,11 +4,11 @@ module.exports = {
   suites: ['test/suites/*'],
   plugins: {
     sauce: {
-      disabled: true
+      disabled: true,
     },
     local: {
       remote: false,
-      browsers: ['chrome']
-    }
-  }
-};
+      browsers: ['chrome'],
+    },
+  },
+}

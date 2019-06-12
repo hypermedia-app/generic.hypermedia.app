@@ -5,7 +5,7 @@ import '@polymer/iron-icons/iron-icons'
 // import 'bower:mat-elements/mat-list.html'
 // import 'bower:mat-elements/mat-sublist.html'
 import '@polymer/paper-icon-button/paper-icon-button'
-import {IHydraResource} from 'alcaeus/types/Resources'
+import { IHydraResource } from 'alcaeus/types/Resources'
 
 import '../api-documentation/property-label'
 
@@ -35,11 +35,9 @@ export class ResourceOutline extends PolymerElement {
   @computed('resource')
   public get currentProperties() {
     const enumerableProperties = Object.entries(this.resource)
-      .filter((entry) => entry[1]['@id'] || Array.isArray(entry[1]))
-      .map((entry) => {
-        const id = Array.isArray(entry[1])
-          ? 'Multiple items'
-          : entry[1]['@id']
+      .filter(entry => entry[1]['@id'] || Array.isArray(entry[1]))
+      .map(entry => {
+        const id = Array.isArray(entry[1]) ? 'Multiple items' : entry[1]['@id']
 
         return {
           id,
@@ -47,12 +45,11 @@ export class ResourceOutline extends PolymerElement {
         }
       })
 
-    return [ ...enumerableProperties ]
+    return [...enumerableProperties]
   }
 
   public _getPath(uri: string) {
     try {
-
       const url = new URL(uri)
       return url.pathname + url.search
     } catch (e) {
@@ -83,13 +80,15 @@ export class ResourceOutline extends PolymerElement {
   }
 
   public _showSource() {
-    this.dispatchEvent(new CustomEvent('show-resource-json', {
-      bubbles: true,
-      composed: true,
-      detail: {
-        resource: this.resource,
-      },
-    }))
+    this.dispatchEvent(
+      new CustomEvent('show-resource-json', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          resource: this.resource,
+        },
+      }),
+    )
   }
 
   static get template() {
