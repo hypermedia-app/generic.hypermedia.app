@@ -1,20 +1,19 @@
-import { computed, customElement } from '@polymer/decorators'
-import { html, PolymerElement } from '@polymer/polymer'
 import { Class } from 'alcaeus/types/Resources'
+import { html, LitElement, property } from 'lit-element'
+import { shrink } from '../../../lib/shrink'
 
 import '@polymer/paper-tooltip/paper-tooltip'
 
-@customElement('supported-class-link')
-export default class SupportedClassLink extends PolymerElement {
+export default class SupportedClassLink extends LitElement {
+  @property({ type: Object })
   public supportedClass: Class
 
-  @computed('supportedClass')
   public get classTitle() {
     if (!this.supportedClass) {
       return ''
     }
 
-    return this.supportedClass.title || this.supportedClass.id
+    return this.supportedClass.title || shrink(this.supportedClass.id)
   }
 
   private selectClass(e: Event) {
@@ -31,7 +30,11 @@ export default class SupportedClassLink extends PolymerElement {
     e.preventDefault()
   }
 
-  public static get template() {
+  public render() {
+    if (!this.supportedClass) {
+      return html``
+    }
+
     return html`
       <style>
         :host {
@@ -41,14 +44,16 @@ export default class SupportedClassLink extends PolymerElement {
         }
       </style>
 
-      <a id="link" href$="[[supportedClass.id]]" on-tap="selectClass" target="_blank"
-        >[[classTitle]]</a
+      <a id="link" href="${this.supportedClass.id}" on-tap="selectClass" target="_blank"
+        >${this.classTitle}</a
       >
       <paper-tooltip for="link" position="left">
-        [[supportedClass.id]]
+        ${shrink(this.supportedClass.id)}
         <br /><br />
-        [[supportedClass.description]]
+        ${this.supportedClass.description}
       </paper-tooltip>
     `
   }
 }
+
+customElements.define('supported-class-link', SupportedClassLink)

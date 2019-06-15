@@ -2,8 +2,8 @@ import { computed, customElement, query, observe, property } from '@polymer/deco
 import { PaperDropdownMenuElement } from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import { PaperToastElement } from '@polymer/paper-toast/paper-toast'
 import { html, PolymerElement } from '@polymer/polymer'
-import { shrink } from '@zazuko/rdf-vocabularies'
 import { Class, IApiDocumentation } from 'alcaeus/types/Resources'
+import { shrink } from '../../../lib/shrink'
 
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@polymer/paper-item/paper-item'
@@ -37,7 +37,7 @@ export default class ApiDocumentationViewer extends PolymerElement {
       return ''
     }
 
-    return shrink(this.selectedClass.id) || this.selectedClass.id
+    return shrink(this.selectedClass.id)
   }
 
   @query('paper-toast')

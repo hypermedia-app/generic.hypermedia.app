@@ -2,6 +2,7 @@ import { computed, customElement, property } from '@polymer/decorators'
 import { html, PolymerElement } from '@polymer/polymer'
 import { Vocab } from 'alcaeus'
 import { HydraResource, IDocumentedResource } from 'alcaeus/types/Resources'
+import { shrink } from '../../lib/shrink'
 
 import '@polymer/app-layout/app-grid/app-grid-style'
 import '@polymer/iron-icons/image-icons'
@@ -113,6 +114,10 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return getPath(urlStr)
   }
 
+  private shrink(iri) {
+    return shrink(iri)
+  }
+
   public static get template() {
     return html`<style include="paper-material-styles"></style>
 <style include="app-grid-style">
@@ -183,7 +188,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
             <paper-item>
               <paper-item-body two-line>
                 <span>[[type.title]]</span>
-                <span secondary>[[type.id]]</span>
+                <span secondary>[[shrink(type.id)]]</span>
               </paper-item-body>
               <resource-buttons resource="[[type]]"
                                 predicate='{ "@id": "@type" }'
