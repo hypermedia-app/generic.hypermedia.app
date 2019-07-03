@@ -107,7 +107,7 @@
     "@polymer/paper-tooltip": "3.0.1",
     "@polymer/polymer": "3.1.0",
     "@webcomponents/webcomponentsjs": "2.2.0",
-    "@zazuko/rdf-vocabularies": "git+https://github.com/tpluscode/rdf-vocabularies.git#browser-friendliness",
+    "@zazuko/rdf-vocabularies": "^2019.6.27",
     "alcaeus": "^0.6.2",
     "feather-icon-literals": "1.0.0-rc.6",
     "ld-navigation": "^0.5.0",
