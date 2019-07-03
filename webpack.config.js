@@ -142,6 +142,10 @@ module.exports = {
         use: ['text-loader', 'postcss-loader'],
       },
       {
+        test: /\.nq$/,
+        use: ['raw-loader'],
+      },
+      {
         test: /\.js$/,
         // We need to transpile Polymer itself and other ES6 code
         // exclude: /(node_modules)/,

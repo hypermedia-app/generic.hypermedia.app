@@ -1,8 +1,8 @@
 import { html } from 'lit-html'
-import { IResourceButtonModel } from './index'
+import { ResourceButtonModel } from './index'
 
-export default function(icon: string, handler: (v: IResourceButtonModel) => (e: Event) => void) {
-  return function(v: IResourceButtonModel) {
+export default function (icon: string, handler: (v: ResourceButtonModel) => (e: Event) => void) {
+  return function (v: ResourceButtonModel) {
     import('@polymer/paper-icon-button/paper-icon-button')
 
     return html`

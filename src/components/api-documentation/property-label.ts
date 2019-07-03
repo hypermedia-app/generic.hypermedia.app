@@ -1,39 +1,38 @@
-import { customElement, property } from '@polymer/decorators'
 import '@polymer/paper-tooltip/paper-tooltip'
-import { html, PolymerElement } from '@polymer/polymer'
+import { html, LitElement, property } from 'lit-element'
 import { SupportedProperty } from 'alcaeus/types/Resources'
+import { shrink } from '../../lib/shrink'
 
-@customElement('property-label')
-class PropertyLabel extends PolymerElement {
+export default class PropertyLabel extends LitElement {
+  @property({ type: Object })
   public supportedProperty: SupportedProperty
 
-  @property({
-    computed: '_getPropertyTitle(supportedProperty, propertyId)',
-    type: String,
-    notify: true,
-  })
-  public propertyTitle: string
-
-  public _getPropertyTitle(supportedProperty: SupportedProperty): string {
-    if (supportedProperty) {
-      if (supportedProperty.title) {
-        return supportedProperty.title
+  private get _propertyTitle(): string {
+    if (this.supportedProperty) {
+      if (this.supportedProperty.title) {
+        return this.supportedProperty.title
       }
 
-      return supportedProperty.property.id
+      return shrink(this.supportedProperty.property.id)
     }
 
     return ''
   }
 
-  static get template() {
+  public render() {
+    if (!this.supportedProperty) {
+      return html``
+    }
+
     return html`
-      <span id="title">[[propertyTitle]]</span>
+      <span id="title">${this._propertyTitle}</span>
       <paper-tooltip for="title" position="right">
-        [[supportedProperty.property.id]]
+        ${this.supportedProperty.property && shrink(this.supportedProperty.property.id)}
         <br /><br />
-        [[supportedProperty.description]]
+        ${this.supportedProperty.description}
       </paper-tooltip>
     `
   }
 }
+
+customElements.define('property-label', PropertyLabel)

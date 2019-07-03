@@ -4,17 +4,16 @@ import '../../forms'
 
 const decorator = {
   unwrap: v => {
+    let value = v
     if (typeof v === 'object' && v !== null) {
-      v = v['@value']
+      value = v['@value']
     }
 
-    return v || ''
+    return value || ''
   },
-  wrap: formValue => {
-    return {
+  wrap: formValue => ({
       '@value': formValue,
-    }
-  },
+    }),
 }
 
 @customElement('url-template-form')

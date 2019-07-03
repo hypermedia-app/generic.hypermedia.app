@@ -2,6 +2,7 @@ import { computed, customElement, property } from '@polymer/decorators'
 import { html, PolymerElement } from '@polymer/polymer'
 import { Vocab } from 'alcaeus'
 import { HydraResource, IDocumentedResource } from 'alcaeus/types/Resources'
+import { shrink } from '../../lib/shrink'
 
 import '@polymer/app-layout/app-grid/app-grid-style'
 import '@polymer/iron-icons/image-icons'
@@ -27,8 +28,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
   public get classes() {
     return this.resource.apiDocumentation
       .map(apiDocumentation => ({ apiDocumentation, getClass: apiDocumentation.getClass }))
-      .map(({ apiDocumentation, getClass }) => {
-        return this.resource.types.map((cId: string) => {
+      .map(({ apiDocumentation, getClass }) => this.resource.types.map((cId: string) => {
           const clas = getClass.bind(apiDocumentation)(cId)
 
           if (!clas) {
@@ -36,8 +36,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
           }
 
           return clas
-        })
-      })
+        }))
       .valueOr([])
   }
 
@@ -115,7 +114,11 @@ export default class AlcaeusResourceViewer extends PolymerElement {
     return getPath(urlStr)
   }
 
-  static get template() {
+  private shrink(iri) {
+    return shrink(iri)
+  }
+
+  public static get template() {
     return html`<style include="paper-material-styles"></style>
 <style include="app-grid-style">
   :host {
@@ -185,7 +188,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
             <paper-item>
               <paper-item-body two-line>
                 <span>[[type.title]]</span>
-                <span secondary>[[type.id]]</span>
+                <span secondary>[[shrink(type.id)]]</span>
               </paper-item-body>
               <resource-buttons resource="[[type]]"
                                 predicate='{ "@id": "@type" }'

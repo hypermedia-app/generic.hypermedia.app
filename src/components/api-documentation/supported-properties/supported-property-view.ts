@@ -1,17 +1,15 @@
-import { computed, customElement, property } from '@polymer/decorators'
-import { html, PolymerElement } from '@polymer/polymer'
-import { ISupportedProperty } from 'alcaeus/types/Resources'
+import { html, LitElement, property } from 'lit-element'
+import { SupportedProperty } from 'alcaeus/types/Resources'
 
 import '@polymer/iron-icon/iron-icon'
 import '../supported-classes/supported-class-link'
+import {shrink} from '@zazuko/rdf-vocabularies/lib/es'
 
-@customElement('supported-property-view')
-export default class SupportedPropertyView extends PolymerElement {
+export default class SupportedPropertyView extends LitElement {
   @property({ type: Object })
-  public supportedProperty: ISupportedProperty
+  public supportedProperty: SupportedProperty
 
-  @computed('supportedProperty')
-  get hasOperations() {
+  public get hasOperations() {
     if (this.supportedProperty) {
       return this.supportedProperty.property.supportedOperations.length > 0
     }
@@ -27,7 +25,11 @@ export default class SupportedPropertyView extends PolymerElement {
     return 'icons:clear'
   }
 
-  static get template() {
+  public render() {
+    if (!this.supportedProperty) {
+      return html``
+    }
+
     return html`
       <style>
         :host {
@@ -40,43 +42,45 @@ export default class SupportedPropertyView extends PolymerElement {
       </style>
 
       <p>
-        [[supportedProperty.description]]
+        ${this.supportedProperty.description}
       </p>
       <p>
         <b>Predicate:</b><br />
-        [[supportedProperty.property.id]]
+        ${shrink(this.supportedProperty.property.id)}
       </p>
       <p>
         <b>Required:</b>
-        <iron-icon icon="[[yesNoIcon(supportedProperty.required)]]"></iron-icon>
+        <iron-icon icon="${this.yesNoIcon(this.supportedProperty.required)}"></iron-icon>
       </p>
       <p>
         <b>Writable:</b>
-        <iron-icon icon="[[yesNoIcon(supportedProperty.writable)]]"></iron-icon>
+        <iron-icon icon="${this.yesNoIcon(this.supportedProperty.writable)}"></iron-icon>
       </p>
       <p>
         <b>Readable:</b>
-        <iron-icon icon="[[yesNoIcon(supportedProperty.readable)]]"></iron-icon>
+        <iron-icon icon="${this.yesNoIcon(this.supportedProperty.readable)}"></iron-icon>
       </p>
       <p>
         <b>Domain:</b>
         <supported-class-link
-          hidden$="[[!hasReturns]]"
-          supported-class="[[supportedProperty.property.domain]]"
+          ?hidden="${!this.supportedProperty.property.domain}"
+          .supportedClass="${this.supportedProperty.property.domain}"
         ></supported-class-link>
       </p>
       <p>
         <b>Range:</b>
         <supported-class-link
-          hidden$="[[!hasReturns]]"
-          supported-class="[[supportedProperty.property.range]]"
+          ?hidden="${!this.supportedProperty.property.range}"
+          .supportedClass="${this.supportedProperty.property.range}"
         ></supported-class-link>
       </p>
 
       <supported-operations-viewer
-        hidden$="[[!hasOperations]]"
-        supported-operations="[[supportedProperty.property.supportedOperations]]"
+        ?hidden="${!this.hasOperations}"
+        .supportedOperations="${this.supportedProperty.property.supportedOperations}"
       ></supported-operations-viewer>
     `
   }
 }
+
+customElements.define('supported-property-view', SupportedPropertyView)

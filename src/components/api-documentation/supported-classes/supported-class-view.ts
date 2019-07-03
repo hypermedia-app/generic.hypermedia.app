@@ -23,7 +23,7 @@ export class SupportedClassView extends PolymerElement {
   }
 
   @computed('supportedClass')
-  get hasProperties(): boolean {
+  public get hasProperties(): boolean {
     if (this.supportedClass && this.supportedClass.supportedProperties) {
       return this.supportedClass.supportedProperties.length > 0
     }
@@ -32,7 +32,7 @@ export class SupportedClassView extends PolymerElement {
   }
 
   @computed('supportedClass')
-  get hasOperations(): boolean {
+  public get hasOperations(): boolean {
     if (this.supportedClass && this.supportedClass.supportedOperations) {
       return this.supportedClass.supportedOperations.length > 0
     }
@@ -40,7 +40,7 @@ export class SupportedClassView extends PolymerElement {
     return false
   }
 
-  static get template() {
+  public static get template() {
     return html([`<style>${style}</style> ${template}`] as any)
   }
 
@@ -57,7 +57,9 @@ export class SupportedClassView extends PolymerElement {
   private supportedProperties: PaperDropdownMenuElement
 
   public connectedCallback() {
-    super.connectedCallback()
+    if (super.connectedCallback) {
+      super.connectedCallback()
+    }
     this.classTabs.select(0)
   }
 

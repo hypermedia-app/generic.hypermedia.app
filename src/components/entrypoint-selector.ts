@@ -19,14 +19,14 @@ export default class EntrypointSelector extends PolymerElement {
   private selector: PaperDropdownMenuElement
 
   public connectedCallback() {
-    super.connectedCallback()
+    if (super.connectedCallback) {
+      super.connectedCallback()
+    }
 
-    const apis = Array.prototype.map.call(this.querySelectorAll('span'), (apiEl: HTMLElement) => {
-      return {
+    const apis = Array.prototype.map.call(this.querySelectorAll('span'), (apiEl: HTMLElement) => ({
         label: apiEl.textContent,
         value: apiEl.getAttribute('data-url'),
-      }
-    })
+      }))
 
     this._setProperty('apis', apis)
 
@@ -41,7 +41,7 @@ export default class EntrypointSelector extends PolymerElement {
     }
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <style>
         :host {

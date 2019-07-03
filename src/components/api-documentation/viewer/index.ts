@@ -1,9 +1,9 @@
-import { computed, customElement, observe, property } from '@polymer/decorators'
-import { query } from '@polymer/decorators/lib/decorators'
+import { computed, customElement, query, observe, property } from '@polymer/decorators'
 import { PaperDropdownMenuElement } from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import { PaperToastElement } from '@polymer/paper-toast/paper-toast'
 import { html, PolymerElement } from '@polymer/polymer'
 import { Class, IApiDocumentation } from 'alcaeus/types/Resources'
+import { shrink } from '../../../lib/shrink'
 
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import '@polymer/paper-item/paper-item'
@@ -31,6 +31,15 @@ export default class ApiDocumentationViewer extends PolymerElement {
   @property({ type: Object })
   public selectedClass: Class
 
+  @computed('selectedClass')
+  public get prefixedSelectedClassId() {
+    if (!this.selectedClass) {
+      return ''
+    }
+
+    return shrink(this.selectedClass.id)
+  }
+
   @query('paper-toast')
   private toast: PaperToastElement
 
@@ -42,7 +51,9 @@ export default class ApiDocumentationViewer extends PolymerElement {
   }
 
   public connectedCallback() {
-    super.connectedCallback()
+    if (super.connectedCallback) {
+      super.connectedCallback()
+    }
     this.toast.fitInto = this
   }
 
@@ -51,9 +62,7 @@ export default class ApiDocumentationViewer extends PolymerElement {
       return
     }
 
-    const clazz = this.apiDocs.classes.find((c: Class) => {
-      return c.id === classId
-    })
+    const clazz = this.apiDocs.classes.find((c: Class) => c.id === classId)
 
     this.selectClass(clazz)
   }
@@ -64,17 +73,13 @@ export default class ApiDocumentationViewer extends PolymerElement {
       return
     }
 
-    const clazz = apiDocs.classes.find((c: Class) => {
-      return types.some(t => c.id === t)
-    })
+    const clazz = apiDocs.classes.find((c: Class) => types.some(t => c.id === t))
 
     this.selectClass(clazz)
   }
 
   public isCurrent(typeId: string) {
-    return this.modelTypes.some(t => {
-      return t === typeId
-    })
+    return this.modelTypes.some(t => t === typeId)
   }
 
   private onClassSelected(e: CustomEvent) {
@@ -102,7 +107,7 @@ export default class ApiDocumentationViewer extends PolymerElement {
     }
   }
 
-  static get template() {
+  public static get template() {
     return html([`<style>${style}</style> ${template}`] as any)
   }
 }

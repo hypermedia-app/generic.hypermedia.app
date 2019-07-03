@@ -1,6 +1,6 @@
 import HydrofoilAddressBar from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar'
 import { HydrofoilPaperShell } from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-paper-shell'
-import { computed, customElement, observe, property, query } from '@polymer/decorators'
+import { computed, customElement, property, query } from '@polymer/decorators'
 import { html, PolymerElement } from '@polymer/polymer'
 import '@polymer/polymer/lib/elements/dom-if'
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings'
@@ -26,7 +26,7 @@ export default class HypermediaApp extends PolymerElement {
     return GitHub()
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <style>
         div {
@@ -147,6 +147,7 @@ export default class HypermediaApp extends PolymerElement {
       </hypermedia-app-shell>
     `
   }
+
   @query('hypermedia-app-shell')
   public shell: HydrofoilPaperShell
 
@@ -165,13 +166,15 @@ export default class HypermediaApp extends PolymerElement {
   @query('api-documentation-viewer')
   private apiDocumentationViewer: ApiDocumentationViewer
 
-  constructor() {
+  public constructor() {
     super()
     setPassiveTouchGestures(true)
   }
 
   public connectedCallback() {
-    super.connectedCallback()
+    if (super.connectedCallback) {
+      super.connectedCallback()
+    }
     import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar')
     import('../entrypoint-selector')
     import('../../views')

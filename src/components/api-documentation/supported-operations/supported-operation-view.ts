@@ -6,6 +6,17 @@ import '../supported-classes/supported-class-link'
 
 const nothing = 'http://www.w3.org/2002/07/owl#Nothing'
 
+function setTitle(clas: Class, setter: () => {}) {
+  let title: string
+  if (!clas) {
+    title = '?'
+  } else {
+    title = clas.id === nothing ? 'Nothing' : clas.title
+  }
+
+  setter.call(this, title)
+}
+
 @customElement('supported-operation-view')
 export default class SupportedOperationView extends PolymerElement {
   @property({ type: Object })
@@ -35,7 +46,7 @@ export default class SupportedOperationView extends PolymerElement {
     setTitle.call(this, returns, this._setReturnsTitle)
   }
 
-  static get template() {
+  public static get template() {
     return html`
       <style>
         :host {
@@ -82,17 +93,4 @@ export default class SupportedOperationView extends PolymerElement {
       </div>
     `
   }
-}
-
-function setTitle(clas: Class, setter: () => {}) {
-  let title
-  if (!clas) {
-    title = '?'
-  } else if (clas.id === nothing) {
-    title = 'Nothing'
-  } else {
-    title = clas.title
-  }
-
-  setter.call(this, title)
 }
