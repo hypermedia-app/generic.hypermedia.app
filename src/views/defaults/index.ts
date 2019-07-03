@@ -4,6 +4,7 @@ import './hydrofoil-shell'
 import './alcaeus-resource-viewer'
 import './resource-link'
 import './zoom-to-blank-icon'
+import './operation-form'
 import { html } from 'lit-html'
 
 ViewTemplates.default.when.valueMatches(v => typeof v === 'string').renders((v: string) => v)
@@ -11,7 +12,7 @@ ViewTemplates.default.when.valueMatches(v => typeof v === 'string').renders((v: 
 ViewTemplates.default.when
   .valueMatches(v => Array.isArray(v))
   .renders(
-    (v: any[], render) =>
+    (v: unknown[], render) =>
       html`
         ${v.map(
           el =>

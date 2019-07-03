@@ -178,6 +178,7 @@ export default class HypermediaApp extends PolymerElement {
     import('@hydrofoil/hydrofoil-paper-shell/hydrofoil-address-bar')
     import('../entrypoint-selector')
     import('../../views')
+    import('../../forms')
     import('@polymer/iron-icon/iron-icon')
     import('@polymer/paper-item/paper-icon-item')
     import('@hydrofoil/hydrofoil-paper-shell/alcaeus-entrypoint-menu')
