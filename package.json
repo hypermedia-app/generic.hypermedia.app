@@ -17,8 +17,7 @@
     "format:eslint": "eslint --ext .js,.ts . --fix",
     "lint:prettier": "prettier \"**/*.ts\" --list-different || (echo '↑↑ these files are not prettier formatted ↑↑' && exit 1)",
     "format:prettier": "prettier \"**/*.ts\" --write",
-    "format": "npm run format:eslint && npm run format:prettier",
-    "commit": "npx git-cz"
+    "format": "npm run format:eslint && npm run format:prettier"
   },
   "xo": {
     "space": true,
@@ -113,7 +112,8 @@
     "ld-navigation": "^0.5.0",
     "lit-element": "^2.1.0",
     "lit-html": "^1.0.0",
-    "lodash.flatten": "4.4.0"
+    "lodash.flatten": "4.4.0",
+    "cz-conventional-changelog": "^2.1.0"
   },
   "lint-staged": {
     "*.js": [
@@ -121,5 +121,10 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
