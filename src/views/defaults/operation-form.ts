@@ -23,5 +23,4 @@ ViewTemplates.default.when
   .renders((operation: IOperation) =>
     html`<alcaeus-form .operation="${operation}"
                        @submit="${runOperation(operation)}"
-                       .value="${ {'http://schema.org/name': 'Monsieur'} }"
                        no-labels></alcaeus-form>`)
