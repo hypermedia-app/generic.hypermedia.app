@@ -53,7 +53,7 @@ export default class HypermediaApp extends PolymerElement {
         on-model-changed="enableDoc"
         on-console-open-documentation="showClassDoc"
         entrypoint="{{entrypoint}}"
-        title="Generic Hydra Application"
+        title="[[title]]"
       >
         <span slot="left-drawer-title">Options</span>
 
@@ -156,6 +156,9 @@ export default class HypermediaApp extends PolymerElement {
 
   @property({ type: String })
   public url: string
+
+  @property({ type: String })
+  public title = 'Generic Hydra Application'
 
   @property({ type: Object })
   public entrypoint: HydraResource = null
