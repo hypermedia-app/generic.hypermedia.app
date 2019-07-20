@@ -14,7 +14,12 @@ export default class HypermediaAppShell extends AlcaeusLoader(HydrofoilPaperShel
   private async __invokeOperation(e: HydraInvokeOperationEvent) {
     let response
     if (e.detail.operation.requiresInput) {
-      response = await e.detail.operation.invoke(e.detail.body)
+      let { body } = e.detail
+      if (typeof body === 'object') {
+        body = JSON.stringify(body)
+      }
+
+      response = await e.detail.operation.invoke(body)
     } else {
       response = await e.detail.operation.invoke(null)
     }
