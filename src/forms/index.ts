@@ -7,6 +7,6 @@ FieldTemplates.default.useComponents(PaperElements)
 export interface HydraInvokeOperationEvent {
   detail: {
     operation: IOperation;
-    body: unknown;
+    body: object | string;
   };
 }
