@@ -108,13 +108,13 @@
     "@polymer/polymer": "3.1.0",
     "@webcomponents/webcomponentsjs": "2.2.0",
     "@zazuko/rdf-vocabularies": "^2019.6.27",
-    "alcaeus": "^0.6.2",
+    "alcaeus": "^0.7.1",
+    "cz-conventional-changelog": "^2.1.0",
     "feather-icon-literals": "1.0.0-rc.6",
     "ld-navigation": "^0.5.0",
     "lit-element": "^2.1.0",
     "lit-html": "^1.0.0",
-    "lodash.flatten": "4.4.0",
-    "cz-conventional-changelog": "^2.1.0"
+    "lodash.flatten": "4.4.0"
   },
   "lint-staged": {
     "*.js": [
