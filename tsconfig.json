@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "resolveJsonModule": true
   }
 }

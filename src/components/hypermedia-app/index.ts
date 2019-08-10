@@ -9,6 +9,7 @@ import { GitHub } from 'feather-icon-literals'
 import fireNavigation from 'ld-navigation/fireNavigation'
 import ApiDocumentationViewer from '../api-documentation/viewer'
 import '../hypermedia-app-shell'
+import { version } from '../../../package.json'
 
 @customElement('hypermedia-app')
 export default class HypermediaApp extends PolymerElement {
@@ -20,6 +21,10 @@ export default class HypermediaApp extends PolymerElement {
   @computed('entrypoint')
   public get entrypointLoaded() {
     return !!this.entrypoint
+  }
+
+  private get version() {
+    return version
   }
 
   public get githubIcon() {
@@ -112,6 +117,12 @@ export default class HypermediaApp extends PolymerElement {
             <span slot="item-icon" inner-h-t-m-l="[[githubIcon]]"></span>
             <a href="https://github.com/hypermedia-app/generic.hypermedia.app"
               >See project on GitHub</a
+            >
+          </paper-icon-item>
+          <paper-icon-item>
+          <span slot="item-icon"><iron-icon icon="info-outline"></iron-icon></span>
+            <a href="https://github.com/hypermedia-app/generic.hypermedia.app/blob/master/CHANGELOG.md"
+              >Version [[version]]</a
             >
           </paper-icon-item>
         </paper-listbox>
