@@ -23,4 +23,4 @@ ViewTemplates.default.when
   .renders((operation: IOperation) =>
     html`<alcaeus-form .operation="${operation}"
                        @submit="${runOperation(operation)}"
-                       no-labels></alcaeus-form>`)
+                       no-labels no-legend></alcaeus-form>`)

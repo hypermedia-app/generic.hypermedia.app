@@ -7,7 +7,9 @@ import './zoom-to-blank-icon'
 import './operation-form'
 import { html } from 'lit-html'
 
-ViewTemplates.default.when.valueMatches(v => typeof v === 'string').renders((v: string) => v)
+ViewTemplates.default.when
+  .valueMatches(v => typeof v !== 'object')
+  .renders((v: any) => v)
 
 ViewTemplates.default.when
   .valueMatches(v => Array.isArray(v))

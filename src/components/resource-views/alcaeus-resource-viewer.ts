@@ -294,7 +294,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
               <template>
                 <paper-item>
                   <paper-item-body two-line>
-                    <span>[[propTuple.property]]</span>
+                    <span>[[shrink(propTuple.property)]]</span>
                     <div secondary>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
                     </div>

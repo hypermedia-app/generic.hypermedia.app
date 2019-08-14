@@ -22,7 +22,10 @@ export function expand({ resource, subject }: ResourceButtonModel) {
 ViewTemplates.default.when
   .scopeMatches(`${Scope}-expand`)
   .valueMatches((v: ResourceButtonModel) => v.resource instanceof Operation)
-  .renders(iconButton('image:flash-on', expand))
+  .renders((...args: any[]) => {
+    import('@polymer/iron-icons/image-icons')
+    return iconButton('image:flash-on', expand).apply(this, args)
+  })
 
 ViewTemplates.default.when
   .scopeMatches(`${Scope}-expand`)
