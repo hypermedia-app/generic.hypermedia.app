@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/hypermedia-app/generic-hypermedia-app/compare/v0.10.2...v0.11.0) (2019-08-14)
+
+
+### Bug Fixes
+
+* abbreviate uris ([d834ef8](https://github.com/hypermedia-app/generic-hypermedia-app/commit/d834ef8)), closes [#15](https://github.com/hypermedia-app/generic-hypermedia-app/issues/15)
+* disable operation form legend ([034b763](https://github.com/hypermedia-app/generic-hypermedia-app/commit/034b763))
+* fallback rendering should also happen non-string primitives ([e2c20d1](https://github.com/hypermedia-app/generic-hypermedia-app/commit/e2c20d1))
+* flash icon not loaded on grid ([21bed98](https://github.com/hypermedia-app/generic-hypermedia-app/commit/21bed98))
+* missing URI shrinking in 'Other values' ([fd277d2](https://github.com/hypermedia-app/generic-hypermedia-app/commit/fd277d2))
+* update PWA icons ([d267426](https://github.com/hypermedia-app/generic-hypermedia-app/commit/d267426))
+
+
+### Features
+
+* show version number in the menu ([2a05dc3](https://github.com/hypermedia-app/generic-hypermedia-app/commit/2a05dc3))
+
+
+
 <a name="0.10.2"></a>
 ## [0.10.2](https://github.com/hypermedia-app/generic-hypermedia-app/compare/v0.10.1...v0.10.2) (2019-08-05)
 
