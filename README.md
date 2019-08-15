@@ -1,4 +1,4 @@
-![graph icon](https://raw.githubusercontent.com/wikibus/Argolis/master/assets/logo.png)
+![graph icon](/src/assets/icons/mstile-150x150.png)
 # generic.hypermedia.app
 
 > A modern, standards-based Hydra console
