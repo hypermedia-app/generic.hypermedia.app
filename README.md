@@ -15,14 +15,11 @@
 
 ## Features
 
-1. Generic, universal view for resource documented in Hydra's API documentaiton
+1. Generic, universal view for resource documented in Hydra's API documentation
 1. Specialized views for Hydra collections
 1. Collections support paging and filtering
 1. API documentation viewer
-
-## Coming soon
-
-1. Support for operations
+1. Basic support for operations
 
 ## Limitations
 
