@@ -1,4 +1,4 @@
-![graph icon](/src/assets/icons/mstile-150x150.png)
+![graph icon](https://github.com/hypermedia-app/generic.hypermedia.app/raw/master/src/assets/icons/mstile-150x150.png)
 # generic.hypermedia.app
 
 > A modern, standards-based Hydra console
