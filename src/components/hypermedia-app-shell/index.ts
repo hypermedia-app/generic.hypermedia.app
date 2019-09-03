@@ -3,9 +3,15 @@ import { HydrofoilPaperShell } from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-
 import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-resource-accordion'
 import '@polymer/paper-spinner/paper-spinner'
 import { Hydra } from 'alcaeus'
+import { ReflectedInHash } from 'ld-navigation'
 import { HydraInvokeOperationEvent } from '../../forms'
 
-export default class HypermediaAppShell extends AlcaeusLoader(HydrofoilPaperShell) {
+export default class HypermediaAppShell extends ReflectedInHash(AlcaeusLoader(HydrofoilPaperShell)) {
+  public constructor() {
+    super()
+    this.clientBasePath = ''
+  }
+
   public connectedCallback(): void {
     super.connectedCallback()
 
