@@ -187,8 +187,8 @@ export default class AlcaeusResourceViewer extends PolymerElement {
           <template>
             <paper-item>
               <paper-item-body two-line>
-                <span>[[type.title]]</span>
-                <span secondary>[[shrink(type.id)]]</span>
+                <span title$="[[type.title]]">[[type.title]]</span>
+                <span secondary title$="[[type.id]]">[[shrink(type.id)]]</span>
               </paper-item-body>
               <resource-buttons resource="[[type]]"
                                 predicate='{ "@id": "@type" }'
@@ -207,8 +207,8 @@ export default class AlcaeusResourceViewer extends PolymerElement {
           <template>
             <paper-item label="[[op.title]]">
               <paper-item-body two-line>
-                <span>[[op.title]]</span>
-                <span secondary>[[op.description]]</span>
+                <span title$="[[op.description]]">[[op.title]]</span>
+                <span secondary title$="[[op.description]]">[[op.description]]</span>
                 <span secondary>(/[[op.method]])</span>
               </paper-item-body>
               <resource-buttons resource="[[op]]" subject="[[resource]]"></resource-buttons>
@@ -228,7 +228,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
               <template>
                 <paper-item>
                   <paper-item-body two-line>
-                    <span>[[propTuple.supportedProperty.title]]</span>
+                    <span title$="[[propTuple.supportedProperty.title]]">[[propTuple.supportedProperty.title]]</span>
                     <div secondary>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
                     </div>
@@ -254,8 +254,8 @@ export default class AlcaeusResourceViewer extends PolymerElement {
               <template>
                 <paper-item>
                   <paper-item-body two-line>
-                    <span>[[link.supportedProperty.title]]</span>
-                    <span secondary>[[getPath(value.id)]]</span>
+                    <span title$="[[link.supportedProperty.title]]">[[link.supportedProperty.title]]</span>
+                    <span secondary title$="[[value.id]]">[[getPath(value.id)]]</span>
                   </paper-item-body>
                   <resource-buttons resource="[[value]]"
                                     predicate="[[link.supportedProperty.property]]"
@@ -272,8 +272,8 @@ export default class AlcaeusResourceViewer extends PolymerElement {
           <template>
             <paper-item>
               <paper-item-body two-line>
-                <span>[[getCollectionTitle(value)]]</span>
-                <span secondary>[[getPath(value.id)]]</span>
+                <span title$="[[getCollectionTitle(value)]]">[[getCollectionTitle(value)]]</span>
+                <span secondary title$="[[value.id]]">[[getPath(value.id)]]</span>
               </paper-item-body>
               <resource-buttons resource="[[value]]" subject="[[resource]]"></resource-buttons>
             </paper-item>
@@ -294,7 +294,7 @@ export default class AlcaeusResourceViewer extends PolymerElement {
               <template>
                 <paper-item>
                   <paper-item-body two-line>
-                    <span>[[shrink(propTuple.property)]]</span>
+                    <span title$="[[propTuple.property]]">[[shrink(propTuple.property)]]</span>
                     <div secondary>
                       <lit-view class="item" value="[[value]]" template-scope="default-resource-view"></lit-view>
                     </div>

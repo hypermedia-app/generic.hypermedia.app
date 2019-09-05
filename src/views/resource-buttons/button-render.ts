@@ -6,7 +6,7 @@ export default function (icon: string, handler: (v: ResourceButtonModel) => (e: 
     import('@polymer/paper-icon-button/paper-icon-button')
 
     return html`
-      <paper-icon-button icon="${icon}" @click="${handler(v)}"></paper-icon-button>
+      <paper-icon-button icon="${icon}" @click="${handler(v)}" title="${v.resource.title || ''}"></paper-icon-button>
     `
   }
 }
