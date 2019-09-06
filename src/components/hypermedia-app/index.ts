@@ -54,7 +54,7 @@ export default class HypermediaApp extends PolymerElement {
 
       <hypermedia-app-shell
         url="{{url}}"
-        use-hash-urls
+        base-url="http://localhost:5678/"
         on-model-changed="enableDoc"
         on-console-open-documentation="showClassDoc"
         entrypoint="{{entrypoint}}"
@@ -62,7 +62,7 @@ export default class HypermediaApp extends PolymerElement {
       >
         <span slot="left-drawer-title">Options</span>
 
-        <app-toolbar slot="drawer-left">
+        <app-toolbar slot="drawer-left" style="display: none">
           <entrypoint-selector main-title on-url-changed="updateAddressBar">
             <span data-url="https://hydra-movies.herokuapp.com/">HydraCG movies API</span>
             <span data-url="https://sources.test.wikibus.org/"
@@ -71,7 +71,7 @@ export default class HypermediaApp extends PolymerElement {
           </entrypoint-selector>
         </app-toolbar>
 
-        <app-toolbar slot="header">
+        <app-toolbar slot="header" style="display: none">
           <hydrofoil-address-bar
             main-title
             url="[[url]]"
