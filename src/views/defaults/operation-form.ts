@@ -21,6 +21,6 @@ ViewTemplates.default.when
   .scopeMatches('hydrofoil-multi-resource')
   .valueMatches(v => v instanceof Operation)
   .renders((operation: IOperation) =>
-    html`<alcaeus-form .operation="${operation}"
+    html`${operation.description} <alcaeus-form .operation="${operation}"
                        @submit="${runOperation(operation)}"
                        no-labels no-legend></alcaeus-form>`)

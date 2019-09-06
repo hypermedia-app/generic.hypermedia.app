@@ -4,6 +4,7 @@ import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-resource-accordion'
 import '@polymer/paper-spinner/paper-spinner'
 import { Hydra } from 'alcaeus'
 import { ReflectedInHash } from 'ld-navigation'
+import { IHydraResponse } from 'alcaeus/types/HydraResponse'
 import { HydraInvokeOperationEvent } from '../../forms'
 
 export default class HypermediaAppShell extends ReflectedInHash(AlcaeusLoader(HydrofoilPaperShell)) {
@@ -19,16 +20,16 @@ export default class HypermediaAppShell extends ReflectedInHash(AlcaeusLoader(Hy
   }
 
   private async __invokeOperation(e: HydraInvokeOperationEvent) {
-    let response
+    let response: IHydraResponse
     if (e.detail.operation.requiresInput) {
       let { body } = e.detail
-      if (typeof body === 'object') {
+      if (typeof body === 'object' && !(body instanceof File)) {
         body = JSON.stringify(body)
       }
 
-      response = await e.detail.operation.invoke(body)
+      response = await e.detail.operation.invoke(body, e.detail.headers)
     } else {
-      response = await e.detail.operation.invoke(null)
+      response = await e.detail.operation.invoke(null, e.detail.headers)
     }
 
     if (response.xhr.status === 201 && response.xhr.headers.has('location')) {
@@ -36,6 +37,10 @@ export default class HypermediaAppShell extends ReflectedInHash(AlcaeusLoader(Hy
     }
 
     this.model = response.root
+    if (this.model) {
+      (this as any).resourceUrl = this.model.id
+      this.reflectUrlInState(this.model.id)
+    }
   }
 }
 
