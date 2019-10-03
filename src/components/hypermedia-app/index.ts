@@ -169,7 +169,7 @@ export default class HypermediaApp extends PolymerElement {
   public url: string
 
   @property({ type: String })
-  public title = 'Generic Hydra Application'
+  public title = 'Data Cube curation'
 
   @property({ type: Object })
   public entrypoint: HydraResource = null
