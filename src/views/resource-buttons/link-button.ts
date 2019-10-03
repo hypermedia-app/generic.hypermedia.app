@@ -5,8 +5,12 @@ import { ResourceButtonModel } from '.'
 import { Scope } from './scope'
 
 function followLink({ resource }: ResourceButtonModel) {
-  return function (e: Event) {
-    fireNavigation(this, resource.id)
+  return function (e: KeyboardEvent) {
+    if (e.shiftKey) {
+      window.open(resource.id, '_blank').focus()
+    } else {
+      fireNavigation(this, resource.id)
+    }
     e.preventDefault()
     e.stopPropagation()
   }
