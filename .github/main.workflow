@@ -4,7 +4,7 @@ workflow "packtracker.io" {
 }
 
 action "report webpack stats" {
-  uses = "packtracker/report@2.2.0"
+  uses = "packtracker/report@2.2.6"
   secrets = ["PT_PROJECT_TOKEN"]
   env = {
     "WEBPACK_CONFIG_PATH" = "./webpack.config.js"
