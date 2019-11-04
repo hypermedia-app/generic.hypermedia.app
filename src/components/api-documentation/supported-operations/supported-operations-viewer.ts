@@ -1,5 +1,6 @@
 import { computed, customElement, observe, property } from '@polymer/decorators'
 import { html, PolymerElement } from '@polymer/polymer'
+import { PaperDropdownMenuElement } from '@polymer/paper-dropdown-menu/paper-dropdown-menu'
 import { IOperation } from 'alcaeus/types/Resources'
 
 import './supported-operation-view'
@@ -20,7 +21,7 @@ export default class SupportedOperationsViewer extends PolymerElement {
   @observe('supportedOperations')
   private clearSelection() {
     this.$.selectedOperation = null
-    this.$.supportedOperations.value = ''
+    ;(this.$.supportedOperations as PaperDropdownMenuElement).value = ''
   }
 
   private operationClicked(e) {
