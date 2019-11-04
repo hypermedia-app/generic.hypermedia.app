@@ -8,5 +8,6 @@ export interface HydraInvokeOperationEvent {
   detail: {
     operation: IOperation;
     body: object | string;
+    headers?: HeadersInit;
   };
 }

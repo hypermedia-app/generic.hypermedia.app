@@ -63,10 +63,6 @@ export class SupportedClassView extends PolymerElement {
     this.classTabs.select(0)
   }
 
-  public openProperties() {
-    this.$.props.toggle()
-  }
-
   @observe('supportedClass')
   private getProperties() {
     this.supportedProperties.value = ''

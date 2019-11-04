@@ -1,0 +1,9 @@
+version: 2.1
+
+orbs:
+  packtracker: packtracker/report@2.2.6
+  
+workflows:
+  packtracker:
+    jobs:
+      - packtracker/report

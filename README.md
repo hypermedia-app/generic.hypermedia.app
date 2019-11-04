@@ -1,4 +1,4 @@
-![graph icon](https://raw.githubusercontent.com/wikibus/Argolis/master/assets/logo.png)
+![graph icon](https://github.com/hypermedia-app/generic.hypermedia.app/raw/master/src/assets/icons/mstile-150x150.png)
 # generic.hypermedia.app
 
 > A modern, standards-based Hydra console
@@ -15,14 +15,11 @@
 
 ## Features
 
-1. Generic, universal view for resource documented in Hydra's API documentaiton
+1. Generic, universal view for resource documented in Hydra's API documentation
 1. Specialized views for Hydra collections
 1. Collections support paging and filtering
 1. API documentation viewer
-
-## Coming soon
-
-1. Support for operations
+1. Basic support for operations
 
 ## Limitations
 

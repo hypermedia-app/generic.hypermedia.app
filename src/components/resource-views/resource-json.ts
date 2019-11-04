@@ -16,7 +16,7 @@ export default class ResourceJson extends PolymerElement {
   }
 
   public show() {
-    this.$.dialog.open()
+    (this.$.dialog as any).open()
   }
 
   public static get template() {
