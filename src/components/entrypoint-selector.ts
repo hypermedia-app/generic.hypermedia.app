@@ -7,13 +7,18 @@ import '@polymer/paper-item/paper-item'
 import '@polymer/paper-listbox/paper-listbox'
 import '@polymer/polymer/lib/elements/dom-repeat'
 
+interface Api {
+  url: string;
+  title: string;
+}
+
 @customElement('entrypoint-selector')
 export default class EntrypointSelector extends PolymerElement {
   @property({ type: String, notify: true })
   public url: string
 
-  @property({ type: Array, readOnly: true })
-  public readonly apis: string[]
+  @property({ type: Array })
+  public apis: Api[]
 
   @query('#selector')
   private selector: PaperDropdownMenuElement
@@ -23,14 +28,7 @@ export default class EntrypointSelector extends PolymerElement {
       super.connectedCallback()
     }
 
-    const apis = Array.prototype.map.call(this.querySelectorAll('span'), (apiEl: HTMLElement) => ({
-        label: apiEl.textContent,
-        value: apiEl.getAttribute('data-url'),
-      }))
-
-    this._setProperty('apis', apis)
-
-    if (apis.filter((api: any) => api.value === this.url)) {
+    if (this.apis.filter((api: any) => api.value === this.url)) {
       this.selector.value = this.url
     }
   }
@@ -68,7 +66,7 @@ export default class EntrypointSelector extends PolymerElement {
         <paper-listbox slot="dropdown-content" on-selected-item-changed="_entrypointSelected">
           <dom-repeat items="[[apis]]" as="api">
             <template>
-              <paper-item data-url="[[api.value]]">[[api.label]]</paper-item>
+              <paper-item data-url="[[api.url]]">[[api.title]]</paper-item>
             </template>
           </dom-repeat>
         </paper-listbox>
