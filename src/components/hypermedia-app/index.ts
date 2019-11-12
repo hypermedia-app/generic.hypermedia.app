@@ -41,6 +41,18 @@ export default class HypermediaApp extends PolymerElement {
     return apis
   }
 
+  public get baseUrl() {
+    return process.env.BASE_URL
+  }
+
+  public get appPath() {
+    return process.env.APP_PATH
+  }
+
+  public get html5History() {
+    return !!process.env.HTML5_HISTORY
+  }
+
   public static get template() {
     return html`
       <style>
@@ -64,7 +76,9 @@ export default class HypermediaApp extends PolymerElement {
 
       <hypermedia-app-shell
         url="{{url}}"
-        use-hash-urls
+        use-hash-urls$="[[!html5History]]"
+        base-url="[[baseUrl]]"
+        client-base-path="[[appPath]]"
         on-model-changed="enableDoc"
         on-console-open-documentation="showClassDoc"
         entrypoint="{{entrypoint}}"

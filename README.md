@@ -35,3 +35,59 @@ npm dev
 ```
 
 And open the browser at webpack-dev-server's URL. Typically http://localhost:3000
+
+## Deployment configuration
+
+The behavior of the application can be customized through environment variables. They
+can be added in a `.env` file.
+
+None of the below are mutually exclusive. All of these settings can be mixed and used together.
+
+### Changing the known APIs (left drawer dropdown)
+
+```
+API_ENTRYPOINTS={ "https://example.com/api/": "My API" }
+```
+
+The value must be a valid JSON condensed to a single line.
+
+### Using HTML5 history
+
+By default the application uses hash fragments, which are more practical when running locally.
+To run with nice URLs:
+
+```
+HTML5_HISTORY=true
+```
+
+The value can be anything. It is only checked whether it's truthy.
+
+### Hiding API base URL
+
+The routing occurs by placing the full resource URIs in the address bar which
+results in lengthy and ugly addresses. To change that, a base URI (namespace) of
+the resource identifiers can be set:
+
+```
+BASE_URL=https://example.com/apis/
+```
+
+This will change the addresses which appear in the application. For example
+
+```diff
+-https://example.app/#/https://example.com/apis/people/bill
++https://example.app/#/people/bill
+```
+
+It is no magic. Simple substitution. If the URL does not share this base URL,
+the whole identifier will still appear in the address.
+
+### Deploying to a path
+
+The application may be deployed in a virtual directory, such as `https://example.com/app/`.
+Set a variable, which will sit between the application's host address and the
+resource identifier.
+
+```
+APP_PATH=app
+```
