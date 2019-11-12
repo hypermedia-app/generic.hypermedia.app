@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 const pkg = require('./package.json')
 
@@ -110,6 +111,10 @@ const renderHtmlPlugins = () => [
 const sharedPlugins = [
   new webpack.DefinePlugin({ 'process.env': processEnv }),
   ...renderHtmlPlugins(),
+  new Dotenv({
+    systemvars: true,
+    defaults: true,
+  }),
 ]
 const devPlugins = [new CopyWebpackPlugin(copyStatics.copyWebcomponents)]
 const buildPlugins = [

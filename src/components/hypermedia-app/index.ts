@@ -11,6 +11,12 @@ import ApiDocumentationViewer from '../api-documentation/viewer'
 import '../hypermedia-app-shell'
 import { version } from '../../../package.json'
 
+const apis = Object.entries(JSON.parse(process.env.API_ENTRYPOINTS))
+  .map(entry => ({
+    url: entry[0],
+    title: entry[1],
+  }))
+
 @customElement('hypermedia-app')
 export default class HypermediaApp extends PolymerElement {
   @computed('apiDocumentation')
@@ -29,6 +35,10 @@ export default class HypermediaApp extends PolymerElement {
 
   public get githubIcon() {
     return GitHub()
+  }
+
+  public get apis() {
+    return apis
   }
 
   public static get template() {
@@ -63,11 +73,7 @@ export default class HypermediaApp extends PolymerElement {
         <span slot="left-drawer-title">Options</span>
 
         <app-toolbar slot="drawer-left">
-          <entrypoint-selector main-title on-url-changed="updateAddressBar">
-            <span data-url="https://hydra-movies.herokuapp.com/">HydraCG movies API</span>
-            <span data-url="https://sources.test.wikibus.org/"
-              >wikibus.org sources (test server)</span
-            >
+          <entrypoint-selector main-title on-url-changed="updateAddressBar" apis="[[apis]]">
           </entrypoint-selector>
         </app-toolbar>
 
