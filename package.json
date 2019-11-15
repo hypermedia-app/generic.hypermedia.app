@@ -1,6 +1,6 @@
 {
   "name": "generic-hypermedia-app",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "main": "src/index.js",
   "license": "MIT",
   "author": "Tomasz Pluskiewicz <awesome@hypermedia.app>",

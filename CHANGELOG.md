@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.12.0"></a>
+# [0.12.0](https://github.com/hypermedia-app/generic-hypermedia-app/compare/v0.11.0...v0.12.0) (2019-11-15)
+
+
+### Bug Fixes
+
+* change logo ([bdd8f24](https://github.com/hypermedia-app/generic-hypermedia-app/commit/bdd8f24))
+* parametrize the shell ([c797104](https://github.com/hypermedia-app/generic-hypermedia-app/commit/c797104))
+* typescript errors ([1aaba42](https://github.com/hypermedia-app/generic-hypermedia-app/commit/1aaba42))
+
+
+### Features
+
+* passing headers to operation ([8dd33e2](https://github.com/hypermedia-app/generic-hypermedia-app/commit/8dd33e2))
+* populate entrypoint dropdown from environment variables ([d5ada4e](https://github.com/hypermedia-app/generic-hypermedia-app/commit/d5ada4e)), closes [#42](https://github.com/hypermedia-app/generic-hypermedia-app/issues/42)
+* prepare Dockerfile ([d8cc1a1](https://github.com/hypermedia-app/generic-hypermedia-app/commit/d8cc1a1)), closes [#41](https://github.com/hypermedia-app/generic-hypermedia-app/issues/41)
+* shift+click to open a link in new tab (window) ([1c26b35](https://github.com/hypermedia-app/generic-hypermedia-app/commit/1c26b35))
+* show hints when hovering one properties, links etc ([b6e0b06](https://github.com/hypermedia-app/generic-hypermedia-app/commit/b6e0b06))
+
+
+
 <a name="0.11.0"></a>
 # [0.11.0](https://github.com/hypermedia-app/generic-hypermedia-app/compare/v0.10.2...v0.11.0) (2019-08-14)
 
