@@ -101,6 +101,7 @@ const renderHtmlPlugins = () => [
     paths: {
       webcomponents: './vendor/webcomponents-loader.js',
     },
+    runtimeConfig: !!process.env.RUNTIME_CONFIG,
   }),
   new HtmlWebpackExcludeAssetsPlugin(),
   new ScriptExtHtmlWebpackPlugin({

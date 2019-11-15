@@ -7,6 +7,7 @@ RUN npm ci
 
 ADD . .
 ENV NODE_ENV=production
+ENV RUNTIME_CONFIG=true
 RUN npm run build
 
 FROM node:lts-alpine

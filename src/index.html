@@ -61,7 +61,9 @@
     </style>
   </custom-style>
 
+  <% if (htmlWebpackPlugin.options.runtimeConfig) { %>
   <script src="config.js"></script>
+  <% } %>
   <script>
     (function() {
       if (!('serviceWorker' in navigator)) {
