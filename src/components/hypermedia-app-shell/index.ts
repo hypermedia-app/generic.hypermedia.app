@@ -3,11 +3,14 @@ import { HydrofoilPaperShell } from '@hydrofoil/hydrofoil-paper-shell/hydrofoil-
 import '@hydrofoil/hydrofoil-paper-shell/hydrofoil-resource-accordion'
 import '@polymer/paper-spinner/paper-spinner'
 import { Hydra } from 'alcaeus'
-import { ReflectedInHash } from 'ld-navigation'
+import { ReflectedInHash, ReflectedInHistory } from 'ld-navigation'
 import { IHydraResponse } from 'alcaeus/types/HydraResponse'
 import { HydraInvokeOperationEvent } from '../../forms'
+import env from '../../env'
 
-export default class HypermediaAppShell extends ReflectedInHash(AlcaeusLoader(HydrofoilPaperShell)) {
+const Reflector = env.HTML5_HISTORY ? ReflectedInHistory : ReflectedInHash
+
+export default class HypermediaAppShell extends Reflector(AlcaeusLoader(HydrofoilPaperShell)) {
   public constructor() {
     super()
     this.clientBasePath = ''

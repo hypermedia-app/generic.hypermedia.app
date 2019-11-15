@@ -10,12 +10,7 @@ import fireNavigation from 'ld-navigation/fireNavigation'
 import ApiDocumentationViewer from '../api-documentation/viewer'
 import '../hypermedia-app-shell'
 import { version } from '../../../package.json'
-
-const apis = Object.entries(JSON.parse(process.env.API_ENTRYPOINTS))
-  .map(entry => ({
-    url: entry[0],
-    title: entry[1],
-  }))
+import env from '../../env'
 
 @customElement('hypermedia-app')
 export default class HypermediaApp extends PolymerElement {
@@ -38,19 +33,21 @@ export default class HypermediaApp extends PolymerElement {
   }
 
   public get apis() {
-    return apis
+    const configEntrypoints = env.API_ENTRYPOINTS ? JSON.parse(env.API_ENTRYPOINTS) : {}
+
+    return Object.entries(configEntrypoints)
+      .map(entry => ({
+        url: entry[0],
+        title: entry[1],
+      }))
   }
 
   public get baseUrl() {
-    return process.env.BASE_URL
+    return env.BASE_URL
   }
 
   public get appPath() {
-    return process.env.APP_PATH
-  }
-
-  public get html5History() {
-    return !!process.env.HTML5_HISTORY
+    return env.APP_PATH
   }
 
   public static get template() {
@@ -76,7 +73,6 @@ export default class HypermediaApp extends PolymerElement {
 
       <hypermedia-app-shell
         url="{{url}}"
-        use-hash-urls$="[[!html5History]]"
         base-url="[[baseUrl]]"
         client-base-path="[[appPath]]"
         on-model-changed="enableDoc"
