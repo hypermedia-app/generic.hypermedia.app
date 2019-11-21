@@ -12,9 +12,12 @@ RUN npm run build
 
 FROM node:lts-alpine
 
+WORKDIR /app
+
 RUN npm install -g local-web-server dotenv-cli
 COPY --from=builder /app/dist ./
+COPY --from=builder /app/package.json ./
 COPY --from=builder /app/.build/ ./.build
 
 EXPOSE 8000
-CMD [ "sh", "-c", "dotenv -e .env.defaults node ./.build/config.js > ./config.js; ws -s index.html" ]
+CMD [ "npm", "run", "docker" ]
