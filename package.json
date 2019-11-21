@@ -18,7 +18,8 @@
     "format:eslint": "eslint --ext .js,.ts . --fix",
     "lint:prettier": "prettier \"**/*.ts\" --list-different || (echo '↑↑ these files are not prettier formatted ↑↑' && exit 1)",
     "format:prettier": "prettier \"**/*.ts\" --write",
-    "format": "npm run format:eslint && npm run format:prettier"
+    "format": "npm run format:eslint && npm run format:prettier",
+    "docker": "dotenv -e .env.defaults node ./.build/config.js > ./config.js; ws -s index.html"
   },
   "xo": {
     "space": true,
