@@ -21,3 +21,5 @@ COPY --from=builder /app/.build/ ./.build
 
 EXPOSE 8000
 CMD [ "npm", "run", "docker" ]
+HEALTHCHECK --interval=5s --timeout=1s \
+    CMD wget --quiet --tries=1 --spider http://localhost:8000/ || exit 1
